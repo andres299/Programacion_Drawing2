@@ -1,0 +1,185 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('../img/fondo2.jpg');
+}
+
+.header {
+    background-color: #333;
+    color: #fff;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.nav-list {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
+.nav-list a {
+    text-decoration: none !important;
+    color: #fff !important;
+    font-size: 25px;
+    background-color: #8A2BE2;
+    padding: 10px 15px; 
+    border-radius: 5px;
+}
+
+.nav-list a:hover {
+    background-color: #6A1A99;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 45px;
+    max-width: 1000px;
+    flex-direction: row; 
+    margin-bottom: 42px;
+}
+
+canvas {
+    background-color: white;
+}
+
+.canvas-container {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.canvas {
+    border: 2px solid black;
+    margin: 10px;
+}
+
+.canvas-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #f2f2f2;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #ccc;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.canvas-form label {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.canvas-form input[type="text"],
+.canvas-form input[type="color"],
+.canvas-form input[type="range"],
+.canvas-form select {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.canvas-form button {
+    background-color: #0074E4;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+.canvas-form button:hover {
+    background-color: #0056A4;
+}
+.checkbox-button-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.checkbox-button-container label {
+    margin: 0;
+    margin-left: 5px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-style {
+    background-color: #0074E4;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px;
+    max-width: 100%;
+}
+
+.button-style:hover {
+    background-color: #0056A4;
+}
+
+.logs-container {
+    text-align: left;
+    background-color: #f2f2f2;
+    width: 250px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #ccc;
+    margin: 0 auto; 
+    margin-left: 20px;
+    height: calc(100vh - 215px);
+}
+
+.logs{
+    height: 300px;
+    overflow-y: scroll;
+}
+
+.logs-container h1{
+    text-align: center;
+}
+
+.Delete-Button {
+    background-color: #e94949;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px;
+    max-width: 100%;
+}
+
+.Delete-Button:hover {
+    background-color: #f30707;
+}
+
+.error{
+    color: red;
+}

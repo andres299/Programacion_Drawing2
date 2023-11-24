@@ -1,0 +1,103 @@
+h1{
+    text-align: center;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: black; 
+    color: white; 
+}
+
+tr:nth-child(even) {
+    background-color: white; 
+    color: black; 
+}
+
+tr:nth-child(odd) {
+    background-color: #f2f2f2; 
+    color: black; 
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin: 5px 0;
+}
+
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.delete {
+    width: 80px;
+    background-color: rgb(196, 44, 44);
+    color: #fff;
+    padding:10px;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: black;
+    display: inline-block;
+}
+
+.delete:hover{
+    background-color: rgb(243, 13, 13);
+}
+
+.view{
+    width: 80px;
+    background-color: rgb(201, 236, 57);
+    color: #fff;
+    padding:10px;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: black;
+    display: inline-block;
+}
+
+.view:hover{
+    background-color: rgb(158, 194, 0);
+}
+
+.modify{
+    width: 80px;
+    background-color: rgb(95, 119, 224);
+    color: #fff;
+    padding:10px;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: black;
+    display: inline-block;
+}
+
+.modify:hover{
+    background-color: rgb(1, 18, 253)
+}
+
+
+.container-title{
+    background-color: #6A1A99;
+    padding: 10px;
+    color: #fff;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+}
+
+.container-title h1 {
+    text-align: center;
+}

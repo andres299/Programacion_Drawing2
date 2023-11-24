@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:c="http://www.w3.org/1999/XSL/Transform">
+
+<head>
+    <title>Todos los Dibujos</title>
+    <link rel="stylesheet" href="/css/CanvasDrawStyle.css">
+    <link rel="stylesheet" href="/css/DrawTable.css">
+    <script src="https://kit.fontawesome.com/2684e8a577.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<div class="header">
+    <nav>
+        <ul class="nav-list">
+            <li class="nav-item"><a href="/CanvasDraw">CanvasDraw</a></li>
+            <li class="nav-item"><a href="/UserDraw">Tus Dibujos</a></li>
+            <li class="nav-item"><a href="/AllDraw">Todos Dibujos</a></li>
+            <li class="nav-item"><a href="/Logout"><i class="fa-solid fa-user"></i> Cerrar Sesion</a></li>
+        </ul>
+    </nav>
+</div>
+<div class="container-title">
+    <h1>Todos los dibujos</h1>
+</div>
+<table>
+    <tr>
+        <th>Id Imagen</th>
+        <th>Nombre</th>
+        <th>Fecha de Creación</th>
+        <th>Fecha de Modificación</th>
+        <th>Figuras</th>
+        <th>Creado por</th>
+        <th>Opciones</th>
+    </tr>
+    <tr>
+        <td>${draw.id}</td>
+        <td>${draw.name}</td>
+        <td>${draw.creationDate}</td>
+        <td>${draw.modificationDate}</td>
+        <td>
+            <ul>
+                <li>Total de Figuras: ${draw.figures.size()}</li>
+            </ul>
+        </td>
+        <td>${draw.createdByUser}</td>
+        <td>
+            <div class="button-container">
+                <form action="/ViewDraw" method="get">
+                    <input type="hidden" name="drawId" value="${draw.id}" />
+                    <input type="hidden" name="drawName" value="${draw.name}">
+                    <button class="view" type="submit">View</button>
+                </form>
+                <c:if test='${user == draw.createdByUser}'>
+                    <form action="/AllDraw" method="post">
+                        <input type="hidden" name="id" value="${draw.id}">
+                        <button class="delete" type="submit">Delete</button>
+                    </form>
+                    <form action="/ModifyCanvas" method="get">
+                        <input type="hidden" name="drawId" value="${draw.id}" />
+                        <input type="hidden" name="drawName" value="${draw.name}">
+                        <button class="modify" type="submit">Modify</button>
+                    </form>
+                </c:if>
+            </div>
+        </td>
+    </tr>
+</table>
+</body>
+
+</html>

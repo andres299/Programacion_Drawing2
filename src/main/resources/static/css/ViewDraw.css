@@ -1,0 +1,64 @@
+body{
+    background-image: url('../img/fondo2.jpg');
+}
+
+.header {
+    background-color: #333;
+    color: #fff;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.nav-list {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
+.nav-list a {
+    text-decoration: none !important;
+    color: #fff !important;
+    font-size: 25px;
+    background-color: #8A2BE2;
+    padding: 10px 15px; 
+    border-radius: 5px;
+}
+
+.nav-list a:hover {
+    background-color: #6A1A99;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.canvas {
+    border: 2px solid black;
+    margin-top: 10px;
+    background-color: white;
+}
+
+.container-title{
+    background-color: #6A1A99;
+    padding: 10px;
+    color: #fff;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+}
+
+.container-title h1 {
+    text-align: center;
+}
