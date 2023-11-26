@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Todos los Dibujos</title>
+    <title>Tus Dibujos</title>
     <link rel="stylesheet" href="/css/CanvasDrawStyle.css">
     <link rel="stylesheet" href="/css/DrawTable.css">
     <script src="https://kit.fontawesome.com/2684e8a577.js" crossorigin="anonymous"></script>
@@ -20,7 +20,7 @@
     </nav>
 </div>
 <div class="container-title">
-    <h1>Estos son tus dibujos, ${sessionScope.login}.</h1>
+    <h1>Estos son tus dibujos,<span th:text="${login}"></span>.</h1>
 </div>
 <table>
     <tr>
