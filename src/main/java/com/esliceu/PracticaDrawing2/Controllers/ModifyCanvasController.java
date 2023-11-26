@@ -30,7 +30,6 @@ public class ModifyCanvasController {
                                @RequestParam int drawId) throws IOException {
         //Obtenemos el usuario atual
         String login = (String) session.getAttribute("login");
-        System.out.println(drawName);
         // Medida de seguridad que compruebe que el usuario esta modificando su propio dibujo
         Draw existDraw = drawService.getDrawById(drawId);
         // Verificar si existDraw es nulo y si el usuario que creó la imagen es el que está intentando modificarla
@@ -58,7 +57,7 @@ public class ModifyCanvasController {
                                    @RequestParam int drawId, @RequestParam String drawName) throws IOException {
         //Obtenemos el usuario atual
         String login = (String) session.getAttribute("login");
-        System.out.println(drawName);
+
         // Analiza el JSON para obtener el array de figuras
         ObjectMapper objectMapper = new ObjectMapper();
         List<Figure> newFigures = objectMapper.readValue(figures, new TypeReference<List<Figure>>() {});
@@ -83,6 +82,7 @@ public class ModifyCanvasController {
 
         // Conservar la fecha de creación
         String originalCreationDate = existDraw.getCreationDate();
+        //Actualizar los datos del dibujo
         drawService.updateDraw(drawName, originalCreationDate,ModificationDate,newFigures,login);
         return "redirect:/ModifyCanvas";
     }
