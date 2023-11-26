@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:c="http://www.w3.org/1999/XSL/Transform">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <title>Todos los Dibujos</title>
@@ -32,35 +32,35 @@
         <th>Creado por</th>
         <th>Opciones</th>
     </tr>
-    <tr>
-        <td>${draw.id}</td>
-        <td>${draw.name}</td>
-        <td>${draw.creationDate}</td>
-        <td>${draw.modificationDate}</td>
+    <tr th:each="draw : ${allDraws}">
+        <td th:text="${draw.id}"></td>
+        <td th:text="${draw.name}"></td>
+        <td th:text="${draw.creationDate}"></td>
+        <td th:text="${draw.modificationDate}"></td>
         <td>
             <ul>
-                <li>Total de Figuras: ${draw.figures.size()}</li>
+                <li>Total de Figuras: <span th:text="${#lists.size(draw.figures)}"></span></li>
             </ul>
         </td>
-        <td>${draw.createdByUser}</td>
+        <td th:text="${draw.createdByUser}"></td>
         <td>
             <div class="button-container">
                 <form action="/ViewDraw" method="get">
-                    <input type="hidden" name="drawId" value="${draw.id}" />
-                    <input type="hidden" name="drawName" value="${draw.name}">
+                    <input type="hidden" name="drawId" th:value="${draw.id}" />
+                    <input type="hidden" name="drawName" th:value="${draw.name}">
                     <button class="view" type="submit">View</button>
                 </form>
-                <c:if test='${user == draw.createdByUser}'>
+                <div th:if="${user == draw.createdByUser}">
                     <form action="/AllDraw" method="post">
-                        <input type="hidden" name="id" value="${draw.id}">
+                        <input type="hidden" name="id" th:value="${draw.id}">
                         <button class="delete" type="submit">Delete</button>
                     </form>
                     <form action="/ModifyCanvas" method="get">
-                        <input type="hidden" name="drawId" value="${draw.id}" />
-                        <input type="hidden" name="drawName" value="${draw.name}">
+                        <input type="hidden" name="drawId" th:value="${draw.id}" />
+                        <input type="hidden" name="drawName" th:value="${draw.name}">
                         <button class="modify" type="submit">Modify</button>
                     </form>
-                </c:if>
+                </div>
             </div>
         </td>
     </tr>

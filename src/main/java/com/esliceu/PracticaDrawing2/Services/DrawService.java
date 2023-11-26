@@ -26,4 +26,16 @@ public class DrawService {
         draw.setCreatedByUser(login);
         drawRepo.saveDraw(draw);
     }
+    // Método para obtener todos los dibujos de la lista.
+    public List<Draw> getDraws() { return drawRepo.getDraws();}
+
+    //Metodo para borrar un dibujo especifico.
+    public void deleteDraw(int id , String login) {
+        drawRepo.deleteDraw(id, login);
+    }
+
+    // Método para obtener una lista de dibujos hechos por un usuario.
+    public List<Draw> getDrawsByUser(String login) {
+        return drawRepo.getDrawByUser(login);
+    }
 }
