@@ -7,7 +7,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class Configuration implements WebMvcConfigurer {
     @Autowired
     SessionInterceptor sessionInterceptor;
-
     @Override
     public void addInterceptors(InterceptorRegistry registry){
         registry.addInterceptor(sessionInterceptor)

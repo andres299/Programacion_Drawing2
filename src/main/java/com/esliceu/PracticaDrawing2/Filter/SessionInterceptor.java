@@ -14,7 +14,8 @@ public class SessionInterceptor implements HandlerInterceptor {
     HttpSession session;
 
     @Override
-    public boolean preHandle(HttpServletRequest req,
+    public boolean preHandle(
+                             HttpServletRequest req,
                              HttpServletResponse resp,
                              Object handler) throws Exception{
         //Obtenemos el usuario atual
