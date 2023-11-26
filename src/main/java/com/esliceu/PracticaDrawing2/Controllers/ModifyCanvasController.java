@@ -30,7 +30,7 @@ public class ModifyCanvasController {
                                @RequestParam int drawId) throws IOException {
         //Obtenemos el usuario atual
         String login = (String) session.getAttribute("login");
-
+        System.out.println(drawName);
         // Medida de seguridad que compruebe que el usuario esta modificando su propio dibujo
         Draw existDraw = drawService.getDrawById(drawId);
         // Verificar si existDraw es nulo y si el usuario que creó la imagen es el que está intentando modificarla
@@ -43,8 +43,8 @@ public class ModifyCanvasController {
         List<Figure> selectedFigures = drawService.getFiguresByDrawId(drawId);
         // Convertimos la lista de figuras a una cadena JSON
         ObjectMapper objectMapper = new ObjectMapper();
-
         String selectedFiguresJson = objectMapper.writeValueAsString(selectedFigures);
+
         model.addAttribute("drawName",drawName);
         model.addAttribute("drawId",drawId);
         model.addAttribute("selectedFiguresJson", selectedFiguresJson);
@@ -55,10 +55,10 @@ public class ModifyCanvasController {
     @PostMapping("/ModifyCanvas")
     public String PostModifyCanvas(Model model,
                                    @RequestParam String figures,
-                                   @RequestParam int drawId, @RequestParam String NomImage) throws IOException {
+                                   @RequestParam int drawId, @RequestParam String drawName) throws IOException {
         //Obtenemos el usuario atual
         String login = (String) session.getAttribute("login");
-
+        System.out.println(drawName);
         // Analiza el JSON para obtener el array de figuras
         ObjectMapper objectMapper = new ObjectMapper();
         List<Figure> newFigures = objectMapper.readValue(figures, new TypeReference<List<Figure>>() {});
@@ -69,12 +69,12 @@ public class ModifyCanvasController {
         // Verificar si hay al menos una figura
         if (newFigures.isEmpty()) {
             model.addAttribute("error", "No se han dibujado figuras. Debes dibujar al menos una figura.");
-            return "CanvasDraw";
+            return "ModifyCanvas";
         }
 
         //Si el nombre esta vacia , genera uno aleatorio
-        if (NomImage.isEmpty()) {
-            NomImage = drawService.generateRandomName();
+        if (drawName.isEmpty()) {
+            drawName = drawService.generateRandomName();
         }
         // Obtener la fecha y hora actuales para la modificación
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -83,8 +83,7 @@ public class ModifyCanvasController {
 
         // Conservar la fecha de creación
         String originalCreationDate = existDraw.getCreationDate();
-        //        drawService.saveDraw(NomImage,currentDateString,newFigures,login);
-        drawService.updateDraw(NomImage, originalCreationDate,ModificationDate,newFigures,login);
+        drawService.updateDraw(drawName, originalCreationDate,ModificationDate,newFigures,login);
         return "redirect:/ModifyCanvas";
     }
 }

@@ -50,9 +50,9 @@ public class DrawService {
         return drawRepo.getDrawById(id);
     }
 
-    public void updateDraw(String nomImage, String originalCreationDate, String modificationDate, List<Figure> newFigures, String login) {
+    public void updateDraw(String drawName, String originalCreationDate, String modificationDate, List<Figure> newFigures, String login) {
         Draw existDraw = new Draw();
-        existDraw.setName(nomImage);
+        existDraw.setName(drawName);
         existDraw.setCreationDate(originalCreationDate);
         existDraw.setModificationDate(modificationDate);
         existDraw.setFigures(newFigures);

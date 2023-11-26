@@ -19,9 +19,9 @@
     </nav>
 </div>
 <div class="container">
-    <form action="/CanvasDraw" method="post" class="canvas-form" id="Formulario">
-        <h1>CanvasDraw</h1>
-        <p>Bienvenido a nuestra página, <span id="loginName"></span>.</p>
+    <form action="/ModifyCanvas" method="post" class="canvas-form" id="Formulario">
+        <h1>Modify CanvasDraw</h1>
+        <p>Bienvenido a mi página.</p>
         <p>Selecciona una forma:</p>
         <select name="figureSelect" id="figureSelect">
             <option value="circle">Círculo</option>
@@ -41,21 +41,22 @@
             <label for="fillFigure">Rellenar figura</label>
         </div>
 
-        <!-- Elementos ocultos para almacenar las coordenadas -->
+        <!-- Elementos ocultos-->
+        <input type="hidden" id="selectedFigures" name="selectedFiguresJson" th:value='${selectedFiguresJson}' />
         <input type="hidden" name="figures" id="figures" value="">
+        <input type="hidden" name="drawId" id="drawId" th:value="${drawId}">
 
-        <label for="NomImage">Nombre de la imagen:</label>
-        <input type="text" name="NomImage" id="NomImage"><br>
+        <label for="drawName">Nombre de la imagen:</label>
+        <input type="text" name="drawName" id="drawName" th:value="${drawName}"><br>
 
-
-        <div th:if="${error}">
+         <div th:if="${error}">
             <p c:class="error" th:text="${error}"></p>
-        </div><br>
+         </div><br>
 
         <button id="sendButton">Enviar</button>
     </form>
     <div class="canvas-container">
-        <canvas width="400" height="300" class="canvas"></canvas>
+        <canvas id="ModifyCanvas" width="400" height="300" class="canvas"></canvas>
 
         <div class="button-container">
             <button id="drawButton" class="button-style">Dibujar</button>
