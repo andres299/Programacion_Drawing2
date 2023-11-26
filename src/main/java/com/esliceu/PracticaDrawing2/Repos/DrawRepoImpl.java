@@ -1,6 +1,7 @@
 package com.esliceu.PracticaDrawing2.Repos;
 
 import com.esliceu.PracticaDrawing2.Entities.Draw;
+import com.esliceu.PracticaDrawing2.Entities.Figure;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @Repository
-public class DrawRepoImpl implements DrawRepo{
+public class DrawRepoImpl implements DrawRepo {
     static List<Draw> drawList = new ArrayList<>();
 
     @Override
@@ -27,7 +28,6 @@ public class DrawRepoImpl implements DrawRepo{
         }
         // Agrega el objeto Draw con su ID asignado a la lista.
         drawList.add(draw);
-        System.out.println(draw.getId() + draw.getCreatedByUser() + draw.getName());
     }
 
     @Override
@@ -67,6 +67,28 @@ public class DrawRepoImpl implements DrawRepo{
         }
         // Se retorna la lista de dibujos del usuario.
         return userDraws;
+    }
+
+    @Override
+    public List<Figure> getFiguresByDrawId(int drawId) {
+        // Se crea una nueva lista para almacenar las figuras del dibujo.
+        List<Figure> figuresDraw = new ArrayList<>();
+        // Encuentra el dibujo correspondiente al drawId.
+        Draw targetDraw = null;
+        // Se busca el dibujo correspondiente al drawId.
+        for (Draw draw : drawList) {
+            //Si las id coinciden se asigna a targetDraw y se sale del bucle.
+            if (draw.getId() == drawId) {
+                targetDraw = draw;
+                break;
+            }
+        }
+        // Si se encuentra el dibujo, se obtienen las figuras asociadas.
+        if (targetDraw != null) {
+            figuresDraw = targetDraw.getFigures();
+        }
+        //Se retorna la lista de figuras asociadas al dibujo.
+        return figuresDraw;
     }
 
 }

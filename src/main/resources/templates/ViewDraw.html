@@ -1,10 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 
+<head>
+    <title>Dibujos Usuario</title>
+    <link rel="stylesheet" href="/css/ViewDraw.css">
+    <script src="https://kit.fontawesome.com/2684e8a577.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<div class="header">
+    <nav>
+        <ul class="nav-list">
+            <li class="nav-item"><a href="/CanvasDraw">CanvasDraw</a></li>
+            <li class="nav-item"><a href="/UserDraw">Tus Dibujos</a></li>
+            <li class="nav-item"><a href="/AllDraw">Todos Dibujos</a></li>
+            <li class="nav-item"><a href="/Logout"><i class="fa-solid fa-user"></i> Cerrar Sesion</a></li>
+        </ul>
+    </nav>
+</div>
+<div class="container">
+    <div class="container-title">
+        <p>Este es el dibujo, <span th:text="${drawName}"></span></p>
+    </div>
+    <input type="hidden" id="selectedFigures" name="selectedFiguresJson" th:value="${selectedFiguresJson}" />
+    <canvas id="ViewCanvas" class="canvas" width="400" height="300"></canvas>
+</div>
+<script src="/js/ViewCanvas.js"></script>
 </body>
+
 </html>

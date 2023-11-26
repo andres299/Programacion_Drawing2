@@ -38,4 +38,9 @@ public class DrawService {
     public List<Draw> getDrawsByUser(String login) {
         return drawRepo.getDrawByUser(login);
     }
+
+    // Método para obtener una lista de figuras asociadas a un dibujo por su ID.
+    public List<Figure> getFiguresByDrawId(int drawId) {
+        return drawRepo.getFiguresByDrawId(drawId);
+    }
 }
