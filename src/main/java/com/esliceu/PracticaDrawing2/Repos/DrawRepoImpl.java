@@ -91,4 +91,23 @@ public class DrawRepoImpl implements DrawRepo {
         return figuresDraw;
     }
 
+    @Override
+    public Draw getDrawById(int id) {
+        //Recorremos la lista estatica.
+        for (Draw draw : drawList) {
+            //Si coincide retorna el dibujo con la ip asociada.
+            if (draw.getId() == id) {
+                return draw;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void updateDraw(Draw existDraw) {
+        // Eliminar el dibujo existente con el mismo ID
+        drawList.removeIf(draw -> draw.getId() == existDraw.getId());
+        // Agregar el dibujo actualizado a la lista
+        drawList.add(existDraw);
+    }
 }

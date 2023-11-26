@@ -15,4 +15,8 @@ public interface DrawRepo {
     List<Draw> getDrawByUser(String login);
 
     List<Figure> getFiguresByDrawId(int drawId);
+
+    Draw getDrawById(int id);
+
+    void updateDraw(Draw existDraw);
 }

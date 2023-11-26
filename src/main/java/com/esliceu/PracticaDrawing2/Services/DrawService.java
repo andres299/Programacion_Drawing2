@@ -7,6 +7,7 @@ import com.esliceu.PracticaDrawing2.Repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,5 +43,20 @@ public class DrawService {
     // Método para obtener una lista de figuras asociadas a un dibujo por su ID.
     public List<Figure> getFiguresByDrawId(int drawId) {
         return drawRepo.getFiguresByDrawId(drawId);
+    }
+
+    // Método para obtener un dibujo por su ID.
+    public Draw getDrawById(int id) {
+        return drawRepo.getDrawById(id);
+    }
+
+    public void updateDraw(String nomImage, String originalCreationDate, String modificationDate, List<Figure> newFigures, String login) {
+        Draw existDraw = new Draw();
+        existDraw.setName(nomImage);
+        existDraw.setCreationDate(originalCreationDate);
+        existDraw.setModificationDate(modificationDate);
+        existDraw.setFigures(newFigures);
+        existDraw.setCreatedByUser(login);
+        drawRepo.updateDraw(existDraw);
     }
 }

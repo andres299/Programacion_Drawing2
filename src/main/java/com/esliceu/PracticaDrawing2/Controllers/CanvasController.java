@@ -27,9 +27,12 @@ public class CanvasController {
     public String CanvasDraw() {
         return "CanvasDraw";
     }
+
     @PostMapping("/CanvasDraw")
     public String PostCanvasDraw(Model model, @RequestParam String figures, @RequestParam String NomImage) throws IOException {
+        //Obtenemos el usuario atual
         String login = (String) session.getAttribute("login");
+
         // Analiza el JSON para obtener el array de figuras
         ObjectMapper objectMapper = new ObjectMapper();
         List<Figure> newFigures = objectMapper.readValue(figures, new TypeReference<List<Figure>>() {});
