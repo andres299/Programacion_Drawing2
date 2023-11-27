@@ -43,18 +43,16 @@ public class CanvasController {
             return "CanvasDraw";
         }
 
-        //Si el nombre esta vacia , genera uno aleatorio
-        if (NomImage.isEmpty()) {
-            NomImage = drawService.generateRandomName();
-        }
-
         // Obtener la fecha y hora actual
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date currentDate = new Date();
         String currentDateString = sdf.format(currentDate);
 
+        //Si el nombre esta vacia , genera uno aleatorio
+        String newName = NomImage.isEmpty() ? drawService.generateRandomName() : NomImage;
+
         // Guardar el dibujo
-        drawService.saveDraw(NomImage,currentDateString,newFigures,login);
+        drawService.saveDraw(newName,currentDateString,newFigures,login);
         return "CanvasDraw";
     }
 

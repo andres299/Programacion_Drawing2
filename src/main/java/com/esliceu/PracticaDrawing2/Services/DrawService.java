@@ -51,8 +51,9 @@ public class DrawService {
     }
 
     // Método para actualizar un dibujo.
-    public void updateDraw(String drawName, String originalCreationDate, String modificationDate, List<Figure> newFigures, String login) {
+    public void updateDraw(int drawId, String drawName, String originalCreationDate, String modificationDate, List<Figure> newFigures, String login) {
         Draw existDraw = new Draw();
+        existDraw.setId(drawId);
         existDraw.setName(drawName);
         existDraw.setCreationDate(originalCreationDate);
         existDraw.setModificationDate(modificationDate);

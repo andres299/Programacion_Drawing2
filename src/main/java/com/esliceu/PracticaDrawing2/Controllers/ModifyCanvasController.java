@@ -76,10 +76,6 @@ public class ModifyCanvasController {
             return "ModifyCanvas";
         }
 
-        //Si el nombre esta vacia , genera uno aleatorio
-        if (drawName.isEmpty()) {
-            drawName = drawService.generateRandomName();
-        }
         // Obtener la fecha y hora actuales para la modificación
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date currentModificationDate = new Date();
@@ -88,8 +84,12 @@ public class ModifyCanvasController {
         // Conservar la fecha de creación
         String originalCreationDate = existDraw.getCreationDate();
 
+
+        //Si el nombre esta vacia , genera uno aleatorio
+        String newName = drawName.isEmpty() ? drawService.generateRandomName() : drawName;
+
         //Actualizar los datos del dibujo
-        drawService.updateDraw(drawName, originalCreationDate,ModificationDate,newFigures,login);
-        return "redirect:/ModifyCanvas";
+        drawService.updateDraw(drawId, newName, originalCreationDate,ModificationDate,newFigures,login);
+        return "redirect:/AllDraw";
     }
 }
