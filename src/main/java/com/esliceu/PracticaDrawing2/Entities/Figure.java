@@ -1,9 +1,10 @@
 package com.esliceu.PracticaDrawing2.Entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Figure {
+public class Figure implements Serializable {
     private String type;
     private String color;
     private double size;
