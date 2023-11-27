@@ -20,7 +20,7 @@ p {
 }
 
 .error {
-    color: red;
+    color: red !important;
 }
 
 form {
