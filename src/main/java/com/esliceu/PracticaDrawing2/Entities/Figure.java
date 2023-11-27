@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Figure implements Serializable {
+public class Figure {
     private String type;
     private String color;
     private double size;

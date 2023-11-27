@@ -2,6 +2,8 @@ package com.esliceu.PracticaDrawing2.Repos;
 
 import com.esliceu.PracticaDrawing2.Entities.Draw;
 import com.esliceu.PracticaDrawing2.Entities.Figure;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,10 +20,18 @@ public class DrawRepoImpl implements DrawRepo {
 
     @Override
     public void saveDraw(Draw draw) {
-        jdbcTemplate.update("INSERT INTO Draw (name, creationDate, modificationDate, figures, createdByUser)" +
-                "VALUES (?, ?, ?, ?, ?)",draw.getName(), draw.getCreationDate(),
-                draw.getModificationDate(), draw.getFigures(), draw.getCreatedByUser());
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            String figuresJson = objectMapper.writeValueAsString(draw.getFigures());
+
+            jdbcTemplate.update("INSERT INTO Draw (name, creationDate, modificationDate, figures, createdByUser)" +
+                            "VALUES (?, ?, ?, ?, ?)", draw.getName(), draw.getCreationDate(),
+                    draw.getModificationDate(), figuresJson, draw.getCreatedByUser());
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
+
 
     @Override
     public List<Draw> getDraws() {
