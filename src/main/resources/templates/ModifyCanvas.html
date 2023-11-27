@@ -50,7 +50,7 @@
         <input type="text" name="drawName" id="drawName" th:value="${drawName}"><br>
 
          <div th:if="${error}">
-            <p c:class="error" th:text="${error}"></p>
+            <p c:class="error" th:text="${error}" style="color: red;"></p>
          </div><br>
 
         <button id="sendButton">Enviar</button>
