@@ -50,6 +50,7 @@ public class DrawService {
         return drawRepo.getDrawById(id);
     }
 
+    // Método para actualizar un dibujo.
     public void updateDraw(String drawName, String originalCreationDate, String modificationDate, List<Figure> newFigures, String login) {
         Draw existDraw = new Draw();
         existDraw.setName(drawName);

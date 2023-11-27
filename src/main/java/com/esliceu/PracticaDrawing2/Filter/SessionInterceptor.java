@@ -20,8 +20,8 @@ public class SessionInterceptor implements HandlerInterceptor {
                              Object handler) throws Exception{
         //Obtenemos el usuario atual
         String login = (String) session.getAttribute("login");
-
         req.setAttribute("loginSession", login);
+
         //Verificar si el usuario esta autentificado.
         if (login == null) {
             //Redirigir a la pagina de inicio de sesion si no esta autenticado.

@@ -44,6 +44,7 @@ public class ModifyCanvasController {
         ObjectMapper objectMapper = new ObjectMapper();
         String selectedFiguresJson = objectMapper.writeValueAsString(selectedFigures);
 
+        // Establecer el atributo JSON en la solicitud, el nombre del dibujo y el id.
         model.addAttribute("drawName",drawName);
         model.addAttribute("drawId",drawId);
         model.addAttribute("selectedFiguresJson", selectedFiguresJson);
@@ -57,14 +58,18 @@ public class ModifyCanvasController {
                                    @RequestParam int drawId, @RequestParam String drawName) throws IOException {
         //Obtenemos el usuario atual
         String login = (String) session.getAttribute("login");
-
         // Analiza el JSON para obtener el array de figuras
         ObjectMapper objectMapper = new ObjectMapper();
         List<Figure> newFigures = objectMapper.readValue(figures, new TypeReference<List<Figure>>() {});
 
         // Obtener la información existente del dibujo
         Draw existDraw = drawService.getDrawById(drawId);
-
+        System.out.println("ID: " + existDraw.getId());
+        System.out.println("Nombre: " + existDraw.getName());
+        System.out.println("fechaCr: " + existDraw.getCreationDate());
+        System.out.println("Modificacion: " + existDraw.getModificationDate());
+        System.out.println("figuras: " + existDraw.getFigures().size());
+        System.out.println("login: " + existDraw.getCreatedByUser());
         // Verificar si hay al menos una figura
         if (newFigures.isEmpty()) {
             model.addAttribute("error", "No se han dibujado figuras. Debes dibujar al menos una figura.");
@@ -82,6 +87,7 @@ public class ModifyCanvasController {
 
         // Conservar la fecha de creación
         String originalCreationDate = existDraw.getCreationDate();
+
         //Actualizar los datos del dibujo
         drawService.updateDraw(drawName, originalCreationDate,ModificationDate,newFigures,login);
         return "redirect:/ModifyCanvas";
