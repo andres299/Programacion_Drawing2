@@ -180,13 +180,26 @@ const guardarConfiguracionFormulario = () => {
 
 // Función para cargar la última configuración del formulario desde localStorage
 const cargarUltimaConfiguracionFormulario = () => {
-    const figuraSeleccionada = localStorage.getItem("figuraSeleccionada");
-    const colorSeleccionado = localStorage.getItem("colorSeleccionado");
-    const tamañoSeleccionado = localStorage.getItem("tamañoSeleccionado");
-    const rellenoFigura = localStorage.getItem("rellenoFigura") === "true";
-    const nombreImagen = localStorage.getItem("nombreImagen");
+    const primeraVisita = localStorage.getItem("primeraVisita");
 
-    if (figuraSeleccionada) {
+    if (!primeraVisita) {
+        // Configurar valores predeterminados solo en la primera visita
+        figureSelect.value = "circle";  // Valor predeterminado para figura
+        colorInput.value = "#000000";   // Valor predeterminado para color (negro)
+        sizeInput.value = 20;            // Valor predeterminado para tamaño
+        fillFigureCheckbox.checked = false;  // Valor predeterminado para relleno
+        document.getElementById("NomImage").value = "";  // Valor predeterminado para nombre de imagen
+
+        // Marcar la visita como no la primera
+        localStorage.setItem("primeraVisita", "true");
+    } else {
+        // Si no es la primera visita, cargar la configuración existente
+        const figuraSeleccionada = localStorage.getItem("figuraSeleccionada");
+        const colorSeleccionado = localStorage.getItem("colorSeleccionado");
+        const tamañoSeleccionado = localStorage.getItem("tamañoSeleccionado");
+        const rellenoFigura = localStorage.getItem("rellenoFigura") === "true";
+        const nombreImagen = localStorage.getItem("nombreImagen");
+
         figureSelect.value = figuraSeleccionada;
         colorInput.value = colorSeleccionado;
         sizeInput.value = tamañoSeleccionado;
@@ -197,6 +210,8 @@ const cargarUltimaConfiguracionFormulario = () => {
 
 // Cargar la última configuración del formulario al cargar la página
 window.addEventListener("load", cargarUltimaConfiguracionFormulario);
+
+
 
 // Eventos para guardar la configuración del formulario cuando hay cambios
 figureSelect.addEventListener("change", guardarConfiguracionFormulario);
