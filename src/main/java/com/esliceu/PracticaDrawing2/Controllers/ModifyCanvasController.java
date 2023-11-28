@@ -78,7 +78,6 @@ public class ModifyCanvasController {
         // Conservar la fecha de creación
         String originalCreationDate = existDraw.getCreationDate();
 
-
         //Si el nombre esta vacia , genera uno aleatorio
         String newName = drawName.isEmpty() ? drawService.generateRandomName() : drawName;
 

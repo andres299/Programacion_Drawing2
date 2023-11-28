@@ -57,11 +57,11 @@ public class DrawRepoImpl implements DrawRepo {
 
     @Override
     public void updateDraw(Draw existDraw) {
-        jdbcTemplate.update("UPDATE Draw SET name = ?, creationDate = ?, modificationDate = ?, figures= ? " +
-                        "createdByUser = ? WHERE id = ?", existDraw.getName(), existDraw.getCreationDate(),
-                existDraw.getModificationDate(), existDraw.getCreatedByUser(), existDraw.getFigures(),
-                existDraw.getId());
+        jdbcTemplate.update("UPDATE Draw SET name = ?, creationDate = ?, modificationDate = ?, figures = ?, createdByUser = ? WHERE id = ?",
+                existDraw.getName(), existDraw.getCreationDate(), existDraw.getModificationDate(),
+                existDraw.getFigures(), existDraw.getCreatedByUser(), existDraw.getId());
     }
+
 
 }
     /*
