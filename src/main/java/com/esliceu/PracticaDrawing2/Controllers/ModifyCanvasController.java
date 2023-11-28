@@ -1,11 +1,7 @@
 package com.esliceu.PracticaDrawing2.Controllers;
 
 import com.esliceu.PracticaDrawing2.Entities.Draw;
-import com.esliceu.PracticaDrawing2.Entities.Figure;
 import com.esliceu.PracticaDrawing2.Services.DrawService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 @Controller
 public class ModifyCanvasController {

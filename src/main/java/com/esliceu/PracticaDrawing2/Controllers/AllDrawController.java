@@ -1,9 +1,7 @@
 package com.esliceu.PracticaDrawing2.Controllers;
 
 import com.esliceu.PracticaDrawing2.Entities.Draw;
-import com.esliceu.PracticaDrawing2.Entities.Figure;
 import com.esliceu.PracticaDrawing2.Services.DrawService;
-import com.esliceu.PracticaDrawing2.Services.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

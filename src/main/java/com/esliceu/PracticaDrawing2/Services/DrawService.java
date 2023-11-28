@@ -1,13 +1,10 @@
 package com.esliceu.PracticaDrawing2.Services;
 
 import com.esliceu.PracticaDrawing2.Entities.Draw;
-import com.esliceu.PracticaDrawing2.Entities.Figure;
 import com.esliceu.PracticaDrawing2.Repos.DrawRepo;
-import com.esliceu.PracticaDrawing2.Repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,11 +35,6 @@ public class DrawService {
     // Método para obtener una lista de dibujos hechos por un usuario.
     public List<Draw> getDrawsByUser(String login) {
         return drawRepo.getDrawByUser(login);
-    }
-
-    // Método para obtener una lista de figuras asociadas a un dibujo por su ID.
-    public List<Figure> getFiguresByDrawId(int drawId) {
-        return drawRepo.getFiguresByDrawId(drawId);
     }
 
     // Método para obtener un dibujo por su ID.

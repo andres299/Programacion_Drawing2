@@ -1,16 +1,11 @@
 package com.esliceu.PracticaDrawing2.Repos;
 
 import com.esliceu.PracticaDrawing2.Entities.Draw;
-import com.esliceu.PracticaDrawing2.Entities.Figure;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Repository
@@ -41,12 +36,6 @@ public class DrawRepoImpl implements DrawRepo {
     public List<Draw> getDrawByUser(String login) {
         return jdbcTemplate.query("SELECT * FROM Draw WHERE createdByUser = ?",
                 new Object[]{login}, new BeanPropertyRowMapper<>(Draw.class));
-    }
-
-    @Override
-    public List<Figure> getFiguresByDrawId(int drawId) {
-        return jdbcTemplate.query("SELECT * FROM Figure WHERE drawId = ?",
-                new Object[]{drawId}, new BeanPropertyRowMapper<>(Figure.class));
     }
 
     @Override
