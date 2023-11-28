@@ -169,12 +169,51 @@ clearButton.addEventListener("click", () => {
     render(figures);
 });
 
-//Enviar los datos
+// Función para guardar la configuración del formulario en localStorage
+const guardarConfiguracionFormulario = () => {
+    localStorage.setItem("figuraSeleccionada", figureSelect.value);
+    localStorage.setItem("colorSeleccionado", colorInput.value);
+    localStorage.setItem("tamañoSeleccionado", sizeInput.value);
+    localStorage.setItem("rellenoFigura", fillFigureCheckbox.checked);
+    localStorage.setItem("nombreImagen", document.getElementById("NomImage").value);
+};
+
+// Función para cargar la última configuración del formulario desde localStorage
+const cargarUltimaConfiguracionFormulario = () => {
+    const figuraSeleccionada = localStorage.getItem("figuraSeleccionada");
+    const colorSeleccionado = localStorage.getItem("colorSeleccionado");
+    const tamañoSeleccionado = localStorage.getItem("tamañoSeleccionado");
+    const rellenoFigura = localStorage.getItem("rellenoFigura") === "true";
+    const nombreImagen = localStorage.getItem("nombreImagen");
+
+    if (figuraSeleccionada) {
+        figureSelect.value = figuraSeleccionada;
+        colorInput.value = colorSeleccionado;
+        sizeInput.value = tamañoSeleccionado;
+        fillFigureCheckbox.checked = rellenoFigura;
+        document.getElementById("NomImage").value = nombreImagen;
+    }
+};
+
+// Cargar la última configuración del formulario al cargar la página
+window.addEventListener("load", cargarUltimaConfiguracionFormulario);
+
+// Eventos para guardar la configuración del formulario cuando hay cambios
+figureSelect.addEventListener("change", guardarConfiguracionFormulario);
+colorInput.addEventListener("input", guardarConfiguracionFormulario);
+sizeInput.addEventListener("input", guardarConfiguracionFormulario);
+fillFigureCheckbox.addEventListener("change", guardarConfiguracionFormulario);
+document.getElementById("NomImage").addEventListener("input", guardarConfiguracionFormulario);
+
+// Evento para guardar la configuración del formulario antes de enviarlo
 saveButton.addEventListener("click", () => {
-    // Convierte el array "figures" a una cadena JSON
-    var figuresJSON = JSON.stringify(figures);
-    // Asigna la cadena JSON al campo oculto "figures"
+    guardarConfiguracionFormulario();
+
+    // Convertir el array "figures" a una cadena JSON
+    const figuresJSON = JSON.stringify(figures);
+    // Asignar la cadena JSON al campo oculto "figures"
     document.getElementById("figures").value = figuresJSON;
     // Enviar el formulario para procesar los datos en el servlet
     document.getElementById("Formulario").submit();
 });
+
