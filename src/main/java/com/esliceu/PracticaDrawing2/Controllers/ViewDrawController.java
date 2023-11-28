@@ -20,8 +20,7 @@ public class ViewDrawController {
     DrawService drawService;
 
     @GetMapping("/ViewDraw")
-    public String ViewDraw(Model model, @RequestParam String drawName,
-                           @RequestParam int drawId) throws IOException {
+    public String ViewDraw(Model model, @RequestParam String drawName, @RequestParam int drawId)  {
         // Obtener el dibujo por su ID
         Draw selectedDraw = drawService.getDrawById(drawId);
 
