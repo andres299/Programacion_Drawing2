@@ -1,5 +1,6 @@
 package com.esliceu.PracticaDrawing2.Controllers;
 
+import com.esliceu.PracticaDrawing2.Entities.Draw;
 import com.esliceu.PracticaDrawing2.Entities.Figure;
 import com.esliceu.PracticaDrawing2.Services.DrawService;
 import com.esliceu.PracticaDrawing2.Services.UserService;
@@ -26,16 +27,17 @@ public class ViewDrawController {
     @GetMapping("/ViewDraw")
     public String ViewDraw(Model model, @RequestParam String drawName,
                            @RequestParam int drawId) throws IOException {
-        //Creamos una lista que recibira todos los dibujos
-        List<Figure> selectedFigures = drawService.getFiguresByDrawId(drawId);
+        // Obtener el dibujo por su ID
+        Draw selectedDraw = drawService.getDrawById(drawId);
 
-        // Convertir la lista de figuras a una cadena JSON
-        ObjectMapper objectMapper = new ObjectMapper();
-        String selectedFiguresJson = objectMapper.writeValueAsString(selectedFigures);
-
-        //Estos atributos se enviaran la página JSP asociada para poder mostralo.
-        model.addAttribute("selectedFiguresJson", selectedFiguresJson);
-        model.addAttribute("drawName",drawName);
+        // Verificar si el dibujo y la cadena de figuras no son nulos
+        if (selectedDraw != null && selectedDraw.getFigures() != null) {
+            //Estos atributos se enviarán a la página JSP asociada para poder mostrarlos.
+            model.addAttribute("selectedFiguresJson", selectedDraw.getFigures());
+            model.addAttribute("drawName", drawName);
+        } else {
+            model.addAttribute("error", "No se encontraron figuras para el dibujo seleccionado.");
+        }
 
         return "ViewDraw";
     }
