@@ -58,7 +58,7 @@ public class AllDrawController {
     };
 
     @PostMapping("/AllDraw")
-    public String PostAllDraw(Model model, @RequestParam int id){
+    public String PostAllDraw(@RequestParam int id){
         //La sesion del usuario actual
         String login = (String) session.getAttribute("login");
         //Metodo para borrar la imagen y nor redirige a AllDraw.
