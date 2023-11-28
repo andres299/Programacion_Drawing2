@@ -38,11 +38,13 @@ public class ModifyCanvasController {
             return "redirect:/AllDraw";
         }
 
-        //Obtenemos la lista de figuras que componen la imagen.
-        List<Figure> selectedFigures = drawService.getFiguresByDrawId(drawId);
-        // Convertimos la lista de figuras a una cadena JSON
-        ObjectMapper objectMapper = new ObjectMapper();
-        String selectedFiguresJson = objectMapper.writeValueAsString(selectedFigures);
+        // Convertir la cadena de figuras a una cadena JSON
+        String selectedFiguresJson = existDraw.getFigures();
+
+        // Establecer los atributos JSON en la solicitud, el nombre del dibujo y el ID.
+        model.addAttribute("drawName", drawName);
+        model.addAttribute("drawId", drawId);
+        model.addAttribute("selectedFiguresJson", selectedFiguresJson);
 
         // Establecer el atributo JSON en la solicitud, el nombre del dibujo y el id.
         model.addAttribute("drawName",drawName);

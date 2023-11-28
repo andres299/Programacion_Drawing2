@@ -30,14 +30,9 @@ public class ViewDrawController {
         // Obtener el dibujo por su ID
         Draw selectedDraw = drawService.getDrawById(drawId);
 
-        // Verificar si el dibujo y la cadena de figuras no son nulos
-        if (selectedDraw != null && selectedDraw.getFigures() != null) {
-            //Estos atributos se enviarán a la página JSP asociada para poder mostrarlos.
-            model.addAttribute("selectedFiguresJson", selectedDraw.getFigures());
-            model.addAttribute("drawName", drawName);
-        } else {
-            model.addAttribute("error", "No se encontraron figuras para el dibujo seleccionado.");
-        }
+        //Estos atributos se enviarán a la página JSP asociada para poder mostrarlos.
+        model.addAttribute("selectedFiguresJson", selectedDraw.getFigures());
+        model.addAttribute("drawName", drawName);
 
         return "ViewDraw";
     }
