@@ -1,10 +1,44 @@
+<!-- deletedDraws.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
+  <title>Todos los Dibujos</title>
+  <link rel="stylesheet" href="/css/CanvasDrawStyle.css">
+  <link rel="stylesheet" href="/css/DrawTable.css">
+  <script src="https://kit.fontawesome.com/2684e8a577.js" crossorigin="anonymous"></script></head>
 <body>
-$END$
+<div class="header">
+  <nav>
+    <ul class="nav-list">
+      <li class="nav-item"><a href="/CanvasDraw">CanvasDraw</a></li>
+      <li class="nav-item"><a href="/UserDraw">Tus Dibujos</a></li>
+      <li class="nav-item"><a href="/AllDraw">Todos Dibujos</a></li>
+      <li class="nav-item"><a href="/Logout"><i class="fa-solid fa-user"></i> Cerrar Sesion</a></li>
+    </ul>
+  </nav>
+</div>
+<div class="container-title">
+<h1>Dibujos en la Papelera</h1>
+</div>
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Nombre</th>
+    <th>Acciones</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="deletedDraw : ${deletedDraws}">
+    <td th:text="${deletedDraw.id}"></td>
+    <td th:text="${deletedDraw.name}"></td>
+    <td>
+      <button class="delete" type="submit">Eliminar</button>
+      <button class="restaurar" type="submit">Restaurar</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
 </body>
 </html>

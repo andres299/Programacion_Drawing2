@@ -49,7 +49,7 @@
                 <div th:if="${user == draw.createdByUser}">
                     <form action="/AllDraw" method="post">
                         <input type="hidden" name="id" th:value="${draw.id}">
-                        <button class="delete" type="submit">Delete</button>
+                        <button class="delete" type="submit">Eliminar</button>
                     </form>
                     <form action="/ModifyCanvas" method="get">
                         <input type="hidden" name="drawId" th:value="${draw.id}" />
