@@ -25,7 +25,7 @@ public class CanvasController {
     }
 
     @PostMapping("/CanvasDraw")
-    public String PostCanvasDraw(Model model, @RequestParam String figures, @RequestParam String NomImage) throws IOException {
+    public String PostCanvasDraw(Model model, @RequestParam String figures, @RequestParam String NomImage) {
         //Obtenemos el usuario atual
         String login = (String) session.getAttribute("login");
         System.out.println(figures);

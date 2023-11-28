@@ -22,7 +22,7 @@ public class ModifyCanvasController {
     DrawService drawService;
     @GetMapping("/ModifyCanvas")
     public String ModifyCanvas(Model model, @RequestParam String drawName,
-                               @RequestParam int drawId) throws IOException {
+                               @RequestParam int drawId) {
         //Obtenemos el usuario atual
         String login = (String) session.getAttribute("login");
         // Medida de seguridad que compruebe que el usuario esta modificando su propio dibujo
@@ -52,7 +52,7 @@ public class ModifyCanvasController {
     @PostMapping("/ModifyCanvas")
     public String PostModifyCanvas(Model model,
                                    @RequestParam String figures,
-                                   @RequestParam int drawId, @RequestParam String drawName) throws IOException {
+                                   @RequestParam int drawId, @RequestParam String drawName) {
         //Obtenemos el usuario atual
         String login = (String) session.getAttribute("login");
 

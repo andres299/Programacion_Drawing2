@@ -22,6 +22,7 @@ public class RegisterController {
     public String PostRegister(Model model, @RequestParam String login,
                                @RequestParam String name,
                                @RequestParam String password) {
+        //Posible errores
         if (userService.existsLogin(login)) {
             model.addAttribute("error", "El usuario ya existe.");
         } else if (password.length() < 5) {
