@@ -17,32 +17,39 @@ import java.util.List;
 
 @Controller
 public class DeleteDrawController {
+
     @Autowired
     HttpSession session;
+
     @Autowired
     DrawService drawService;
-    /*
+/*
     @GetMapping("/DeleteDraw")
-    public String DeleteDraw(Model model) {
-        //La sesion del usuario actual
+    public String showAllDraws(Model model,@RequestParam int id) {
         String login = (String) session.getAttribute("login");
 
-        // Obtén todos los dibujos marcados para eliminar
-        List<Draw> deletedDraws = drawService.getDeletedDraws(login);
+        // Obtén todos los dibujos, incluidos los eliminados
+        List<Draw> allDraws = drawService.getAllDraws(id);
 
         // Estos atributos se enviarán a la página JSP asociada para mostrarlos
-        model.addAttribute("deletedDraws", deletedDraws);
+        model.addAttribute("allDraws", allDraws);
         model.addAttribute("user", login);
-        return "DeleteDraw";
+        return "DeleteDraw"; // Nombre de tu vista que mostrará la lista de dibujos
     }
 
     @PostMapping("/DeleteDraw")
-    public String PostDeleteDraw(Model model, @RequestParam int id){
-        //La sesion del usuario actual
+    public String handleDeleteDraw(Model model, @RequestParam int id, @RequestParam String action) {
         String login = (String) session.getAttribute("login");
-        //Metodo para borrar la imagen y nor redirige a AllDraw.
-        drawService.deleteDraw(id,login);
+
+        if ("delete".equals(action)) {
+            drawService.deleteDraw(id, login);
+        }
+
+        else if ("restore".equals(action)) {
+            drawService.restoreDraw(id);
+        }
         return "redirect:/DeleteDraw";
     }
-     */
+    */
 }
+
