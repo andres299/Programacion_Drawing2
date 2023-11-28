@@ -18,12 +18,12 @@ public class DrawService {
     // Método que genera un nombre aleatorio para una imagen.
     public String generateRandomName() {return "image_" + UUID.randomUUID().toString();}
 
-    public void saveDraw(String nomImage, String currentDateString, List<Figure> newFigures, String login) {
+    public void saveDraw(String nomImage, String currentDateString, String figures, String login) {
         Draw draw = new Draw();
         draw.setName(nomImage);
         draw.setCreationDate(currentDateString);
         draw.setModificationDate(currentDateString);
-        draw.setFigures(newFigures);
+        draw.setFigures(figures);
         draw.setCreatedByUser(login);
         drawRepo.saveDraw(draw);
     }
@@ -51,13 +51,13 @@ public class DrawService {
     }
 
     // Método para actualizar un dibujo.
-    public void updateDraw(int drawId, String drawName, String originalCreationDate, String modificationDate, List<Figure> newFigures, String login) {
+    public void updateDraw(int drawId, String drawName, String originalCreationDate, String modificationDate, String figures, String login) {
         Draw existDraw = new Draw();
         existDraw.setId(drawId);
         existDraw.setName(drawName);
         existDraw.setCreationDate(originalCreationDate);
         existDraw.setModificationDate(modificationDate);
-        existDraw.setFigures(newFigures);
+        existDraw.setFigures(figures);
         existDraw.setCreatedByUser(login);
         drawRepo.updateDraw(existDraw);
     }

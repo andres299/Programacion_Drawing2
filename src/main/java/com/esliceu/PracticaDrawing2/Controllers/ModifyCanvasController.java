@@ -58,15 +58,12 @@ public class ModifyCanvasController {
                                    @RequestParam int drawId, @RequestParam String drawName) throws IOException {
         //Obtenemos el usuario atual
         String login = (String) session.getAttribute("login");
-        // Analiza el JSON para obtener el array de figuras
-        ObjectMapper objectMapper = new ObjectMapper();
-        List<Figure> newFigures = objectMapper.readValue(figures, new TypeReference<List<Figure>>() {});
 
         // Obtener la información existente del dibujo
         Draw existDraw = drawService.getDrawById(drawId);
 
         // Verificar si hay al menos una figura
-        if (newFigures.isEmpty()) {
+        if (figures.isEmpty()) {
             model.addAttribute("error", "No se han dibujado figuras. Debes dibujar al menos una figura.");
             return "ModifyCanvas";
         }
@@ -84,7 +81,7 @@ public class ModifyCanvasController {
         String newName = drawName.isEmpty() ? drawService.generateRandomName() : drawName;
 
         //Actualizar los datos del dibujo
-        drawService.updateDraw(drawId, newName, originalCreationDate,ModificationDate,newFigures,login);
+        drawService.updateDraw(drawId, newName, originalCreationDate,ModificationDate,figures,login);
         return "redirect:/AllDraw";
     }
 }

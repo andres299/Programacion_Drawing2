@@ -33,12 +33,8 @@ public class CanvasController {
         //Obtenemos el usuario atual
         String login = (String) session.getAttribute("login");
 
-        // Analiza el JSON para obtener el array de figuras
-        ObjectMapper objectMapper = new ObjectMapper();
-        List<Figure> newFigures = objectMapper.readValue(figures, new TypeReference<List<Figure>>() {});
-
         // Verificar si hay al menos una figura
-        if (newFigures.isEmpty()) {
+        if (figures.isEmpty()) {
             model.addAttribute("error", "No se han dibujado figuras. Debes dibujar al menos una figura.");
             return "CanvasDraw";
         }
@@ -52,7 +48,7 @@ public class CanvasController {
         String newName = NomImage.isEmpty() ? drawService.generateRandomName() : NomImage;
 
         // Guardar el dibujo
-        drawService.saveDraw(newName,currentDateString,newFigures,login);
+        drawService.saveDraw(newName,currentDateString,figures,login);
         return "CanvasDraw";
     }
 

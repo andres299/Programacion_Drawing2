@@ -2,6 +2,9 @@ package com.esliceu.PracticaDrawing2.Controllers;
 
 import com.esliceu.PracticaDrawing2.Entities.Draw;
 import com.esliceu.PracticaDrawing2.Services.DrawService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,9 +33,31 @@ public class UserDrawController {
         //Estos atributos se enviaran a la página JSP asociada para poder mostralo.
         model.addAttribute("userDraws", userDraws);
         model.addAttribute("login", login);
+        // Agregamos la función countFiguresInJson como un atributo del modelo
+        model.addAttribute("countFiguresInJson", countFiguresInJson);
+
 
         return "UserDraw";
     }
+
+    // Método extraído
+    private Object countFiguresInJson = new Object() {
+        public int countFiguresInJson(String figures) {
+            try {
+                ObjectMapper objectMapper = new ObjectMapper();
+                JsonNode jsonNode = objectMapper.readTree(figures);
+
+                if (jsonNode.isArray()) {
+                    return objectMapper.convertValue(jsonNode, List.class).size();
+                } else {
+                    return 0;
+                }
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+                return 0;
+            }
+        }
+    };
 
     @PostMapping("/UserDraw")
     public String PostUserDraw(){

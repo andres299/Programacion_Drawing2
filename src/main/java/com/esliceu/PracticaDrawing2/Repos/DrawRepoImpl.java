@@ -20,16 +20,9 @@ public class DrawRepoImpl implements DrawRepo {
 
     @Override
     public void saveDraw(Draw draw) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            String figuresJson = objectMapper.writeValueAsString(draw.getFigures());
-
-            jdbcTemplate.update("INSERT INTO Draw (name, creationDate, modificationDate, figures, createdByUser)" +
-                            "VALUES (?, ?, ?, ?, ?)", draw.getName(), draw.getCreationDate(),
-                    draw.getModificationDate(), figuresJson, draw.getCreatedByUser());
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        jdbcTemplate.update("INSERT INTO Draw (name, creationDate, modificationDate, figures, createdByUser)" +
+                        "VALUES (?, ?, ?, ?, ?)", draw.getName(), draw.getCreationDate(),
+                    draw.getModificationDate(), draw.getFigures(), draw.getCreatedByUser());
     }
 
 

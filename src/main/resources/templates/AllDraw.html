@@ -37,11 +37,7 @@
         <td th:text="${draw.name}"></td>
         <td th:text="${draw.creationDate}"></td>
         <td th:text="${draw.modificationDate}"></td>
-        <td>
-            <ul>
-                <li>Total de Figuras: <span th:text="${#lists.size(draw.figures)}"></span></li>
-            </ul>
-        </td>
+        <td th:text="${countFiguresInJson.countFiguresInJson(draw.figures)}"></td>
         <td th:text="${draw.createdByUser}"></td>
         <td>
             <div class="button-container">

@@ -9,14 +9,13 @@ public class Draw {
     private String name;
     private String creationDate;
     private String modificationDate;
-    private List<Figure> figures;
+    private String figures;
     private String createdByUser;
-    
+
     public Draw() {
-        this.figures = new ArrayList<>();
     }
 
-    public Draw(int id, String name, String creationDate, String modificationDate, List<Figure> figures, String createdByUser) {
+    public Draw(int id, String name, String creationDate, String modificationDate, String figures, String createdByUser) {
         this.id = id;
         this.name = name;
         this.creationDate = creationDate;
@@ -57,7 +56,11 @@ public class Draw {
         this.modificationDate = modificationDate;
     }
 
-    public void setFigures(List<Figure> figures) {
+    public String getFigures() {
+        return figures;
+    }
+
+    public void setFigures(String figures) {
         this.figures = figures;
     }
 
@@ -67,10 +70,5 @@ public class Draw {
 
     public void setCreatedByUser(String createdByUser) {
         this.createdByUser = createdByUser;
-    }
-
-    public List<Figure> getFigures() {
-        // Lógica para obtener la lista de figuras
-        return figures;
     }
 }
