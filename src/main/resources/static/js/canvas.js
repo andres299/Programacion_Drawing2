@@ -1,4 +1,4 @@
-//Guardar variables del jsp
+// Guardar variables del jsp
 const canvas = document.querySelector(".canvas");
 const ctx = canvas.getContext("2d");
 const figureSelect = document.getElementById("figureSelect");
@@ -26,12 +26,12 @@ const render = (figures) => {
     logs.innerHTML = "";
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-   figures.forEach((figure, i) => {
-       logs.innerHTML += `<li>Tipo: ${figure.type} - Color: ${figure.color}
+    figures.forEach((figure, i) => {
+        logs.innerHTML += `<li>Tipo: ${figure.type} - Color: ${figure.color}
        <button id="${i}" onclick="removeFigure(${i})" class="Delete-Button">Eliminar</button>
        </li>`;
-       draw(figure);
-   });
+        draw(figure);
+    });
 
     // Dibujar la línea en tiempo real mientras se está dibujando
     if (isDrawingLine && currentPath.length > 1) {
@@ -82,12 +82,12 @@ const draw = (figure) => {
             ctx.closePath();
             break;
         case "line":
-             if (coordinates && coordinates.length > 0) {
-                 ctx.moveTo(coordinates[0].x, coordinates[0].y);
-                 for (let i = 1; i < coordinates.length; i++) {
-                     ctx.lineTo(coordinates[i].x, coordinates[i].y);
+            if (coordinates && coordinates.length > 0) {
+                ctx.moveTo(coordinates[0].x, coordinates[0].y);
+                for (let i = 1; i < coordinates.length; i++) {
+                    ctx.lineTo(coordinates[i].x, coordinates[i].y);
                 }
-             }
+            }
             break;
         default:
             break;
@@ -100,6 +100,28 @@ const draw = (figure) => {
     }
     ctx.closePath();
 };
+
+// Función para guardar automáticamente las figuras en el servidor
+function saveFigures() {
+    console.log('saveFigures se está llamando');
+    // Convertir el array "figures" a una cadena JSON
+    const figuresJSON = JSON.stringify(figures);
+    const formData = new FormData();
+    
+    // Adjuntar las figuras en formato JSON
+    formData.append("figures", figuresJSON);
+
+    // Obtener el valor del nombre desde un campo de entrada en tu formulario
+    const imageName = document.getElementById("NomImage").value;
+    formData.append("NomImage", imageName);
+    console.log(figuresJSON);
+    console.log(imageName);
+    // Enviar las figuras y la imagen al servidor
+    fetch('/CanvasDraw', {
+        method: 'POST',
+        body: formData,
+    })
+}
 
 // Evento para el clic en el canvas
 canvas.addEventListener("mousedown", (event) => {
@@ -114,6 +136,9 @@ canvas.addEventListener("mousedown", (event) => {
         };
         figures.push(figure);
         render(figures);
+
+        // Guardar automáticamente al agregar una figura
+        saveFigures();
     } else {
         // Comienza el dibujo de línea
         isDrawingLine = true;
@@ -147,6 +172,9 @@ canvas.addEventListener("mouseup", () => {
             figures.push(lineFigure);
             currentPath = [];
             render(figures);
+
+            // Guardar automáticamente al agregar una línea
+            saveFigures();
         }
     }
 });
@@ -169,66 +197,10 @@ clearButton.addEventListener("click", () => {
     render(figures);
 });
 
-// Función para guardar la configuración del formulario en localStorage
-const guardarConfiguracionFormulario = () => {
-    localStorage.setItem("figuraSeleccionada", figureSelect.value);
-    localStorage.setItem("colorSeleccionado", colorInput.value);
-    localStorage.setItem("tamañoSeleccionado", sizeInput.value);
-    localStorage.setItem("rellenoFigura", fillFigureCheckbox.checked);
-    localStorage.setItem("nombreImagen", document.getElementById("NomImage").value);
-};
-
-// Función para cargar la última configuración del formulario desde localStorage
-const cargarUltimaConfiguracionFormulario = () => {
-    const primeraVisita = localStorage.getItem("primeraVisita");
-
-    if (!primeraVisita) {
-        // Configurar valores predeterminados solo en la primera visita
-        figureSelect.value = "circle";  // Valor predeterminado para figura
-        colorInput.value = "#000000";   // Valor predeterminado para color (negro)
-        sizeInput.value = 20;            // Valor predeterminado para tamaño
-        fillFigureCheckbox.checked = false;  // Valor predeterminado para relleno
-        document.getElementById("NomImage").value = "";  // Valor predeterminado para nombre de imagen
-
-        // Marcar la visita como no la primera
-        localStorage.setItem("primeraVisita", "true");
-    } else {
-        // Si no es la primera visita, cargar la configuración existente
-        const figuraSeleccionada = localStorage.getItem("figuraSeleccionada");
-        const colorSeleccionado = localStorage.getItem("colorSeleccionado");
-        const tamañoSeleccionado = localStorage.getItem("tamañoSeleccionado");
-        const rellenoFigura = localStorage.getItem("rellenoFigura") === "true";
-        const nombreImagen = localStorage.getItem("nombreImagen");
-
-        figureSelect.value = figuraSeleccionada;
-        colorInput.value = colorSeleccionado;
-        sizeInput.value = tamañoSeleccionado;
-        fillFigureCheckbox.checked = rellenoFigura;
-        document.getElementById("NomImage").value = nombreImagen;
-    }
-};
-
-// Cargar la última configuración del formulario al cargar la página
-window.addEventListener("load", cargarUltimaConfiguracionFormulario);
-
-
-
-// Eventos para guardar la configuración del formulario cuando hay cambios
-figureSelect.addEventListener("change", guardarConfiguracionFormulario);
-colorInput.addEventListener("input", guardarConfiguracionFormulario);
-sizeInput.addEventListener("input", guardarConfiguracionFormulario);
-fillFigureCheckbox.addEventListener("change", guardarConfiguracionFormulario);
-document.getElementById("NomImage").addEventListener("input", guardarConfiguracionFormulario);
-
-// Evento para guardar la configuración del formulario antes de enviarlo
 saveButton.addEventListener("click", () => {
-    guardarConfiguracionFormulario();
-
-    // Convertir el array "figures" a una cadena JSON
-    const figuresJSON = JSON.stringify(figures);
-    // Asignar la cadena JSON al campo oculto "figures"
-    document.getElementById("figures").value = figuresJSON;
-    // Enviar el formulario para procesar los datos en el servlet
-    document.getElementById("Formulario").submit();
+    
 });
+
+
+
 

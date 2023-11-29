@@ -28,7 +28,8 @@ public class CanvasController {
     public String PostCanvasDraw(Model model, @RequestParam String figures, @RequestParam String NomImage) {
         //Obtenemos el usuario atual
         String login = (String) session.getAttribute("login");
-
+        System.out.println("figures" + figures);
+        System.out.println("nombre" + NomImage);
         // Verificar si hay al menos una figura
         if (figures.isEmpty()) {
             model.addAttribute("error", "No se han dibujado figuras. Debes dibujar al menos una figura.");
