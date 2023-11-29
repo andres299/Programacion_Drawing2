@@ -1,5 +1,6 @@
 package com.esliceu.PracticaDrawing2.Controllers;
 
+import com.esliceu.PracticaDrawing2.Entities.User;
 import com.esliceu.PracticaDrawing2.Services.DrawService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +23,17 @@ public class CanvasController {
 
     @GetMapping("/CanvasDraw")
     public String CanvasDraw() {
+        User user = (User) session.getAttribute("user");
+        System.out.println(user.getId());
+        System.out.println(user.getLogin());
         return "CanvasDraw";
     }
 
     @PostMapping("/CanvasDraw")
     public String PostCanvasDraw(Model model, @RequestParam String figures, @RequestParam String NomImage) {
         //Obtenemos el usuario atual
-        String login = (String) session.getAttribute("login");
-        System.out.println("figures" + figures);
-        System.out.println("nombre" + NomImage);
-        
+        User user = (User) session.getAttribute("user");
+
         if (figures.isEmpty()) {
             model.addAttribute("error", "No se han dibujado figuras. Debes dibujar al menos una figura.");
             return "CanvasDraw";

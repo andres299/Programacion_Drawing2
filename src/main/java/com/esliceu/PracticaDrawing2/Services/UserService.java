@@ -28,4 +28,8 @@ public class UserService {
     public String xifratMD5(String password){
         return DigestUtils.md5Hex(password).toUpperCase();
     }
+
+    public User user(String login) {
+        return userRepo.user(login);
+    }
 }

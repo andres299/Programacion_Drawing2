@@ -5,17 +5,16 @@ public class Version {
     private int id_draw;
     private String figures;
     private String modificationDate;
-    private String nameDraw;
-
+    private int id_user;
     public Version() {
     }
 
-    public Version(int id, int id_draw, String figures, String modificationDate, String nameDraw) {
+    public Version(int id, int id_draw, String figures, String modificationDate, int id_user) {
         this.id = id;
         this.id_draw = id_draw;
         this.figures = figures;
         this.modificationDate = modificationDate;
-        this.nameDraw = nameDraw;
+        this.id_user = id_user;
     }
 
     public int getId() {
@@ -50,11 +49,11 @@ public class Version {
         this.modificationDate = modificationDate;
     }
 
-    public String getNameDraw() {
-        return nameDraw;
+    public int getId_user() {
+        return id_user;
     }
 
-    public void setNameDraw(String nameDraw) {
-        this.nameDraw = nameDraw;
+    public void setId_user(int id_user) {
+        this.id_user = id_user;
     }
 }

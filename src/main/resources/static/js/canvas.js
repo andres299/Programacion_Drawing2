@@ -114,6 +114,8 @@ canvas.addEventListener("mousedown", (event) => {
         };
         figures.push(figure);
         render(figures);
+        // Llama a la función saveFigures() cada vez que agregas una figura
+        saveFigures();
     } else {
         // Comienza el dibujo de línea
         isDrawingLine = true;
@@ -147,6 +149,8 @@ canvas.addEventListener("mouseup", () => {
             figures.push(lineFigure);
             currentPath = [];
             render(figures);
+            // Llama a la función saveFigures() cada vez que agregas una figura
+            saveFigures();
         }
     }
 });

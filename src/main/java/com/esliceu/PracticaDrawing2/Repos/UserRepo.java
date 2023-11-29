@@ -8,4 +8,6 @@ public interface UserRepo {
     void register(User user);
 
     boolean login(String login, String s);
+
+    User user(String login);
 }
