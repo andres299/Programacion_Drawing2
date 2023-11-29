@@ -12,15 +12,17 @@ public class Draw {
 
     private boolean visualization;
 
+    private boolean inTheTrash;
+
     public Draw() {
     }
 
-    public Draw(int id, String nameDraw, int owner_id, String creationDate, boolean visualization) {
-        this.id = id;
+    public Draw(String nameDraw, int owner_id, String creationDate, boolean visualization, boolean inTheTrash) {
         this.nameDraw = nameDraw;
         this.owner_id = owner_id;
         this.creationDate = creationDate;
         this.visualization = visualization;
+        this.inTheTrash = inTheTrash;
     }
 
     public int getId() {
@@ -61,5 +63,13 @@ public class Draw {
 
     public void setVisualization(boolean visualization) {
         this.visualization = visualization;
+    }
+
+    public boolean isInTheTrash() {
+        return inTheTrash;
+    }
+
+    public void setInTheTrash(boolean inTheTrash) {
+        this.inTheTrash = inTheTrash;
     }
 }

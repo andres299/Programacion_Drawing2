@@ -1,9 +1,11 @@
 package com.esliceu.PracticaDrawing2.Repos;
 
 import com.esliceu.PracticaDrawing2.Entities.Draw;
+import com.esliceu.PracticaDrawing2.Entities.Version;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,6 +14,16 @@ import java.util.List;
 public class DrawRepoImpl implements DrawRepo {
     @Autowired
     JdbcTemplate jdbcTemplate;
+
+    @Override
+    public void saveDraw(Draw draw, Version version) {
+        GeneratedKeyHolder key = new GeneratedKeyHolder();
+        jdbcTemplate.update("INSERT INTO Draw (nameDraw, owner_id, creationDate)" +
+                        "VALUES (?, ?, NOW())", draw.getNameDraw(), draw.getOwner_id(), key);
+        jdbcTemplate.update("INSERT INTO version (id_draw, figures, modificationDate, id_user)" +
+                        "VALUES (?, ?,NOW(), ?)", key.getKey().intValue(), version.getFigures(), draw.getOwner_id());
+        ;
+    }
 
     /*
     @Override

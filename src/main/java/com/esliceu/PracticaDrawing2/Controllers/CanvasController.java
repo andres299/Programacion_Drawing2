@@ -33,22 +33,19 @@ public class CanvasController {
     public String PostCanvasDraw(Model model, @RequestParam String figures, @RequestParam String NomImage) {
         //Obtenemos el usuario atual
         User user = (User) session.getAttribute("user");
-
+        System.out.println(figures);
+        System.out.println(NomImage);
+        int owner_id = user.getId();
         if (figures.isEmpty()) {
             model.addAttribute("error", "No se han dibujado figuras. Debes dibujar al menos una figura.");
             return "CanvasDraw";
         }
 
-        // Obtener la fecha y hora actual
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date currentDate = new Date();
-        String currentDateString = sdf.format(currentDate);
-
         //Si el nombre esta vacia , genera uno aleatorio
         String newName = NomImage.isEmpty() ? drawService.generateRandomName() : NomImage;
 
         // Guardar el dibujo
-        //drawService.saveDraw(newName,currentDateString,figures,login);
+        drawService.saveDraw(newName,figures,owner_id);
         return "CanvasDraw";
     }
 }

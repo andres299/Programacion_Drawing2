@@ -1,10 +1,12 @@
 package com.esliceu.PracticaDrawing2.Repos;
 
 import com.esliceu.PracticaDrawing2.Entities.Draw;
+import com.esliceu.PracticaDrawing2.Entities.Version;
 
 import java.util.List;
 
 public interface DrawRepo {
+    void saveDraw(Draw draw, Version version);
      /*
     void saveDraw(Draw draw);
     List<Draw> getDraws();

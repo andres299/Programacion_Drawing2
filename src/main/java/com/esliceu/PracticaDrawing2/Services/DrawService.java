@@ -1,6 +1,7 @@
 package com.esliceu.PracticaDrawing2.Services;
 
 import com.esliceu.PracticaDrawing2.Entities.Draw;
+import com.esliceu.PracticaDrawing2.Entities.Version;
 import com.esliceu.PracticaDrawing2.Repos.DrawRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,17 @@ public class DrawService {
     // Método que genera un nombre aleatorio para una imagen.
 
     public String generateRandomName() {return "image_" + UUID.randomUUID().toString();}
+
+    public void saveDraw(String newName, String figures, int ownerId) {
+        Draw draw = new Draw();
+        draw.setNameDraw(newName);
+        draw.setOwner_id(ownerId);
+
+        Version version = new Version();
+        version.setId_user(ownerId);
+        version.setFigures(figures);
+        drawRepo.saveDraw(draw,version);
+    }
 /*
     public void saveDraw(String nomImage, String currentDateString, String figures, String login) {
         Draw draw = new Draw();
