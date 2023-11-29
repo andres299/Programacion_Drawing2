@@ -21,7 +21,7 @@ public class AllDrawController {
     HttpSession session;
     @Autowired
     DrawService drawService;
-
+/*
     @GetMapping("/AllDraw")
     public String AllDraw(Model model) {
         //La sesion del usuario actual
@@ -65,5 +65,6 @@ public class AllDrawController {
         drawService.deleteDraw(id,login);
         return "redirect:/AllDraw";
     }
+ */
 }
 

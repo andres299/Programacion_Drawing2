@@ -13,14 +13,13 @@ public class DrawRepoImpl implements DrawRepo {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
+    /*
     @Override
     public void saveDraw(Draw draw) {
         jdbcTemplate.update("INSERT INTO Draw (name, creationDate, modificationDate, figures, createdByUser)" +
                         "VALUES (?, ?, ?, ?, ?)", draw.getName(), draw.getCreationDate(),
                     draw.getModificationDate(), draw.getFigures(), draw.getCreatedByUser());
     }
-
-
     @Override
     public List<Draw> getDraws() {
         String selectSql = "SELECT * FROM Draw";
@@ -50,6 +49,7 @@ public class DrawRepoImpl implements DrawRepo {
                 existDraw.getName(), existDraw.getCreationDate(), existDraw.getModificationDate(),
                 existDraw.getFigures(), existDraw.getCreatedByUser(), existDraw.getId());
     }
+     */
 }
 
 

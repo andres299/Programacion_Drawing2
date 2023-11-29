@@ -101,28 +101,6 @@ const draw = (figure) => {
     ctx.closePath();
 };
 
-// Función para guardar automáticamente las figuras en el servidor
-function saveFigures() {
-    console.log('saveFigures se está llamando');
-    // Convertir el array "figures" a una cadena JSON
-    const figuresJSON = JSON.stringify(figures);
-    const formData = new FormData();
-    
-    // Adjuntar las figuras en formato JSON
-    formData.append("figures", figuresJSON);
-
-    // Obtener el valor del nombre desde un campo de entrada en tu formulario
-    const imageName = document.getElementById("NomImage").value;
-    formData.append("NomImage", imageName);
-    console.log(figuresJSON);
-    console.log(imageName);
-    // Enviar las figuras y la imagen al servidor
-    fetch('/CanvasDraw', {
-        method: 'POST',
-        body: formData,
-    })
-}
-
 // Evento para el clic en el canvas
 canvas.addEventListener("mousedown", (event) => {
     if (currentFigure !== "line") {
@@ -136,9 +114,6 @@ canvas.addEventListener("mousedown", (event) => {
         };
         figures.push(figure);
         render(figures);
-
-        // Guardar automáticamente al agregar una figura
-        saveFigures();
     } else {
         // Comienza el dibujo de línea
         isDrawingLine = true;
@@ -172,9 +147,6 @@ canvas.addEventListener("mouseup", () => {
             figures.push(lineFigure);
             currentPath = [];
             render(figures);
-
-            // Guardar automáticamente al agregar una línea
-            saveFigures();
         }
     }
 });
@@ -197,9 +169,37 @@ clearButton.addEventListener("click", () => {
     render(figures);
 });
 
-saveButton.addEventListener("click", () => {
-    
-});
+async function saveFigures() {    
+    // Convierte el array "figures" a una cadena JSON
+    var figuresJSON = JSON.stringify(figures);
+    console.log('Figuras JSON:', figuresJSON);
+
+    const formData = new FormData();
+    // Adjuntar las figuras en formato JSON
+    formData.append("figures", figuresJSON);
+
+    // Obtener el valor del nombre desde un campo de entrada en tu formulario
+    const imageName = document.getElementById("NomImage").value;
+    formData.append("NomImage", imageName);
+
+    // Enviar las figuras y la imagen al servidor
+    try {
+        const response = await fetch('/CanvasDraw', {
+            method: 'POST',
+            body: formData,
+        });
+
+        // Manejar la respuesta del servidor
+        if (response.ok) {
+            console.log('Operación exitosa');
+        } else {
+            console.error('Error en la solicitud:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error al realizar la solicitud:', error);
+    }
+}
+
 
 
 

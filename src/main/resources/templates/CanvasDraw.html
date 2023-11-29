@@ -19,7 +19,7 @@
     </nav>
 </div>
 <div class="container">
-    <form action="/CanvasDraw" method="post" class="canvas-form" id="Formulario">
+    <section class="canvas-form" id="Formulario">
         <h1>CanvasDraw</h1>
         <p>Bienvenido a mi página.</p>
         <p>Selecciona una forma:</p>
@@ -51,9 +51,7 @@
         <div th:if="${error}">
             <p class="error" th:text="${error}" style="color: red;"></p>
         </div><br>
-
-        <button id="sendButton">Enviar</button>
-    </form>
+    </section>
     <div class="canvas-container">
         <canvas width="400" height="300" class="canvas"></canvas>
 

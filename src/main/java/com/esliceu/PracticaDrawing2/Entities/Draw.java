@@ -6,22 +6,21 @@ import java.util.List;
 
 public class Draw {
     private int id;
-    private String name;
+    private String nameDraw;
+    private int owner_id;
     private String creationDate;
-    private String modificationDate;
-    private String figures;
-    private String createdByUser;
+
+    private boolean visualization;
 
     public Draw() {
     }
 
-    public Draw(int id, String name, String creationDate, String modificationDate, String figures, String createdByUser) {
+    public Draw(int id, String nameDraw, int owner_id, String creationDate, boolean visualization) {
         this.id = id;
-        this.name = name;
+        this.nameDraw = nameDraw;
+        this.owner_id = owner_id;
         this.creationDate = creationDate;
-        this.modificationDate = modificationDate;
-        this.figures = figures;
-        this.createdByUser = createdByUser;
+        this.visualization = visualization;
     }
 
     public int getId() {
@@ -32,12 +31,20 @@ public class Draw {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNameDraw() {
+        return nameDraw;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNameDraw(String nameDraw) {
+        this.nameDraw = nameDraw;
+    }
+
+    public int getOwner_id() {
+        return owner_id;
+    }
+
+    public void setOwner_id(int owner_id) {
+        this.owner_id = owner_id;
     }
 
     public String getCreationDate() {
@@ -48,27 +55,11 @@ public class Draw {
         this.creationDate = creationDate;
     }
 
-    public String getModificationDate() {
-        return modificationDate;
+    public boolean isVisualization() {
+        return visualization;
     }
 
-    public void setModificationDate(String modificationDate) {
-        this.modificationDate = modificationDate;
-    }
-
-    public String getFigures() {
-        return figures;
-    }
-
-    public void setFigures(String figures) {
-        this.figures = figures;
-    }
-
-    public String getCreatedByUser() {
-        return createdByUser;
-    }
-
-    public void setCreatedByUser(String createdByUser) {
-        this.createdByUser = createdByUser;
+    public void setVisualization(boolean visualization) {
+        this.visualization = visualization;
     }
 }

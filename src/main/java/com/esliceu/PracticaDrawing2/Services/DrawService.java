@@ -13,8 +13,9 @@ public class DrawService {
     @Autowired
     DrawRepo drawRepo;
     // Método que genera un nombre aleatorio para una imagen.
-    public String generateRandomName() {return "image_" + UUID.randomUUID().toString();}
 
+    public String generateRandomName() {return "image_" + UUID.randomUUID().toString();}
+/*
     public void saveDraw(String nomImage, String currentDateString, String figures, String login) {
         Draw draw = new Draw();
         draw.setName(nomImage);
@@ -24,6 +25,7 @@ public class DrawService {
         draw.setCreatedByUser(login);
         drawRepo.saveDraw(draw);
     }
+
     // Método para obtener todos los dibujos de la lista.
     public List<Draw> getDraws() { return drawRepo.getDraws();}
 
@@ -53,5 +55,5 @@ public class DrawService {
         existDraw.setCreatedByUser(login);
         drawRepo.updateDraw(existDraw);
     }
-
+     */
 }

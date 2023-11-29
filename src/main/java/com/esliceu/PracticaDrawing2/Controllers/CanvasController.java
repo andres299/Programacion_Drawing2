@@ -19,6 +19,7 @@ public class CanvasController {
     HttpSession session;
     @Autowired
     DrawService drawService;
+
     @GetMapping("/CanvasDraw")
     public String CanvasDraw() {
         return "CanvasDraw";
@@ -30,7 +31,7 @@ public class CanvasController {
         String login = (String) session.getAttribute("login");
         System.out.println("figures" + figures);
         System.out.println("nombre" + NomImage);
-        // Verificar si hay al menos una figura
+        
         if (figures.isEmpty()) {
             model.addAttribute("error", "No se han dibujado figuras. Debes dibujar al menos una figura.");
             return "CanvasDraw";
@@ -45,8 +46,7 @@ public class CanvasController {
         String newName = NomImage.isEmpty() ? drawService.generateRandomName() : NomImage;
 
         // Guardar el dibujo
-        drawService.saveDraw(newName,currentDateString,figures,login);
+        //drawService.saveDraw(newName,currentDateString,figures,login);
         return "CanvasDraw";
     }
-
 }

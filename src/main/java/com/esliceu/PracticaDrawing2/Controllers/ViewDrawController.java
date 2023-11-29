@@ -18,7 +18,7 @@ public class ViewDrawController {
     HttpSession session;
     @Autowired
     DrawService drawService;
-
+    /*
     @GetMapping("/ViewDraw")
     public String ViewDraw(Model model, @RequestParam String drawName, @RequestParam int drawId)  {
         // Obtener el dibujo por su ID
@@ -36,4 +36,5 @@ public class ViewDrawController {
     public String PostViewDraw() {
         return "ViewDraw";
     }
+     */
 }
