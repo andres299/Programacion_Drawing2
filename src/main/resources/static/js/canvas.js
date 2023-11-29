@@ -107,7 +107,7 @@ function saveFigures() {
     // Convertir el array "figures" a una cadena JSON
     const figuresJSON = JSON.stringify(figures);
     const formData = new FormData();
-    
+
     // Adjuntar las figuras en formato JSON
     formData.append("figures", figuresJSON);
 
@@ -136,9 +136,6 @@ canvas.addEventListener("mousedown", (event) => {
         };
         figures.push(figure);
         render(figures);
-
-        // Guardar automáticamente al agregar una figura
-        saveFigures();
     } else {
         // Comienza el dibujo de línea
         isDrawingLine = true;
@@ -172,9 +169,6 @@ canvas.addEventListener("mouseup", () => {
             figures.push(lineFigure);
             currentPath = [];
             render(figures);
-
-            // Guardar automáticamente al agregar una línea
-            saveFigures();
         }
     }
 });
@@ -198,7 +192,7 @@ clearButton.addEventListener("click", () => {
 });
 
 saveButton.addEventListener("click", () => {
-    
+    saveFigures();
 });
 
 
