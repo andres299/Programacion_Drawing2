@@ -8,6 +8,10 @@ import java.util.List;
 public interface DrawRepo {
     Draw saveDraw(Draw draw);
     void saveVersion(Version version);
+
+    List<Draw> getDraws(int id);
+
+    Version VersionForDraw(int id);
      /*
     void saveDraw(Draw draw);
     List<Draw> getDraws();

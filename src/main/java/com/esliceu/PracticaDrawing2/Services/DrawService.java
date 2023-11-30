@@ -22,7 +22,6 @@ public class DrawService {
         Draw draw = new Draw();
         draw.setNameDraw(newName);
         draw.setOwner_id(owner_id);
-        drawRepo.saveDraw(draw);
         return drawRepo.saveDraw(draw);
     }
 
@@ -34,10 +33,16 @@ public class DrawService {
         drawRepo.saveVersion(version);
     }
 
-/*
     // Método para obtener todos los dibujos de la lista.
-    public List<Draw> getDraws() { return drawRepo.getDraws();}
+    public List<Draw> getDraws(int id) {
+        return drawRepo.getDraws(id);
+    }
 
+    public Version getVersion(int id) {
+        return drawRepo.VersionForDraw(id);
+    }
+
+/*
     //Metodo para borrar un dibujo especifico.
     public void deleteDraw(int id , String login) {
         drawRepo.deleteDraw(id, login);

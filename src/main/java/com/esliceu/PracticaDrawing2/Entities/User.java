@@ -1,5 +1,7 @@
 package com.esliceu.PracticaDrawing2.Entities;
 
+import java.util.List;
+
 public class User {
     int id;
     String login;
@@ -46,4 +48,5 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }

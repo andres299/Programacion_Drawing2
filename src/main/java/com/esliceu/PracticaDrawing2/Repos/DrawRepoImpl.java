@@ -39,11 +39,7 @@ public class DrawRepoImpl implements DrawRepo {
 
         if (key != null) {
             draw.setId(key.intValue());
-            System.out.println("ID generado automáticamente: " + draw.getId());
         }
-
-        System.out.println("Dibujo después de la inserción: " + draw);
-
         return draw;
     }
 
@@ -52,6 +48,35 @@ public class DrawRepoImpl implements DrawRepo {
         jdbcTemplate.update("INSERT INTO version (id_draw, figures, modificationDate,id_user) VALUES (?, ?, NOW(),?)",
                 version.getId_draw(),version.getFigures(),version.getId_user()
         );
+    }
+
+    @Override
+    public List<Draw> getDraws(int id) {
+        return jdbcTemplate.query("SELECT * FROM draw WHERE owner_id = id", (resultSet, rowNum) -> {
+            Draw draw = new Draw();
+            draw.setId(resultSet.getInt("id"));
+            draw.setNameDraw(resultSet.getString("nameDraw"));
+            draw.setOwner_id(resultSet.getInt("owner_id"));
+            draw.setCreationDate(resultSet.getString("creationDate"));
+            draw.setVisualization(resultSet.getBoolean("visualization"));
+            draw.setVisualization(resultSet.getBoolean("intTheTrash"));
+            System.out.println("draw" + draw);
+            return draw;
+        });
+    }
+
+    @Override
+    public Version VersionForDraw(int id) {
+        String sql = "SELECT * FROM version WHERE id_draw = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{id}, (resultSet, rowNum) -> {
+            Version version = new Version();
+            version.setId(resultSet.getInt("id"));
+            version.setId_draw(resultSet.getInt("id_draw"));
+            version.setFigures(resultSet.getString("figures"));
+            version.setModificationDate(resultSet.getString("modificationDate"));
+            version.setId_user(resultSet.getInt("id_user"));
+            return version;
+        });
     }
     /*
 

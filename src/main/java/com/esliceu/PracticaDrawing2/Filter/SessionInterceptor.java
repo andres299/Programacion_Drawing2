@@ -21,16 +21,15 @@ public class SessionInterceptor implements HandlerInterceptor {
                              Object handler) throws Exception{
         // Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
+        // Agregar el usuario al atributo de la solicitud
+        req.setAttribute("user", user);
 
         // Verificar si el usuario está autenticado.
-        if (user == null || user.getLogin() == null) {
+        if (user.getLogin() == null) {
             // Redirigir a la página de inicio de sesión si no está autenticado.
             resp.sendRedirect("/login");
             return false;  // Detener la ejecución del controlador actual
         }
-
-        // Agregar el usuario al atributo de la solicitud para que esté disponible en las vistas
-        req.setAttribute("user", user);
 
         // Continuar con la ejecución del controlador actual
         return true;
