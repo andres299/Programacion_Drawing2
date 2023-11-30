@@ -1,5 +1,6 @@
 package com.esliceu.PracticaDrawing2.Controllers;
 
+import com.esliceu.PracticaDrawing2.Entities.Draw;
 import com.esliceu.PracticaDrawing2.Entities.User;
 import com.esliceu.PracticaDrawing2.Services.DrawService;
 import jakarta.servlet.http.HttpSession;
@@ -23,9 +24,6 @@ public class CanvasController {
 
     @GetMapping("/CanvasDraw")
     public String CanvasDraw() {
-        User user = (User) session.getAttribute("user");
-        System.out.println(user.getId());
-        System.out.println(user.getLogin());
         return "CanvasDraw";
     }
 
@@ -33,8 +31,9 @@ public class CanvasController {
     public String PostCanvasDraw(Model model, @RequestParam String figures, @RequestParam String NomImage) {
         //Obtenemos el usuario atual
         User user = (User) session.getAttribute("user");
-        System.out.println(figures);
-        System.out.println(NomImage);
+        System.out.println("figuras" + figures);
+        System.out.println(figures.length());
+        System.out.println("imagen" + NomImage);
         int owner_id = user.getId();
         if (figures.isEmpty()) {
             model.addAttribute("error", "No se han dibujado figuras. Debes dibujar al menos una figura.");
@@ -45,7 +44,13 @@ public class CanvasController {
         String newName = NomImage.isEmpty() ? drawService.generateRandomName() : NomImage;
 
         // Guardar el dibujo
-        drawService.saveDraw(newName,figures,owner_id);
+        Draw savedDraw = drawService.saveDraw(newName, owner_id);
+        // Obtener la ID del dibujo recién creado
+        int drawId = savedDraw.getId();
+        System.out.println(drawId);
+        // Guardar la versión
+        drawService.saveVersion(drawId, figures, owner_id);
         return "CanvasDraw";
+
     }
 }

@@ -101,28 +101,6 @@ const draw = (figure) => {
     ctx.closePath();
 };
 
-// Función para guardar automáticamente las figuras en el servidor
-function saveFigures() {
-    console.log('saveFigures se está llamando');
-    // Convertir el array "figures" a una cadena JSON
-    const figuresJSON = JSON.stringify(figures);
-    const formData = new FormData();
-
-    // Adjuntar las figuras en formato JSON
-    formData.append("figures", figuresJSON);
-
-    // Obtener el valor del nombre desde un campo de entrada en tu formulario
-    const imageName = document.getElementById("NomImage").value;
-    formData.append("NomImage", imageName);
-    console.log(figuresJSON);
-    console.log(imageName);
-    // Enviar las figuras y la imagen al servidor
-    fetch('/CanvasDraw', {
-        method: 'POST',
-        body: formData,
-    })
-}
-
 // Evento para el clic en el canvas
 canvas.addEventListener("mousedown", (event) => {
     if (currentFigure !== "line") {
@@ -137,7 +115,7 @@ canvas.addEventListener("mousedown", (event) => {
         figures.push(figure);
         render(figures);
         // Llama a la función saveFigures() cada vez que agregas una figura
-        saveFigures();
+        //saveFigures();
     } else {
         // Comienza el dibujo de línea
         isDrawingLine = true;
@@ -172,7 +150,7 @@ canvas.addEventListener("mouseup", () => {
             currentPath = [];
             render(figures);
             // Llama a la función saveFigures() cada vez que agregas una figura
-            saveFigures();
+            //saveFigures();
         }
     }
 });
@@ -199,7 +177,7 @@ saveButton.addEventListener("click", () => {
     saveFigures();
 });
 async function saveFigures() {    
-    // Convierte el array "figures" a una cadena JSON
+    // Convierte el array "figures" a una cadena JSONsave
     var figuresJSON = JSON.stringify(figures);
     console.log('Figuras JSON:', figuresJSON);
 

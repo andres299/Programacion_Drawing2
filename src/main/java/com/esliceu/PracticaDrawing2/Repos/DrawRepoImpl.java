@@ -16,13 +16,17 @@ public class DrawRepoImpl implements DrawRepo {
     JdbcTemplate jdbcTemplate;
 
     @Override
-    public void saveDraw(Draw draw, Version version) {
-        GeneratedKeyHolder key = new GeneratedKeyHolder();
-        jdbcTemplate.update("INSERT INTO Draw (nameDraw, owner_id, creationDate)" +
-                        "VALUES (?, ?, NOW())", draw.getNameDraw(), draw.getOwner_id(), key);
-        jdbcTemplate.update("INSERT INTO version (id_draw, figures, modificationDate, id_user)" +
-                        "VALUES (?, ?,NOW(), ?)", key.getKey().intValue(), version.getFigures(), draw.getOwner_id());
-        ;
+    public Draw saveDraw(Draw draw) {
+        jdbcTemplate.update("INSERT INTO draw (nameDraw, owner_id, creationDate) VALUES (?, ?, NOW())",
+                draw.getNameDraw(), draw.getOwner_id());
+        return draw;
+    }
+
+    @Override
+    public void saveVersion(Version version) {
+        jdbcTemplate.update("INSERT INTO version (id_draw, figures, modificationDate,id_user) VALUES (?, ?, NOW(),?)",
+                version.getId_draw(),version.getFigures(),version.getId_user()
+        );
     }
 
     /*

@@ -6,7 +6,6 @@ import com.esliceu.PracticaDrawing2.Repos.DrawRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -17,16 +16,23 @@ public class DrawService {
 
     public String generateRandomName() {return "image_" + UUID.randomUUID().toString();}
 
-    public void saveDraw(String newName, String figures, int ownerId) {
+    public Draw saveDraw(String newName, int owner_id) {
         Draw draw = new Draw();
         draw.setNameDraw(newName);
-        draw.setOwner_id(ownerId);
-
-        Version version = new Version();
-        version.setId_user(ownerId);
-        version.setFigures(figures);
-        drawRepo.saveDraw(draw,version);
+        draw.setOwner_id(owner_id);
+        drawRepo.saveDraw(draw);
+        return drawRepo.saveDraw(draw);
     }
+
+    public void saveVersion(int drawId, String figures, int owner_id) {
+        Version version = new Version();
+        version.setId_draw(drawId);
+        version.setFigures(figures);
+        version.setId_user(owner_id);
+        drawRepo.saveVersion(version);
+    }
+
+
 /*
     public void saveDraw(String nomImage, String currentDateString, String figures, String login) {
         Draw draw = new Draw();
