@@ -23,18 +23,30 @@ public class DrawRepoImpl implements DrawRepo {
     public Draw saveDraw(Draw draw) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
-        jdbcTemplate.update(
-                "INSERT INTO draw (nameDraw, owner_id, creationDate) VALUES (?, ?, NOW())",
-                new Object[]{draw.getNameDraw(), draw.getOwner_id()},
-                keyHolder
-        );
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(
+                    "INSERT INTO draw (nameDraw, owner_id, creationDate) VALUES (?, ?, NOW())",
+                    Statement.RETURN_GENERATED_KEYS
+            );
 
-        draw.setId(keyHolder.getKey() != null ? keyHolder.getKey().intValue() : null);
+            ps.setString(1, draw.getNameDraw());
+            ps.setInt(2, draw.getOwner_id());
+
+            return ps;
+        }, keyHolder);
+
+        // Obtener el ID generado automáticamente
+        Number key = keyHolder.getKey();
+
+        if (key != null) {
+            draw.setId(key.intValue());
+            System.out.println("ID generado automáticamente: " + draw.getId());
+        }
+
+        System.out.println("Dibujo después de la inserción: " + draw);
 
         return draw;
     }
-
-
 
     @Override
     public void saveVersion(Version version) {
@@ -44,12 +56,7 @@ public class DrawRepoImpl implements DrawRepo {
     }
 
     /*
-    @Override
-    public void saveDraw(Draw draw) {
-        jdbcTemplate.update("INSERT INTO Draw (name, creationDate, modificationDate, figures, createdByUser)" +
-                        "VALUES (?, ?, ?, ?, ?)", draw.getName(), draw.getCreationDate(),
-                    draw.getModificationDate(), draw.getFigures(), draw.getCreatedByUser());
-    }
+
     @Override
     public List<Draw> getDraws() {
         String selectSql = "SELECT * FROM Draw";

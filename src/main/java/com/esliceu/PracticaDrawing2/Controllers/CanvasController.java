@@ -33,15 +33,10 @@ public class CanvasController {
 
     @PostMapping("/CanvasDraw")
     public String PostCanvasDraw(Model model, @RequestParam String figures, @RequestParam String NomImage) {
-        //Obtenemos el usuario atual
+        //Obtenemos el id atual
         User user = (User) session.getAttribute("user");
-        System.out.println("Figuras: " + figures);
-
-        int count = countFiguresInJson(figures);
-        System.out.println("Número de figuras: " + count);
-
-        System.out.println("Imagen: " + NomImage);
         int owner_id = user.getId();
+
         if (figures.isEmpty()) {
             model.addAttribute("error", "No se han dibujado figuras. Debes dibujar al menos una figura.");
             return "CanvasDraw";
@@ -59,21 +54,4 @@ public class CanvasController {
         drawService.saveVersion(drawId, figures, owner_id);
         return "CanvasDraw";
     }
-
-    private int countFiguresInJson(String figures) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonNode = objectMapper.readTree(figures);
-
-            if (jsonNode.isArray()) {
-                return objectMapper.convertValue(jsonNode, List.class).size();
-            } else {
-                return 0;
-            }
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return 0;
-        }
-    }
-
 }

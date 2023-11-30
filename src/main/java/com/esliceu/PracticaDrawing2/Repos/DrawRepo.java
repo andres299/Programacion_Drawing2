@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface DrawRepo {
     Draw saveDraw(Draw draw);
-
     void saveVersion(Version version);
      /*
     void saveDraw(Draw draw);
