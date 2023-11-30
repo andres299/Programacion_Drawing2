@@ -34,30 +34,28 @@
     </tr>
     <tr th:each="draw : ${allDraws}">
         <td th:text="${draw.id}"></td>
-        <td th:text="${draw.name}"></td>
+        <td th:text="${draw.nameDraw}"></td>
         <td th:text="${draw.creationDate}"></td>
         <td th:text="${draw.modificationDate}"></td>
-        <td th:text="${countFiguresInJson.countFiguresInJson(draw.figures)}"></td>
-        <td th:text="${draw.createdByUser}"></td>
+        <td th:text="${figuresCount}"></td>
+        <td th:text="${draw.owner_id}"></td>
         <td>
             <div class="button-container">
                 <form action="/ViewDraw" method="get">
                     <input type="hidden" name="drawId" th:value="${draw.id}" />
-                    <input type="hidden" name="drawName" th:value="${draw.name}">
+                    <input type="hidden" name="drawName" th:value="${draw.nameDraw}">
                     <button class="view" type="submit">View</button>
                 </form>
-                <div th:if="${user == draw.createdByUser}">
                     <form action="/AllDraw" method="post">
                         <input type="hidden" name="id" th:value="${draw.id}">
                         <button class="delete" type="submit">Eliminar</button>
                     </form>
                     <form action="/ModifyCanvas" method="get">
                         <input type="hidden" name="drawId" th:value="${draw.id}" />
-                        <input type="hidden" name="drawName" th:value="${draw.name}">
+                        <input type="hidden" name="drawName" th:value="${draw.nameDraw}">
                         <button class="modify" type="submit">Modify</button>
                     </form>
                 </div>
-            </div>
         </td>
     </tr>
 </table>

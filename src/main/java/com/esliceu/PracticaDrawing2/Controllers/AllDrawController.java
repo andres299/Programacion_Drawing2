@@ -33,32 +33,31 @@ public class AllDrawController {
 
         // Crear una lista para almacenar información sobre el dibujo y su versión
         List<DrawWithVersionDTO> drawWithVersionList = drawService.getDraws(user.getId());
-        System.out.println(drawWithVersionList);
+        for (DrawWithVersionDTO drawWithVersion : drawWithVersionList){
+            int figureCount = countFiguresInJson(drawWithVersion.getFigures());
+            model.addAttribute("figuresCount", figureCount);
+        }
         // Agregar la lista de DTOs al modelo
-        model.addAttribute("drawWithVersions", drawWithVersionList);
+        model.addAttribute("allDraws", drawWithVersionList);
         return "AllDraw";
     }
 
-    // Método extraído
-        /*
-    private Object countFiguresInJson = new Object() {
-        public int countFiguresInJson(String figures) {
-            try {
-                ObjectMapper objectMapper = new ObjectMapper();
-                JsonNode jsonNode = objectMapper.readTree(figures);
+    // Método para contar figuras
+    private int countFiguresInJson(String figures) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(figures);
 
-                if (jsonNode.isArray()) {
-                    return objectMapper.convertValue(jsonNode, List.class).size();
-                } else {
-                    return 0;
-                }
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
+            if (jsonNode.isArray()) {
+                return objectMapper.convertValue(jsonNode, List.class).size();
+            } else {
                 return 0;
             }
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return 0;
         }
-    };
-         */
+    }
 
     /*
     @PostMapping("/AllDraw")
