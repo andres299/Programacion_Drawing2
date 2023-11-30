@@ -5,6 +5,7 @@ import com.esliceu.PracticaDrawing2.Entities.Version;
 import com.esliceu.PracticaDrawing2.Repos.DrawRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -16,6 +17,7 @@ public class DrawService {
 
     public String generateRandomName() {return "image_" + UUID.randomUUID().toString();}
 
+    @Transactional
     public Draw saveDraw(String newName, int owner_id) {
         Draw draw = new Draw();
         draw.setNameDraw(newName);
@@ -34,16 +36,6 @@ public class DrawService {
 
 
 /*
-    public void saveDraw(String nomImage, String currentDateString, String figures, String login) {
-        Draw draw = new Draw();
-        draw.setName(nomImage);
-        draw.setCreationDate(currentDateString);
-        draw.setModificationDate(currentDateString);
-        draw.setFigures(figures);
-        draw.setCreatedByUser(login);
-        drawRepo.saveDraw(draw);
-    }
-
     // Método para obtener todos los dibujos de la lista.
     public List<Draw> getDraws() { return drawRepo.getDraws();}
 
