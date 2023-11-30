@@ -25,7 +25,7 @@ public class SessionInterceptor implements HandlerInterceptor {
         req.setAttribute("user", user);
 
         // Verificar si el usuario está autenticado.
-        if (user.getLogin() == null) {
+        if (user == null) {
             // Redirigir a la página de inicio de sesión si no está autenticado.
             resp.sendRedirect("/login");
             return false;  // Detener la ejecución del controlador actual

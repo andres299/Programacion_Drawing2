@@ -5,26 +5,79 @@ import com.esliceu.PracticaDrawing2.Entities.User;
 import com.esliceu.PracticaDrawing2.Entities.Version;
 
 public class DrawWithVersionDTO {
-    private Draw draw;
-
-    private Version version;
+    private int id;
+    private String nameDraw;
+    private int owner_id;
+    private String creationDate;
+    private boolean visualization;
+    private boolean inTheTrash;
+    private String figures;
+    private String modificationDate;
 
     public DrawWithVersionDTO() {
     }
 
-    public Draw getDraw() {
-        return draw;
+    public int getId() {
+        return id;
     }
 
-    public void setDraw(Draw draw) {
-        this.draw = draw;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public Version getVersion() {
-        return version;
+    public String getNameDraw() {
+        return nameDraw;
     }
 
-    public void setVersion(Version version) {
-        this.version = version;
+    public void setNameDraw(String nameDraw) {
+        this.nameDraw = nameDraw;
+    }
+
+    public int getOwner_id() {
+        return owner_id;
+    }
+
+    public void setOwner_id(int owner_id) {
+        this.owner_id = owner_id;
+    }
+
+    public String getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public boolean isVisualization() {
+        return visualization;
+    }
+
+    public void setVisualization(boolean visualization) {
+        this.visualization = visualization;
+    }
+
+    public boolean isInTheTrash() {
+        return inTheTrash;
+    }
+
+    public void setInTheTrash(boolean inTheTrash) {
+        this.inTheTrash = inTheTrash;
+    }
+
+    public String getFigures() {
+        return figures;
+    }
+
+    public void setFigures(String figures) {
+        this.figures = figures;
+    }
+
+    public String getModificationDate() {
+        return modificationDate;
+    }
+
+    public void setModificationDate(String modificationDate) {
+        this.modificationDate = modificationDate;
     }
 }

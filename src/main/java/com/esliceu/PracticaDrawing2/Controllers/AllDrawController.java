@@ -30,34 +30,16 @@ public class AllDrawController {
     public String AllDraw(Model model) {
         //La sesion del usuario actual
         User user = (User) session.getAttribute("user");
-        System.out.println(user.getId());
-        // Verificar si el usuario existe en la sesión
-        if (user.getLogin() != null) {
-            // Obtener la lista de dibujos del usuario
-            List<Draw> userDraws = drawService.getDraws(user.getId());
-            System.out.println(userDraws);
-            // Crear una lista para almacenar información sobre el dibujo y su versión
-            List<DrawWithVersionDTO> drawWithVersionList = new ArrayList<>();
 
-            // Iterar sobre los dibujos
-            for (Draw draw : userDraws) {
-                    // Obtener la versión asociada a cada dibujo
-                    Version version = drawService.getVersion(draw.getId());
+        // Crear una lista para almacenar información sobre el dibujo y su versión
+        List<DrawWithVersionDTO> drawWithVersionList = new ArrayList<>();
 
-                    DrawWithVersionDTO drawWithVersionDTO = new DrawWithVersionDTO();
-                    drawWithVersionDTO.setDraw(draw);
-                    drawWithVersionDTO.setVersion(version);
-
-                    // Agregar el DTO a la lista
-                    drawWithVersionList.add(drawWithVersionDTO);
-            }
-            // Agregar la lista de DTOs al modelo
-            model.addAttribute("drawWithVersions", drawWithVersionList);
-        }
+        // Agregar la lista de DTOs al modelo
+        model.addAttribute("drawWithVersions", drawWithVersionList);
         return "AllDraw";
     }
 
-        // Método extraído
+    // Método extraído
         /*
     private Object countFiguresInJson = new Object() {
         public int countFiguresInJson(String figures) {
@@ -88,5 +70,5 @@ public class AllDrawController {
         return "redirect:/AllDraw";
     }
      */
-    }
+}
 
