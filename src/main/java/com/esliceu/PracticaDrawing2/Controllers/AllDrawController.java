@@ -1,6 +1,7 @@
 package com.esliceu.PracticaDrawing2.Controllers;
 
 import com.esliceu.PracticaDrawing2.Entities.Draw;
+import com.esliceu.PracticaDrawing2.Entities.User;
 import com.esliceu.PracticaDrawing2.Services.DrawService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -21,20 +22,10 @@ public class AllDrawController {
     HttpSession session;
     @Autowired
     DrawService drawService;
-/*
     @GetMapping("/AllDraw")
     public String AllDraw(Model model) {
         //La sesion del usuario actual
-        String login = (String) session.getAttribute("login");
-
-        // Obtén todos los dibujos
-        List<Draw> allDraws = drawService.getDraws();
-
-        //Estos atributos se enviaran a la página JSP asociada para poder mostralo.
-        model.addAttribute("allDraws", allDraws);
-        model.addAttribute("user",login);
-        // Agregamos la función countFiguresInJson como un atributo del modelo
-        model.addAttribute("countFiguresInJson", countFiguresInJson);
+        User user = (User) session.getAttribute("user");
         return "AllDraw";
     }
 
@@ -57,6 +48,7 @@ public class AllDrawController {
         }
     };
 
+    /*
     @PostMapping("/AllDraw")
     public String PostAllDraw(@RequestParam int id){
         //La sesion del usuario actual
@@ -65,6 +57,6 @@ public class AllDrawController {
         drawService.deleteDraw(id,login);
         return "redirect:/AllDraw";
     }
- */
+     */
 }
 

@@ -53,7 +53,6 @@ public class DrawRepoImpl implements DrawRepo {
                 version.getId_draw(),version.getFigures(),version.getId_user()
         );
     }
-
     /*
 
     @Override
