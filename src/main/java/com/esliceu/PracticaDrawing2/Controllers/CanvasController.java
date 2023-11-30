@@ -35,8 +35,6 @@ public class CanvasController {
     public String PostCanvasDraw(Model model, @RequestParam String figures, @RequestParam String NomImage) {
         //Obtenemos el id atual
         User user = (User) session.getAttribute("user");
-        System.out.println(figures);
-        System.out.println(NomImage);
         int owner_id = user.getId();
 
         if (figures.isEmpty()) {

@@ -1,5 +1,6 @@
 package com.esliceu.PracticaDrawing2.Services;
 
+import com.esliceu.PracticaDrawing2.DTO.DrawWithVersionDTO;
 import com.esliceu.PracticaDrawing2.Entities.Draw;
 import com.esliceu.PracticaDrawing2.Entities.Version;
 import com.esliceu.PracticaDrawing2.Repos.DrawRepo;
@@ -33,14 +34,12 @@ public class DrawService {
         drawRepo.saveVersion(version);
     }
 
-    // Método para obtener todos los dibujos de la lista.
-    public List<Draw> getDraws(int id) {
+    public List<DrawWithVersionDTO> getDraws(int id) {
         return drawRepo.getDraws(id);
     }
 
-    public Version getVersion(int id) {
-        return drawRepo.VersionForDraw(id);
-    }
+    // Método para obtener todos los dibujos de la lista.
+
 
 /*
     //Metodo para borrar un dibujo especifico.

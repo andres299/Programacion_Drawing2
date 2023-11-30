@@ -1,5 +1,6 @@
 package com.esliceu.PracticaDrawing2.Repos;
 
+import com.esliceu.PracticaDrawing2.DTO.DrawWithVersionDTO;
 import com.esliceu.PracticaDrawing2.Entities.Draw;
 import com.esliceu.PracticaDrawing2.Entities.Version;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,33 +52,16 @@ public class DrawRepoImpl implements DrawRepo {
     }
 
     @Override
-    public List<Draw> getDraws(int id) {
-        return jdbcTemplate.query("SELECT * FROM draw WHERE owner_id = id", (resultSet, rowNum) -> {
-            Draw draw = new Draw();
-            draw.setId(resultSet.getInt("id"));
-            draw.setNameDraw(resultSet.getString("nameDraw"));
-            draw.setOwner_id(resultSet.getInt("owner_id"));
-            draw.setCreationDate(resultSet.getString("creationDate"));
-            draw.setVisualization(resultSet.getBoolean("visualization"));
-            draw.setVisualization(resultSet.getBoolean("intTheTrash"));
-            System.out.println("draw" + draw);
-            return draw;
-        });
+    public List<DrawWithVersionDTO> getDraws(int id) {
+        String sql = "SELECT draw.*, version.figures, version.modificationDate FROM draw JOIN version ON " +
+                "draw.id = version.id_draw WHERE (draw.visualization = 1 AND draw.intTheTrash = 0) " +
+                "OR (draw.owner_id = 2 AND draw.intTheTrash = 0)";
+        List<DrawWithVersionDTO> allDrawWhithVersion = jdbcTemplate.query(sql,
+                new BeanPropertyRowMapper<>(DrawWithVersionDTO.class));
+        return allDrawWhithVersion;
     }
 
-    @Override
-    public Version VersionForDraw(int id) {
-        String sql = "SELECT * FROM version WHERE id_draw = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{id}, (resultSet, rowNum) -> {
-            Version version = new Version();
-            version.setId(resultSet.getInt("id"));
-            version.setId_draw(resultSet.getInt("id_draw"));
-            version.setFigures(resultSet.getString("figures"));
-            version.setModificationDate(resultSet.getString("modificationDate"));
-            version.setId_user(resultSet.getInt("id_user"));
-            return version;
-        });
-    }
+
     /*
 
     @Override

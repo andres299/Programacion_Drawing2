@@ -32,8 +32,8 @@ public class AllDrawController {
         User user = (User) session.getAttribute("user");
 
         // Crear una lista para almacenar información sobre el dibujo y su versión
-        List<DrawWithVersionDTO> drawWithVersionList = new ArrayList<>();
-
+        List<DrawWithVersionDTO> drawWithVersionList = drawService.getDraws(user.getId());
+        System.out.println(drawWithVersionList);
         // Agregar la lista de DTOs al modelo
         model.addAttribute("drawWithVersions", drawWithVersionList);
         return "AllDraw";

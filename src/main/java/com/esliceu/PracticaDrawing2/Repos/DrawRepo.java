@@ -1,5 +1,6 @@
 package com.esliceu.PracticaDrawing2.Repos;
 
+import com.esliceu.PracticaDrawing2.DTO.DrawWithVersionDTO;
 import com.esliceu.PracticaDrawing2.Entities.Draw;
 import com.esliceu.PracticaDrawing2.Entities.Version;
 
@@ -9,9 +10,9 @@ public interface DrawRepo {
     Draw saveDraw(Draw draw);
     void saveVersion(Version version);
 
-    List<Draw> getDraws(int id);
+    List<DrawWithVersionDTO> getDraws(int id);
 
-    Version VersionForDraw(int id);
+   
      /*
     void saveDraw(Draw draw);
     List<Draw> getDraws();
