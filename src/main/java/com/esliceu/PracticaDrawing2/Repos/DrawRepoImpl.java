@@ -3,11 +3,15 @@ package com.esliceu.PracticaDrawing2.Repos;
 import com.esliceu.PracticaDrawing2.Entities.Draw;
 import com.esliceu.PracticaDrawing2.Entities.Version;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 
 @Repository
@@ -17,10 +21,20 @@ public class DrawRepoImpl implements DrawRepo {
 
     @Override
     public Draw saveDraw(Draw draw) {
-        jdbcTemplate.update("INSERT INTO draw (nameDraw, owner_id, creationDate) VALUES (?, ?, NOW())",
-                draw.getNameDraw(), draw.getOwner_id());
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jdbcTemplate.update(
+                "INSERT INTO draw (nameDraw, owner_id, creationDate) VALUES (?, ?, NOW())",
+                new Object[]{draw.getNameDraw(), draw.getOwner_id()},
+                keyHolder
+        );
+
+        draw.setId(keyHolder.getKey() != null ? keyHolder.getKey().intValue() : null);
+
         return draw;
     }
+
+
 
     @Override
     public void saveVersion(Version version) {

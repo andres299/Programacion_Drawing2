@@ -3,6 +3,9 @@ package com.esliceu.PracticaDrawing2.Controllers;
 import com.esliceu.PracticaDrawing2.Entities.Draw;
 import com.esliceu.PracticaDrawing2.Entities.User;
 import com.esliceu.PracticaDrawing2.Services.DrawService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class CanvasController {
@@ -31,9 +35,12 @@ public class CanvasController {
     public String PostCanvasDraw(Model model, @RequestParam String figures, @RequestParam String NomImage) {
         //Obtenemos el usuario atual
         User user = (User) session.getAttribute("user");
-        System.out.println("figuras" + figures);
-        System.out.println(figures.length());
-        System.out.println("imagen" + NomImage);
+        System.out.println("Figuras: " + figures);
+
+        int count = countFiguresInJson(figures);
+        System.out.println("Número de figuras: " + count);
+
+        System.out.println("Imagen: " + NomImage);
         int owner_id = user.getId();
         if (figures.isEmpty()) {
             model.addAttribute("error", "No se han dibujado figuras. Debes dibujar al menos una figura.");
@@ -51,6 +58,22 @@ public class CanvasController {
         // Guardar la versión
         drawService.saveVersion(drawId, figures, owner_id);
         return "CanvasDraw";
-
     }
+
+    private int countFiguresInJson(String figures) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(figures);
+
+            if (jsonNode.isArray()) {
+                return objectMapper.convertValue(jsonNode, List.class).size();
+            } else {
+                return 0;
+            }
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
 }

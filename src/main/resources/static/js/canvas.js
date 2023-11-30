@@ -172,25 +172,27 @@ clearButton.addEventListener("click", () => {
     figures = [];
     render(figures);
 });
-
+// Event listener para el botón de guardar
 saveButton.addEventListener("click", () => {
     saveFigures();
 });
-async function saveFigures() {    
-    // Convierte el array "figures" a una cadena JSONsave
-    var figuresJSON = JSON.stringify(figures);
-    console.log('Figuras JSON:', figuresJSON);
 
-    const formData = new FormData();
-    // Adjuntar las figuras en formato JSON
-    formData.append("figures", figuresJSON);
-
-    // Obtener el valor del nombre desde un campo de entrada en tu formulario
-    const imageName = document.getElementById("NomImage").value;
-    formData.append("NomImage", imageName);
-
-    // Enviar las figuras y la imagen al servidor
+// Función para guardar figuras
+async function saveFigures() {
     try {
+        // Convierte el array "figures" a una cadena JSON
+        var figuresJSON = JSON.stringify(figures);
+        console.log('Figuras JSON:', figuresJSON);
+
+        const formData = new FormData();
+        // Adjuntar las figuras en formato JSON
+        formData.append("figures", figuresJSON);
+
+        // Obtener el valor del nombre desde un campo de entrada en tu formulario
+        const imageName = document.getElementById("NomImage").value;
+        formData.append("NomImage", imageName);
+
+        // Enviar las figuras y la imagen al servidor
         const response = await fetch('/CanvasDraw', {
             method: 'POST',
             body: formData,
@@ -206,8 +208,3 @@ async function saveFigures() {
         console.error('Error al realizar la solicitud:', error);
     }
 }
-
-
-
-
-
