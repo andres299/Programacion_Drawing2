@@ -14,7 +14,6 @@ public class DrawService {
     @Autowired
     DrawRepo drawRepo;
     // Método que genera un nombre aleatorio para una imagen.
-
     public String generateRandomName() {return "image_" + UUID.randomUUID().toString();}
 
     @Transactional

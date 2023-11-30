@@ -31,7 +31,6 @@ public class DrawRepoImpl implements DrawRepo {
 
             ps.setString(1, draw.getNameDraw());
             ps.setInt(2, draw.getOwner_id());
-
             return ps;
         }, keyHolder);
 
