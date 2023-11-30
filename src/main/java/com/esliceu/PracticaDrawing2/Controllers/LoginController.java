@@ -39,7 +39,7 @@ public class LoginController {
         if (userInPause) {
             model.addAttribute("error", "Número de intentos fallidos alcanzado. Espere un minuto.");
         } else if (userService.userExists(login, password)) {
-            session.setAttribute("login", login);
+            session.setAttribute("user", userService.user(login));
             session.setAttribute("loginAttempts", 0);
             return "redirect:/CanvasDraw";
         } else {

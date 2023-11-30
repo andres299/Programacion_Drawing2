@@ -1,14 +1,26 @@
 package com.esliceu.PracticaDrawing2.Entities;
 
 public class User {
+    int id;
     String login;
     String name;
     String password;
+
+    public User() {
+    }
 
     public User(String login, String name, String password) {
         this.login = login;
         this.name = name;
         this.password = password;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getLogin() {

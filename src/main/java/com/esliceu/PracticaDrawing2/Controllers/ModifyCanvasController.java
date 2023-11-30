@@ -20,6 +20,7 @@ public class ModifyCanvasController {
     HttpSession session;
     @Autowired
     DrawService drawService;
+    /*
     @GetMapping("/ModifyCanvas")
     public String ModifyCanvas(Model model, @RequestParam String drawName,
                                @RequestParam int drawId) {
@@ -80,4 +81,5 @@ public class ModifyCanvasController {
         drawService.updateDraw(drawId, newName, originalCreationDate,ModificationDate,figures,login);
         return "redirect:/AllDraw";
     }
+     */
 }

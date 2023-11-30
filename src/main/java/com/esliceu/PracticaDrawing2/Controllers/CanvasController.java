@@ -1,5 +1,6 @@
 package com.esliceu.PracticaDrawing2.Controllers;
 
+import com.esliceu.PracticaDrawing2.Entities.User;
 import com.esliceu.PracticaDrawing2.Services.DrawService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,34 +20,32 @@ public class CanvasController {
     HttpSession session;
     @Autowired
     DrawService drawService;
+
     @GetMapping("/CanvasDraw")
     public String CanvasDraw() {
+        User user = (User) session.getAttribute("user");
+        System.out.println(user.getId());
+        System.out.println(user.getLogin());
         return "CanvasDraw";
     }
 
     @PostMapping("/CanvasDraw")
     public String PostCanvasDraw(Model model, @RequestParam String figures, @RequestParam String NomImage) {
         //Obtenemos el usuario atual
-        String login = (String) session.getAttribute("login");
-        System.out.println("figures" + figures);
-        System.out.println("nombre" + NomImage);
-        // Verificar si hay al menos una figura
+        User user = (User) session.getAttribute("user");
+        System.out.println(figures);
+        System.out.println(NomImage);
+        int owner_id = user.getId();
         if (figures.isEmpty()) {
             model.addAttribute("error", "No se han dibujado figuras. Debes dibujar al menos una figura.");
             return "CanvasDraw";
         }
 
-        // Obtener la fecha y hora actual
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date currentDate = new Date();
-        String currentDateString = sdf.format(currentDate);
-
         //Si el nombre esta vacia , genera uno aleatorio
         String newName = NomImage.isEmpty() ? drawService.generateRandomName() : NomImage;
 
         // Guardar el dibujo
-        drawService.saveDraw(newName,currentDateString,figures,login);
+        drawService.saveDraw(newName,figures,owner_id);
         return "CanvasDraw";
     }
-
 }

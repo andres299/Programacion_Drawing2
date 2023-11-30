@@ -1,9 +1,11 @@
 package com.esliceu.PracticaDrawing2.Repos;
 
 import com.esliceu.PracticaDrawing2.Entities.Draw;
+import com.esliceu.PracticaDrawing2.Entities.Version;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,13 +16,22 @@ public class DrawRepoImpl implements DrawRepo {
     JdbcTemplate jdbcTemplate;
 
     @Override
+    public void saveDraw(Draw draw, Version version) {
+        GeneratedKeyHolder key = new GeneratedKeyHolder();
+        jdbcTemplate.update("INSERT INTO Draw (nameDraw, owner_id, creationDate)" +
+                        "VALUES (?, ?, NOW())", draw.getNameDraw(), draw.getOwner_id(), key);
+        jdbcTemplate.update("INSERT INTO version (id_draw, figures, modificationDate, id_user)" +
+                        "VALUES (?, ?,NOW(), ?)", key.getKey().intValue(), version.getFigures(), draw.getOwner_id());
+        ;
+    }
+
+    /*
+    @Override
     public void saveDraw(Draw draw) {
         jdbcTemplate.update("INSERT INTO Draw (name, creationDate, modificationDate, figures, createdByUser)" +
                         "VALUES (?, ?, ?, ?, ?)", draw.getName(), draw.getCreationDate(),
                     draw.getModificationDate(), draw.getFigures(), draw.getCreatedByUser());
     }
-
-
     @Override
     public List<Draw> getDraws() {
         String selectSql = "SELECT * FROM Draw";
@@ -50,6 +61,7 @@ public class DrawRepoImpl implements DrawRepo {
                 existDraw.getName(), existDraw.getCreationDate(), existDraw.getModificationDate(),
                 existDraw.getFigures(), existDraw.getCreatedByUser(), existDraw.getId());
     }
+     */
 }
 
 

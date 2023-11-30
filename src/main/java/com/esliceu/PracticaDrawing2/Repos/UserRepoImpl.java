@@ -2,6 +2,7 @@ package com.esliceu.PracticaDrawing2.Repos;
 
 import com.esliceu.PracticaDrawing2.Entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -30,5 +31,11 @@ public class UserRepoImpl implements UserRepo{
         String sql = "SELECT COUNT(*) FROM user WHERE login = ? AND password = ?";
         int count = jdbcTemplate.queryForObject(sql, Integer.class, login, password);
         return count > 0;
+    }
+
+    @Override
+    public User user(String login) {
+        String sql = "SELECT * FROM user WHERE login = ?";
+        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), login);
     }
 }

@@ -136,6 +136,8 @@ canvas.addEventListener("mousedown", (event) => {
         };
         figures.push(figure);
         render(figures);
+        // Llama a la función saveFigures() cada vez que agregas una figura
+        saveFigures();
     } else {
         // Comienza el dibujo de línea
         isDrawingLine = true;
@@ -169,6 +171,8 @@ canvas.addEventListener("mouseup", () => {
             figures.push(lineFigure);
             currentPath = [];
             render(figures);
+            // Llama a la función saveFigures() cada vez que agregas una figura
+            saveFigures();
         }
     }
 });
@@ -194,6 +198,37 @@ clearButton.addEventListener("click", () => {
 saveButton.addEventListener("click", () => {
     saveFigures();
 });
+async function saveFigures() {    
+    // Convierte el array "figures" a una cadena JSON
+    var figuresJSON = JSON.stringify(figures);
+    console.log('Figuras JSON:', figuresJSON);
+
+    const formData = new FormData();
+    // Adjuntar las figuras en formato JSON
+    formData.append("figures", figuresJSON);
+
+    // Obtener el valor del nombre desde un campo de entrada en tu formulario
+    const imageName = document.getElementById("NomImage").value;
+    formData.append("NomImage", imageName);
+
+    // Enviar las figuras y la imagen al servidor
+    try {
+        const response = await fetch('/CanvasDraw', {
+            method: 'POST',
+            body: formData,
+        });
+
+        // Manejar la respuesta del servidor
+        if (response.ok) {
+            console.log('Operación exitosa');
+        } else {
+            console.error('Error en la solicitud:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error al realizar la solicitud:', error);
+    }
+}
+
 
 
 
