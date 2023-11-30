@@ -27,7 +27,9 @@ public class CanvasController {
     DrawService drawService;
 
     @GetMapping("/CanvasDraw")
-    public String CanvasDraw() {
+    public String CanvasDraw(Model model) {
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("user", user.getLogin());
         return "CanvasDraw";
     }
 
