@@ -30,7 +30,7 @@ public class AllDrawController {
     public String AllDraw(Model model) {
         //La sesion del usuario actual
         User user = (User) session.getAttribute("user");
-
+        System.out.println(user.getId());
         // Crear una lista para almacenar información sobre el dibujo y su versión
         List<DrawWithVersionDTO> drawWithVersionList = drawService.getDraws(user.getId());
         for (DrawWithVersionDTO drawWithVersion : drawWithVersionList){

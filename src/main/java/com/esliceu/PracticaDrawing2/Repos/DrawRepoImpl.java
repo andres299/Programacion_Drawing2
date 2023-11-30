@@ -55,9 +55,9 @@ public class DrawRepoImpl implements DrawRepo {
     public List<DrawWithVersionDTO> getDraws(int id) {
         String sql = "SELECT draw.*, version.figures, version.modificationDate FROM draw JOIN version ON " +
                 "draw.id = version.id_draw WHERE (draw.visualization = 1 AND draw.intTheTrash = 0) " +
-                "OR (draw.owner_id = 2 AND draw.intTheTrash = 0)";
+                "OR (draw.owner_id = ? AND draw.intTheTrash = 0)";
         List<DrawWithVersionDTO> allDrawWhithVersion = jdbcTemplate.query(sql,
-                new BeanPropertyRowMapper<>(DrawWithVersionDTO.class));
+                new BeanPropertyRowMapper<>(DrawWithVersionDTO.class),id);
         return allDrawWhithVersion;
     }
 
