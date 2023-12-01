@@ -1,43 +1,58 @@
-<!-- deletedDraws.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-  <title>Todos los Dibujos</title>
-  <link rel="stylesheet" href="/css/CanvasDrawStyle.css">
-  <link rel="stylesheet" href="/css/DrawTable.css">
-  <script src="https://kit.fontawesome.com/2684e8a577.js" crossorigin="anonymous"></script></head>
+    <title>Todos los Dibujos</title>
+    <link rel="stylesheet" href="/css/CanvasDrawStyle.css">
+    <link rel="stylesheet" href="/css/DrawTable.css">
+    <script src="https://kit.fontawesome.com/2684e8a577.js" crossorigin="anonymous"></script>
+</head>
+
 <body>
 <div class="header">
-  <nav>
-    <ul class="nav-list">
-      <li class="nav-item"><a href="/CanvasDraw">CanvasDraw</a></li>
-      <li class="nav-item"><a href="/AllDraw">Todos Dibujos</a></li>
-      <li class="nav-item"><a href="/Logout"><i class="fa-solid fa-user"></i> Cerrar Sesion</a></li>
-    </ul>
-  </nav>
+    <nav>
+        <ul class="nav-list">
+            <li class="nav-item"><a href="/CanvasDraw">CanvasDraw</a></li>
+            <li class="nav-item"><a href="/UserDraw">Tus Dibujos</a></li>
+            <li class="nav-item"><a href="/AllDraw">Todos Dibujos</a></li>
+            <li class="nav-item"><a href="/Logout"><i class="fa-solid fa-user"></i> Cerrar Sesion</a></li>
+        </ul>
+    </nav>
 </div>
 <div class="container-title">
-<h1>Dibujos en la Papelera</h1>
+    <h1>Papelera de dibujos</h1>
 </div>
 <table>
-  <thead>
-  <tr>
-    <th>ID</th>
-    <th>Nombre</th>
-    <th>Acciones</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="deletedDraw : ${deletedDraws}">
-    <td th:text="${deletedDraw.id}"></td>
-    <td th:text="${deletedDraw.name}"></td>
-    <td>
-      <button class="delete" type="submit">Eliminar</button>
-      <button class="restaurar" type="submit">Restaurar</button>
-    </td>
-  </tr>
-  </tbody>
+    <tr>
+        <th>Id Imagen</th>
+        <th>Nombre</th>
+        <th>Fecha de Creación</th>
+        <th>Fecha de Modificación</th>
+        <th>Figuras</th>
+        <th>Creado por</th>
+        <th>Opciones</th>
+    </tr>
+    <tr th:each="draw : ${allDraws}">
+        <td th:text="${draw.id}"></td>
+        <td th:text="${draw.nameDraw}"></td>
+        <td th:text="${draw.creationDate}"></td>
+        <td th:text="${draw.modificationDate}"></td>
+        <td th:text="${figuresCount}"></td>
+        <td th:text="${draw.owner_id}"></td>
+        <td>
+            <div class="button-container">
+                <form action="/AllDraw" method="post">
+                    <input type="hidden" name="id" th:value="${draw.id}">
+                    <button class="delete" type="submit">Eliminar</button>
+                </form>
+                <form action="/ViewDraw" method="get">
+                    <input type="hidden" name="drawId" th:value="${draw.id}" />
+                    <button class="restaurar" type="submit">Restaurar</button>
+                </form>
+            </div>
+        </td>
+    </tr>
 </table>
-
 </body>
+
 </html>
