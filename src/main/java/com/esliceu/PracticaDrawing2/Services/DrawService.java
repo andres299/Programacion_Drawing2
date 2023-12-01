@@ -46,6 +46,10 @@ public class DrawService {
         return drawRepo.getDrawsTrash(id);
     }
 
+    public void userPermissions(int drawId, int owner_id) {
+        drawRepo.userPermissions(drawId,owner_id);
+    }
+
     // Método para obtener todos los dibujos de la lista.
 
 

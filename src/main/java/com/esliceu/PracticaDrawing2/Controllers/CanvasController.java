@@ -55,6 +55,8 @@ public class CanvasController {
 
         // Guardar la versión
         drawService.saveVersion(drawId, figures, owner_id);
+        //Permisos del usuario sobre el dibujo
+        drawService.userPermissions(drawId,owner_id);
         return "CanvasDraw";
     }
 }

@@ -80,6 +80,13 @@ public class DrawRepoImpl implements DrawRepo {
         List<DrawWithVersionDTO> allDrawWhithVersion = jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper<>(DrawWithVersionDTO.class),id);
         return allDrawWhithVersion;    }
+
+    //Metodo para crear permisos del usuario
+    @Override
+    public void userPermissions(int drawId, int owner_id) {
+        String sql = "INSERT INTO permissions (id_draw, id_user, writing, reading) VALUES (?, ?, 1, 1)";
+        jdbcTemplate.update(sql, drawId, owner_id);
+    }
     /*
 
     @Override

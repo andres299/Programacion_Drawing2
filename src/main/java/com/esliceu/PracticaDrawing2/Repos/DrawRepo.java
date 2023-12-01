@@ -16,6 +16,8 @@ public interface DrawRepo {
 
     List<DrawWithVersionDTO> getDrawsTrash(int id);
 
+    void userPermissions(int drawId, int owner_id);
+
    
      /*
     void saveDraw(Draw draw);
