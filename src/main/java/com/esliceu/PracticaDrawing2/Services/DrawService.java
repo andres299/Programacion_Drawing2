@@ -18,14 +18,14 @@ public class DrawService {
     // Método que genera un nombre aleatorio para una imagen.
     public String generateRandomName() {return "image_" + UUID.randomUUID().toString();}
 
-
+    //Metodo para guardar el dibujo
     public Draw saveDraw(String newName, int owner_id) {
         Draw draw = new Draw();
         draw.setNameDraw(newName);
         draw.setOwner_id(owner_id);
         return drawRepo.saveDraw(draw);
     }
-
+    //Metodo para guardar el dibujo
     public void saveVersion(int drawId, String figures, int owner_id) {
         Version version = new Version();
         version.setId_draw(drawId);
@@ -34,16 +34,17 @@ public class DrawService {
         drawRepo.saveVersion(version);
     }
 
+    //Obtener una lista de los dibujos
     public List<DrawWithVersionDTO> getDraws(int id) {
         return drawRepo.getDraws(id);
     }
 
-    //Actualizar el dibujo
+    //Actualizar el dibujo a la papelera
     public void updateDraw(int id, int id_user) {
         drawRepo.updateDraw(id,id_user);
     }
 
-    //Obtener una lista de los dibujos
+    //Obtener una lista de los dibujos en la papelera
     public List<DrawWithVersionDTO> getDrawsTrash(int id) {
         return drawRepo.getDrawsTrash(id);
     }
