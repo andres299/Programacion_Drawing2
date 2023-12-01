@@ -48,19 +48,9 @@ public class DrawService {
         return drawRepo.getDrawsTrash(id);
     }
 
-    //Crear el usuario con permisos
-    public void userPermissions(int drawId, int owner_id) {
-        drawRepo.userPermissions(drawId,owner_id);
-    }
-
     //Metodo para ver si el usuario tiene permisos lectura o escitura del dibujo
     public boolean hasPermissionsWriting(int id_draw, int id_user) {
         return drawRepo.hasPermissionsWriting(id_draw,id_user);
-    }
-
-    public boolean hasPermissionsReading(int drawId, int id_user) {
-        return drawRepo.hasPermissionsReading(drawId,id_user);
-
     }
 
     //Metodo borrar el dibujo con su version

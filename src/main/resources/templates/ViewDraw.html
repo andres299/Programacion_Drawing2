@@ -24,6 +24,14 @@
     </div>
     <input type="hidden" id="selectedFigures" name="selectedFiguresJson" th:value="${selectedFiguresJson}" />
     <canvas id="ViewCanvas" class="canvas" width="400" height="300"></canvas>
+
+    <form action="/viewDraw" method="get" class="canvas-form">
+        <label for="">Visibilidad
+        <input type="radio" id="Visibility" value="public"> Público
+        <input type="radio" id="Visibility" value="private" checked> Privado
+    </label>
+    <button id="sendButton" type="submit">Enviar</button>
+    </form>
 </div>
 <script src="/js/ViewCanvas.js"></script>
 </body>
