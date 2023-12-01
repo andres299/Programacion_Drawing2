@@ -27,12 +27,13 @@
 
     <form th:if="${OwnerDraw == true}" action="/ViewDraw" method="post" class="canvas-form">
         <label for="visibility">Visibilidad:</label>
-        <input type="radio" name="type_visibility" class="visibility" value="public"> Público
-        <input type="radio" name="type_visibility" class="visibility" value="private"> Privado
+        <input type="radio" name="type_visibility" class="visibility" value="public" th:checked="${visibility}"> Público
+        <input type="radio" name="type_visibility" class="visibility" value="private" th:checked="${not visibility}"> Privado
         <input type="hidden" id="visibility" name="visibility" th:value="${visualization}">
 
         <button id="sendButton" type="submit">Enviar</button>
     </form>
+
 </div>
 <script src="/js/ViewCanvas.js"></script>
 </body>

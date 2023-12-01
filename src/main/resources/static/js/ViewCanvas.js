@@ -63,23 +63,3 @@ const draw = (parsedFigures,ctx) => {
 
 //Llamo funcion draw pasandole las figuras que recibo
 draw(parsedFigures,newCtx);
-
-document.addEventListener('DOMContentLoaded', function () {
-        const visibilityRadios = document.querySelectorAll('.visibility');
-        const visibilityHiddenInput = document.querySelector('#visibility');
-
-        // Marcar automáticamente el radio button basado en el valor de visibilityHiddenInput
-        const visibilityValue = visibilityHiddenInput.value;
-        const selectedRadio = Array.from(visibilityRadios).find((radio) => radio.value === visibilityValue);
-
-        if (selectedRadio) {
-            selectedRadio.checked = true;
-        }
-
-        // Actualizar el campo oculto cuando cambia manualmente el radio button
-        visibilityRadios.forEach((radio) => {
-            radio.addEventListener('change', () => {
-                visibilityHiddenInput.value = radio.value;
-            });
-        });
-    });
