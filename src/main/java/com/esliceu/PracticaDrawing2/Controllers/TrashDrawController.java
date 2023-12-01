@@ -3,6 +3,7 @@ package com.esliceu.PracticaDrawing2.Controllers;
 import com.esliceu.PracticaDrawing2.DTO.DrawWithVersionDTO;
 import com.esliceu.PracticaDrawing2.Entities.User;
 import com.esliceu.PracticaDrawing2.Services.DrawService;
+import com.esliceu.PracticaDrawing2.utils.ObjectCounter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,6 +25,9 @@ public class TrashDrawController {
 
     @Autowired
     DrawService drawService;
+
+    @Autowired
+    ObjectCounter objectCounter;
     @GetMapping("/TrashDraw")
     public String TrashDrawController(Model model) {
         //Obtenemos el usuario actual
@@ -32,7 +36,7 @@ public class TrashDrawController {
         // Crear una lista para almacenar información sobre el dibujo y su versión
         List<DrawWithVersionDTO> drawWithVersionList = drawService.getDrawsTrash(user.getId());
         for (DrawWithVersionDTO drawWithVersion : drawWithVersionList){
-            int figureCount = countFiguresInJson(drawWithVersion.getFigures());
+            int figureCount = objectCounter.countFiguresInJson(drawWithVersion.getFigures());
             model.addAttribute("figuresCount", figureCount);
         }
 
@@ -54,23 +58,6 @@ public class TrashDrawController {
             }
     }
         return "redirect:/TrashDraw";
-    }
-
-    // Método para contar figuras
-    private int countFiguresInJson(String figures) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonNode = objectMapper.readTree(figures);
-
-            if (jsonNode.isArray()) {
-                return objectMapper.convertValue(jsonNode, List.class).size();
-            } else {
-                return 0;
-            }
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return 0;
-        }
     }
 }
 

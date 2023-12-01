@@ -49,15 +49,15 @@ public class DrawRepoImpl implements DrawRepo {
     //Metodo para guardar la version del dibujo.
     @Override
     public void saveVersion(Version version) {
-        jdbcTemplate.update("INSERT INTO version (id_draw, figures, modificationDate,id_user) VALUES (?, ?, NOW(),?)",
-                version.getId_draw(),version.getFigures(),version.getId_user()
+        jdbcTemplate.update("INSERT INTO version (id_draw, figures, numFigures, modificationDate,id_user) VALUES (?, ?, ?, NOW(),?)",
+                version.getId_draw(),version.getFigures(), version.getNumFigures() ,version.getId_user()
         );
     }
 
     //Metodo para mostrar las imagenes
     @Override
     public List<DrawWithVersionDTO> getDraws(int id) {
-        String sql = "SELECT draw.*, version.figures, version.modificationDate FROM draw JOIN version ON " +
+        String sql = "SELECT draw.*, version.figures, version.numFigures, version.modificationDate FROM draw JOIN version ON " +
                 "draw.id = version.id_draw WHERE (draw.visualization = 1 AND draw.inTheTrash = 0) " +
                 "OR (draw.owner_id = ? AND draw.inTheTrash = 0)";
         List<DrawWithVersionDTO> allDrawWhithVersion = jdbcTemplate.query(sql,
@@ -75,12 +75,13 @@ public class DrawRepoImpl implements DrawRepo {
 
     @Override
     public List<DrawWithVersionDTO> getDrawsTrash(int id) {
-        String sql = "SELECT draw.*, version.figures, version.modificationDate FROM draw JOIN version ON " +
+        String sql = "SELECT draw.*, version.figures, version.numFigures, version.modificationDate FROM draw JOIN version ON " +
                 "draw.id = version.id_draw WHERE (draw.visualization = 1 AND draw.inTheTrash = 1) " +
                 "OR (draw.owner_id = ? AND draw.inTheTrash = 1)";
         List<DrawWithVersionDTO> allDrawWhithVersion = jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper<>(DrawWithVersionDTO.class),id);
-        return allDrawWhithVersion;    }
+        return allDrawWhithVersion;
+    }
 
     //Metodo para crear permisos del usuario
     @Override
@@ -130,7 +131,8 @@ public class DrawRepoImpl implements DrawRepo {
             return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Version.class), drawId);
         } catch (EmptyResultDataAccessException e) {
             return null;
-        }    }
+        }
+    }
 
     /*
 

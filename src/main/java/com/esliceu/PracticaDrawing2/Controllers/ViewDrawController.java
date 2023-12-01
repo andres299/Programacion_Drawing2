@@ -22,24 +22,22 @@ public class ViewDrawController {
     DrawService drawService;
 
     @GetMapping("/ViewDraw")
-    public String ViewDraw(Model model, @RequestParam String drawName, @RequestParam int drawId)  {
+    public String ViewDraw(Model model, @RequestParam String drawName,
+                           @RequestParam int drawId)  {
         //Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
-        if (drawService.hasPermissionsReading(drawId, user.getId())) {
-            // Obtener el dibujo por su ID
-            Version selectedDraw = drawService.getVersionById(drawId);
 
-            // Estos atributos se enviarán a la página JSP asociada para poder mostrarlos.
-            model.addAttribute("selectedFiguresJson", selectedDraw.getFigures());
-            model.addAttribute("drawName", drawName);
+        // Obtener el dibujo por su ID
+        Version selectedDraw = drawService.getVersionById(drawId);
 
-            // Mostrar la vista si tiene permisos
-            return "ViewDraw";
-        } else {
-            // Si no tiene permisos, redirigir a otro lugar (por ejemplo, a una página de error)
-            return "redirect:/AllDraw";
-        }
-    }
+        // Estos atributos se enviarán a la página JSP asociada para poder mostrarlos.
+        model.addAttribute("selectedFiguresJson", selectedDraw.getFigures());
+        model.addAttribute("drawName", drawName);
+
+        // Mostrar la vista si tiene permisos
+        return "ViewDraw";
+
+}
 
     // Manejo de la solicitud POST para procesar el formulario de registro
     @PostMapping("/ViewDraw")

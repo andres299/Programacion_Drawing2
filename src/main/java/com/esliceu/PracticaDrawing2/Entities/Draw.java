@@ -17,6 +17,11 @@ public class Draw {
     public Draw() {
     }
 
+    public Draw(String nameDraw, int owner_id) {
+        this.nameDraw = nameDraw;
+        this.owner_id = owner_id;
+    }
+
     public Draw(String nameDraw, int owner_id, String creationDate, boolean visualization, boolean inTheTrash) {
         this.nameDraw = nameDraw;
         this.owner_id = owner_id;

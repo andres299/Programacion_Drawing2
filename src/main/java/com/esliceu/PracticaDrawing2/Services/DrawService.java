@@ -4,6 +4,7 @@ import com.esliceu.PracticaDrawing2.DTO.DrawWithVersionDTO;
 import com.esliceu.PracticaDrawing2.Entities.Draw;
 import com.esliceu.PracticaDrawing2.Entities.Version;
 import com.esliceu.PracticaDrawing2.Repos.DrawRepo;
+import com.esliceu.PracticaDrawing2.utils.ObjectCounter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,22 +16,20 @@ import java.util.UUID;
 public class DrawService {
     @Autowired
     DrawRepo drawRepo;
+
+    @Autowired
+    ObjectCounter objectCounter;
     // Método que genera un nombre aleatorio para una imagen.
     public String generateRandomName() {return "image_" + UUID.randomUUID().toString();}
 
     //Metodo para guardar el dibujo
     public Draw saveDraw(String newName, int owner_id) {
-        Draw draw = new Draw();
-        draw.setNameDraw(newName);
-        draw.setOwner_id(owner_id);
+        Draw draw = new Draw(newName,owner_id);
         return drawRepo.saveDraw(draw);
     }
     //Metodo para guardar el dibujo
     public void saveVersion(int drawId, String figures, int owner_id) {
-        Version version = new Version();
-        version.setId_draw(drawId);
-        version.setFigures(figures);
-        version.setId_user(owner_id);
+        Version version = new Version(drawId,figures,objectCounter.countFiguresInJson(figures),owner_id);
         drawRepo.saveVersion(version);
     }
 

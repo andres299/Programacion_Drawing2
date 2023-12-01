@@ -12,6 +12,7 @@ public class DrawWithVersionDTO {
     private boolean visualization;
     private boolean inTheTrash;
     private String figures;
+    private int numFigures;
     private String modificationDate;
 
     public DrawWithVersionDTO() {
@@ -71,6 +72,14 @@ public class DrawWithVersionDTO {
 
     public void setFigures(String figures) {
         this.figures = figures;
+    }
+
+    public int getNumFigures() {
+        return numFigures;
+    }
+
+    public void setNumFigures(int numFigures) {
+        this.numFigures = numFigures;
     }
 
     public String getModificationDate() {
