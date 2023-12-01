@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface DrawRepo {
     Draw saveDraw(Draw draw);
-    void saveVersion(Version version);
 
     List<DrawWithVersionDTO> getDraws(int id);
 
@@ -24,20 +23,5 @@ public interface DrawRepo {
 
     void restoreDraw(int id_draw);
 
-    boolean hasPermissionsReading(int drawId, int id_user);
-
     Version getVersionById(int drawId);
-
-     /*
-    void saveDraw(Draw draw);
-    List<Draw> getDraws();
-
-    void deleteDraw(int id, String login);
-
-    List<Draw> getDrawByUser(String login);
-
-    Draw getDrawById(int id);
-
-    void updateDraw(Draw existDraw);
-     */
 }

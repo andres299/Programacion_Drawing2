@@ -3,6 +3,7 @@ package com.esliceu.PracticaDrawing2.Controllers;
 import com.esliceu.PracticaDrawing2.Entities.Draw;
 import com.esliceu.PracticaDrawing2.Entities.User;
 import com.esliceu.PracticaDrawing2.Services.DrawService;
+import com.esliceu.PracticaDrawing2.Services.VersionService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,6 +26,9 @@ public class CanvasController {
     HttpSession session;
     @Autowired
     DrawService drawService;
+
+    @Autowired
+    VersionService versionService;
 
     @GetMapping("/CanvasDraw")
     public String CanvasDraw(Model model) {
@@ -54,7 +58,7 @@ public class CanvasController {
         int drawId = savedDraw.getId();
 
         // Guardar la versión
-        drawService.saveVersion(drawId, figures, owner_id);
+        versionService.saveVersion(drawId, figures, owner_id);
 
         return "CanvasDraw";
     }

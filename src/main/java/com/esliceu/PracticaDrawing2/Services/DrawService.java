@@ -27,11 +27,6 @@ public class DrawService {
         Draw draw = new Draw(newName,owner_id);
         return drawRepo.saveDraw(draw);
     }
-    //Metodo para guardar el dibujo
-    public void saveVersion(int drawId, String figures, int owner_id) {
-        Version version = new Version(drawId,figures,objectCounter.countFiguresInJson(figures),owner_id);
-        drawRepo.saveVersion(version);
-    }
 
     //Obtener una lista de los dibujos
     public List<DrawWithVersionDTO> getDraws(int id) {
@@ -66,6 +61,7 @@ public class DrawService {
         return drawRepo.getVersionById(drawId);
 
     }
+
     /*
 
     // Método para obtener una lista de dibujos hechos por un usuario.

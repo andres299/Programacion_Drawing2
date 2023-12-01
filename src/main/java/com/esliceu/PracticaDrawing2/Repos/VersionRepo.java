@@ -1,4 +1,8 @@
 package com.esliceu.PracticaDrawing2.Repos;
 
-public class VersionRepo {
+import com.esliceu.PracticaDrawing2.Entities.Version;
+
+public interface VersionRepo {
+    void saveVersion(Version version);
+
 }

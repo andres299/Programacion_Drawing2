@@ -46,14 +46,6 @@ public class DrawRepoImpl implements DrawRepo {
         return draw;
     }
 
-    //Metodo para guardar la version del dibujo.
-    @Override
-    public void saveVersion(Version version) {
-        jdbcTemplate.update("INSERT INTO version (id_draw, figures, numFigures, modificationDate,id_user) VALUES (?, ?, ?, NOW(),?)",
-                version.getId_draw(),version.getFigures(), version.getNumFigures() ,version.getId_user()
-        );
-    }
-
     //Metodo para mostrar las imagenes
     @Override
     public List<DrawWithVersionDTO> getDraws(int id) {
@@ -117,12 +109,6 @@ public class DrawRepoImpl implements DrawRepo {
         String sql = "UPDATE draw SET inTheTrash = 0 WHERE id = ?";
         jdbcTemplate.update(sql, id_draw);
     }
-
-    @Override
-    public boolean hasPermissionsReading(int drawId, int id_user) {
-        String checkPermissionsSql = "SELECT COUNT(*) FROM permissions WHERE id_draw = ? AND id_user = ? AND reading = 1";
-        int count = jdbcTemplate.queryForObject(checkPermissionsSql, Integer.class, drawId, id_user);
-        return count > 0;    }
 
     @Override
     public Version getVersionById(int drawId) {
