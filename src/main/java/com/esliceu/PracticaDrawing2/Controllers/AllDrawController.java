@@ -30,7 +30,7 @@ public class AllDrawController {
     public String AllDraw(Model model) {
         //La sesion del usuario actual
         User user = (User) session.getAttribute("user");
-        System.out.println(user.getId());
+
         // Crear una lista para almacenar información sobre el dibujo y su versión
         List<DrawWithVersionDTO> drawWithVersionList = drawService.getDraws(user.getId());
         for (DrawWithVersionDTO drawWithVersion : drawWithVersionList){
@@ -59,15 +59,16 @@ public class AllDrawController {
         }
     }
 
-    /*
     @PostMapping("/AllDraw")
     public String PostAllDraw(@RequestParam int id){
         //La sesion del usuario actual
-        String login = (String) session.getAttribute("login");
+        User user = (User) session.getAttribute("user");
+        //Metodo para actualizar la imagen a Papelera.
+        drawService.updateDraw(id, user.getId());
         //Metodo para borrar la imagen y nor redirige a AllDraw.
-        drawService.deleteDraw(id,login);
+        //drawService.deleteDraw(id,login);
         return "redirect:/AllDraw";
     }
-     */
+
 }
 

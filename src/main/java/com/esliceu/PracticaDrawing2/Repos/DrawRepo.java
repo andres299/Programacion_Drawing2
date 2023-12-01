@@ -12,6 +12,8 @@ public interface DrawRepo {
 
     List<DrawWithVersionDTO> getDraws(int id);
 
+    void updateDraw(int id, int id_user);
+
    
      /*
     void saveDraw(Draw draw);

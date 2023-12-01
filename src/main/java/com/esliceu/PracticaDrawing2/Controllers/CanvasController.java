@@ -51,7 +51,7 @@ public class CanvasController {
         Draw savedDraw = drawService.saveDraw(newName, owner_id);
         // Obtener la ID del dibujo recién creado
         int drawId = savedDraw.getId();
-        System.out.println(drawId);
+
         // Guardar la versión
         drawService.saveVersion(drawId, figures, owner_id);
         return "CanvasDraw";

@@ -38,6 +38,10 @@ public class DrawService {
         return drawRepo.getDraws(id);
     }
 
+    public void updateDraw(int id, int id_user) {
+        drawRepo.updateDraw(id,id_user);
+    }
+
     // Método para obtener todos los dibujos de la lista.
 
 

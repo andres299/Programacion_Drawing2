@@ -20,6 +20,7 @@ public class DrawRepoImpl implements DrawRepo {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
+    //Metodo para guardar el dibujo(draw) y obtener la id generada en la BBDD.
     @Override
     public Draw saveDraw(Draw draw) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -44,6 +45,7 @@ public class DrawRepoImpl implements DrawRepo {
         return draw;
     }
 
+    //Metodo para guardar la version del dibujo.
     @Override
     public void saveVersion(Version version) {
         jdbcTemplate.update("INSERT INTO version (id_draw, figures, modificationDate,id_user) VALUES (?, ?, NOW(),?)",
@@ -51,6 +53,7 @@ public class DrawRepoImpl implements DrawRepo {
         );
     }
 
+    //Metodo para mostrar las imagenes
     @Override
     public List<DrawWithVersionDTO> getDraws(int id) {
         String sql = "SELECT draw.*, version.figures, version.modificationDate FROM draw JOIN version ON " +
@@ -61,7 +64,13 @@ public class DrawRepoImpl implements DrawRepo {
         return allDrawWhithVersion;
     }
 
-
+    // Método para actualizar el campo intTheTrash en la tabla draw
+    @Override
+    public void updateDraw(int id, int id_user) {
+        // Aquí verificamos que el id_user es el propietario de la imagen antes de realizar la actualización
+        String sql = "UPDATE draw SET intTheTrash = 1 WHERE id = ? AND owner_id = ?";
+        jdbcTemplate.update(sql, id, id_user);
+    }
     /*
 
     @Override
