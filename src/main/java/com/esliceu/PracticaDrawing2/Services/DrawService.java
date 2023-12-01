@@ -18,7 +18,7 @@ public class DrawService {
     // Método que genera un nombre aleatorio para una imagen.
     public String generateRandomName() {return "image_" + UUID.randomUUID().toString();}
 
-    @Transactional
+
     public Draw saveDraw(String newName, int owner_id) {
         Draw draw = new Draw();
         draw.setNameDraw(newName);
@@ -38,36 +38,45 @@ public class DrawService {
         return drawRepo.getDraws(id);
     }
 
+    //Actualizar el dibujo
     public void updateDraw(int id, int id_user) {
         drawRepo.updateDraw(id,id_user);
     }
 
+    //Obtener una lista de los dibujos
     public List<DrawWithVersionDTO> getDrawsTrash(int id) {
         return drawRepo.getDrawsTrash(id);
     }
 
+    //Crear el usuario con permisos
     public void userPermissions(int drawId, int owner_id) {
         drawRepo.userPermissions(drawId,owner_id);
     }
 
+    //Metodo para ver si el usuario tiene permisos lectura o escitura del dibujo
+    public boolean hasPermissionsWriting(int id_draw, int id_user) {
+        return drawRepo.hasPermissionsWriting(id_draw,id_user);
+    }
+
+    public boolean hasPermissionsReading(int drawId, int id_user) {
+        return drawRepo.hasPermissionsReading(drawId,id_user);
+
+    }
+
+    //Metodo borrar el dibujo con su version
     public void deleteDraw(int id_draw) {
         drawRepo.deleteDraw(id_draw);
     }
 
+    //Metodo restaurar el dibujo
     public void restoreDraw(int id_draw) {drawRepo.restoreDraw(id_draw);}
 
-    public boolean hasPermissions(int id_draw, int id_user) {
-        return drawRepo.hasPermissions(id_draw,id_user);
+    //Metodo para obtener las figuras de la version del dibujo
+    public Version getVersionById(int drawId) {
+        return drawRepo.getVersionById(drawId);
+
     }
-
-    // Método para obtener todos los dibujos de la lista.
-
-
-/*
-    //Metodo para borrar un dibujo especifico.
-    public void deleteDraw(int id , String login) {
-        drawRepo.deleteDraw(id, login);
-    }
+    /*
 
     // Método para obtener una lista de dibujos hechos por un usuario.
     public List<Draw> getDrawsByUser(String login) {

@@ -46,7 +46,7 @@ public class TrashDrawController {
         //Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
 
-        if (drawService.hasPermissions(id, user.getId())){
+        if (drawService.hasPermissionsWriting(id, user.getId())){
             if ("delete".equals(action)) {
                 drawService.deleteDraw(id);
             } else if ("restore".equals(action)) {

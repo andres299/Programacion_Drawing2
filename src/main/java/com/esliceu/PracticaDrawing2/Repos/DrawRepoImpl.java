@@ -89,7 +89,7 @@ public class DrawRepoImpl implements DrawRepo {
     }
 
     @Override
-    public boolean hasPermissions(int id_draw, int id_user) {
+    public boolean hasPermissionsWriting(int id_draw, int id_user) {
         String checkPermissionsSql = "SELECT COUNT(*) FROM permissions WHERE id_draw = ? AND id_user = ? AND writing = 1";
         int count = jdbcTemplate.queryForObject(checkPermissionsSql, Integer.class, id_draw, id_user);
         return count > 0;
@@ -115,6 +115,12 @@ public class DrawRepoImpl implements DrawRepo {
         String sql = "UPDATE draw SET inTheTrash = 0 WHERE id = ?";
         jdbcTemplate.update(sql, id_draw);
     }
+
+    @Override
+    public boolean hasPermissionsReading(int drawId, int id_user) {
+        String checkPermissionsSql = "SELECT COUNT(*) FROM permissions WHERE id_draw = ? AND id_user = ? AND reading = 1";
+        int count = jdbcTemplate.queryForObject(checkPermissionsSql, Integer.class, drawId, id_user);
+        return count > 0;    }
 
     /*
 
