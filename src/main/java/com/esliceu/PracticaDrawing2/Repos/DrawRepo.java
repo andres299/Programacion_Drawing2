@@ -22,4 +22,8 @@ public interface DrawRepo {
     void deleteDraw(int id_draw);
 
     void restoreDraw(int id_draw);
+
+    boolean propietaryDraw(int idUser, int drawId);
+
+    boolean getVisibility(int drawId);
 }

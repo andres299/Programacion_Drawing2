@@ -109,6 +109,19 @@ public class DrawRepoImpl implements DrawRepo {
         String sql = "UPDATE draw SET inTheTrash = 0 WHERE id = ?";
         jdbcTemplate.update(sql, id_draw);
     }
+
+    @Override
+    public boolean propietaryDraw(int idUser, int drawId) {
+        String checkUserDraw = "SELECT COUNT(*) FROM draw WHERE id = ? AND owner_id = ?";
+        int count = jdbcTemplate.queryForObject(checkUserDraw, Integer.class, drawId, idUser);
+        return count > 0;
+    }
+
+    @Override
+    public boolean getVisibility(int drawId) {
+        String checkVisibilityDraw = "SELECT visualization FROM draw WHERE id = ?";
+        return jdbcTemplate.queryForObject(checkVisibilityDraw, boolean.class, drawId);
+         }
     /*
 
     @Override

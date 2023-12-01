@@ -42,7 +42,8 @@
         <td>
             <div class="button-container">
                 <form action="/ViewDraw" method="get">
-                    <input type="hidden" name="drawName" th:value="${draw}">
+                    <input type="hidden" name="drawId" th:value="${draw.id}" />
+                    <input type="hidden" name="drawName" th:value="${draw.nameDraw}">
                     <button class="view" type="submit">View</button>
                 </form>
                     <form action="/AllDraw" method="post">
