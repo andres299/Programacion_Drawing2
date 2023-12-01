@@ -87,6 +87,20 @@ li {
     background-color: rgb(1, 18, 253)
 }
 
+.restore{
+    width: 80px;
+    background-color: rgb(13, 227, 38);
+    color: #fff;
+    padding:10px;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: black;
+    display: inline-block;
+}
+
+.restore:hover{
+    background-color: rgb(2, 66, 15)
+}
 
 .container-title{
     background-color: #6A1A99;
