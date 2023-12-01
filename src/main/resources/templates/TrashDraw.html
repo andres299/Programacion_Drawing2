@@ -41,12 +41,14 @@
         <td th:text="${draw.owner_id}"></td>
         <td>
             <div class="button-container">
-                <form action="/AllDraw" method="post">
+                <form action="/TrashDraw" method="post">
                     <input type="hidden" name="id" th:value="${draw.id}">
+                    <input type="hidden" name="action" th:value="'delete'" />
                     <button class="delete" type="submit">Eliminar</button>
                 </form>
-                <form action="/ViewDraw" method="get">
-                    <input type="hidden" name="drawId" th:value="${draw.id}" />
+                <form action="/TrashDraw" method="post">
+                    <input type="hidden" name="id" th:value="${draw.id}" />
+                    <input type="hidden" name="action" th:value="'restore'" />
                     <button class="restore" type="submit">Restaurar</button>
                 </form>
             </div>

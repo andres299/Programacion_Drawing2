@@ -18,7 +18,12 @@ public interface DrawRepo {
 
     void userPermissions(int drawId, int owner_id);
 
-   
+    boolean hasPermissions(int id_draw, int id_user);
+
+    void deleteDraw(int id_draw);
+
+    void restoreDraw(int id_draw);
+
      /*
     void saveDraw(Draw draw);
     List<Draw> getDraws();

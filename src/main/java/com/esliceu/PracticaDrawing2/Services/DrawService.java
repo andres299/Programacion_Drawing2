@@ -50,6 +50,16 @@ public class DrawService {
         drawRepo.userPermissions(drawId,owner_id);
     }
 
+    public void deleteDraw(int id_draw) {
+        drawRepo.deleteDraw(id_draw);
+    }
+
+    public void restoreDraw(int id_draw) {drawRepo.restoreDraw(id_draw);}
+
+    public boolean hasPermissions(int id_draw, int id_user) {
+        return drawRepo.hasPermissions(id_draw,id_user);
+    }
+
     // Método para obtener todos los dibujos de la lista.
 
 

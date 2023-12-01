@@ -48,8 +48,6 @@ public class AllDrawController {
         User user = (User) session.getAttribute("user");
         //Metodo para actualizar la imagen a Papelera.
         drawService.updateDraw(id, user.getId());
-        //Metodo para borrar la imagen y nor redirige a AllDraw.
-        //drawService.deleteDraw(id,login);
         return "redirect:/AllDraw";
     }
 

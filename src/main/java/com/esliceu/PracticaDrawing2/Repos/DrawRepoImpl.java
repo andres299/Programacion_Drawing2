@@ -57,26 +57,26 @@ public class DrawRepoImpl implements DrawRepo {
     @Override
     public List<DrawWithVersionDTO> getDraws(int id) {
         String sql = "SELECT draw.*, version.figures, version.modificationDate FROM draw JOIN version ON " +
-                "draw.id = version.id_draw WHERE (draw.visualization = 1 AND draw.intTheTrash = 0) " +
-                "OR (draw.owner_id = ? AND draw.intTheTrash = 0)";
+                "draw.id = version.id_draw WHERE (draw.visualization = 1 AND draw.inTheTrash = 0) " +
+                "OR (draw.owner_id = ? AND draw.inTheTrash = 0)";
         List<DrawWithVersionDTO> allDrawWhithVersion = jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper<>(DrawWithVersionDTO.class),id);
         return allDrawWhithVersion;
     }
 
-    // Método para actualizar el campo intTheTrash en la tabla draw
+    // Método para actualizar el campo inTheTrash en la tabla draw
     @Override
     public void updateDraw(int id, int id_user) {
         // Aquí verificamos que el id_user es el propietario de la imagen antes de realizar la actualización
-        String sql = "UPDATE draw SET intTheTrash = 1 WHERE id = ? AND owner_id = ?";
+        String sql = "UPDATE draw SET inTheTrash = 1 WHERE id = ? AND owner_id = ?";
         jdbcTemplate.update(sql, id, id_user);
     }
 
     @Override
     public List<DrawWithVersionDTO> getDrawsTrash(int id) {
         String sql = "SELECT draw.*, version.figures, version.modificationDate FROM draw JOIN version ON " +
-                "draw.id = version.id_draw WHERE (draw.visualization = 1 AND draw.intTheTrash = 1) " +
-                "OR (draw.owner_id = ? AND draw.intTheTrash = 1)";
+                "draw.id = version.id_draw WHERE (draw.visualization = 1 AND draw.inTheTrash = 1) " +
+                "OR (draw.owner_id = ? AND draw.inTheTrash = 1)";
         List<DrawWithVersionDTO> allDrawWhithVersion = jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper<>(DrawWithVersionDTO.class),id);
         return allDrawWhithVersion;    }
@@ -87,6 +87,35 @@ public class DrawRepoImpl implements DrawRepo {
         String sql = "INSERT INTO permissions (id_draw, id_user, writing, reading) VALUES (?, ?, 1, 1)";
         jdbcTemplate.update(sql, drawId, owner_id);
     }
+
+    @Override
+    public boolean hasPermissions(int id_draw, int id_user) {
+        String checkPermissionsSql = "SELECT COUNT(*) FROM permissions WHERE id_draw = ? AND id_user = ? AND writing = 1";
+        int count = jdbcTemplate.queryForObject(checkPermissionsSql, Integer.class, id_draw, id_user);
+        return count > 0;
+    }
+
+    @Override
+    public void deleteDraw(int id_draw) {
+        // Eliminar de la tabla permissions
+        String deletePermissionsSql = "DELETE FROM permissions WHERE id_draw = ?";
+        jdbcTemplate.update(deletePermissionsSql, id_draw);
+
+        // Eliminar de la tabla version
+        String deleteVersionSql = "DELETE FROM version WHERE id_draw = ?";
+        jdbcTemplate.update(deleteVersionSql, id_draw);
+
+        // Eliminar de la tabla draw
+        String deleteDrawSql = "DELETE FROM draw WHERE id = ?";
+        jdbcTemplate.update(deleteDrawSql, id_draw);
+    }
+
+    @Override
+    public void restoreDraw(int id_draw) {
+        String sql = "UPDATE draw SET inTheTrash = 0 WHERE id = ?";
+        jdbcTemplate.update(sql, id_draw);
+    }
+
     /*
 
     @Override
