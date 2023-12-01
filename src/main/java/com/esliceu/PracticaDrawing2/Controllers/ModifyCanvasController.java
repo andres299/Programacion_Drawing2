@@ -64,6 +64,7 @@ public class ModifyCanvasController {
             return "ModifyCanvas";
         }
 
+
         //Si el nombre esta vacia , genera uno aleatorio
         String newName = drawName.isEmpty() ? drawService.generateRandomName() : drawName;
 
