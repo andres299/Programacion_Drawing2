@@ -5,6 +5,7 @@ import com.esliceu.PracticaDrawing2.Entities.Draw;
 import com.esliceu.PracticaDrawing2.Entities.Version;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -121,6 +122,15 @@ public class DrawRepoImpl implements DrawRepo {
         String checkPermissionsSql = "SELECT COUNT(*) FROM permissions WHERE id_draw = ? AND id_user = ? AND reading = 1";
         int count = jdbcTemplate.queryForObject(checkPermissionsSql, Integer.class, drawId, id_user);
         return count > 0;    }
+
+    @Override
+    public Version getVersionById(int drawId) {
+        String sql = "SELECT * FROM version WHERE id_draw = ? ORDER BY modificationDate DESC LIMIT 1";
+        try {
+            return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Version.class), drawId);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }    }
 
     /*
 
