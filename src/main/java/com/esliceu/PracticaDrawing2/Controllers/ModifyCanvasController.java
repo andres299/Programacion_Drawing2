@@ -4,6 +4,7 @@ import com.esliceu.PracticaDrawing2.Entities.Draw;
 import com.esliceu.PracticaDrawing2.Entities.User;
 import com.esliceu.PracticaDrawing2.Entities.Version;
 import com.esliceu.PracticaDrawing2.Services.DrawService;
+import com.esliceu.PracticaDrawing2.Services.VersionService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,13 +24,16 @@ public class ModifyCanvasController {
     @Autowired
     DrawService drawService;
 
+    @Autowired
+    VersionService versionService;
+
     @GetMapping("/ModifyCanvas")
     public String ModifyCanvas(Model model, @RequestParam String drawName,
                                @RequestParam int drawId) {
         //La sesion del usuario actual
         User user = (User) session.getAttribute("user");
         // Obtener el dibujo por su ID
-        Version selectedDraw = drawService.getVersionById(drawId);
+        Version selectedDraw = versionService.getVersionById(drawId);
 
         // Verificar si existDraw es nulo y si el usuario que creó la imagen es el que está intentando modificarla
         if (selectedDraw == null || !drawService.hasPermissionsWriting(drawId, user.getId())) {

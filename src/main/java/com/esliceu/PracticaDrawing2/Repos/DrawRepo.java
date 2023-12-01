@@ -22,6 +22,4 @@ public interface DrawRepo {
     void deleteDraw(int id_draw);
 
     void restoreDraw(int id_draw);
-
-    Version getVersionById(int drawId);
 }

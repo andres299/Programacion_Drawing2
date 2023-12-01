@@ -109,17 +109,6 @@ public class DrawRepoImpl implements DrawRepo {
         String sql = "UPDATE draw SET inTheTrash = 0 WHERE id = ?";
         jdbcTemplate.update(sql, id_draw);
     }
-
-    @Override
-    public Version getVersionById(int drawId) {
-        String sql = "SELECT * FROM version WHERE id_draw = ? ORDER BY modificationDate DESC LIMIT 1";
-        try {
-            return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Version.class), drawId);
-        } catch (EmptyResultDataAccessException e) {
-            return null;
-        }
-    }
-
     /*
 
     @Override

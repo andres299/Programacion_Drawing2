@@ -20,4 +20,9 @@ public class VersionService {
         Version version = new Version(drawId,figures,objectCounter.countFiguresInJson(figures),owner_id);
         versionRepo.saveVersion(version);
     }
+
+    //Metodo para obtener las figuras de la version del dibujo
+    public Version getVersionById(int drawId) {
+        return versionRepo.getVersionById(drawId);
+    }
 }

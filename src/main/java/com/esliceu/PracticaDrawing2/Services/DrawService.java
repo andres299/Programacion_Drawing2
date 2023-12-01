@@ -56,34 +56,4 @@ public class DrawService {
     //Metodo restaurar el dibujo
     public void restoreDraw(int id_draw) {drawRepo.restoreDraw(id_draw);}
 
-    //Metodo para obtener las figuras de la version del dibujo
-    public Version getVersionById(int drawId) {
-        return drawRepo.getVersionById(drawId);
-
-    }
-
-    /*
-
-    // Método para obtener una lista de dibujos hechos por un usuario.
-    public List<Draw> getDrawsByUser(String login) {
-        return drawRepo.getDrawByUser(login);
-    }
-
-    // Método para obtener un dibujo por su ID.
-    public Draw getDrawById(int id) {
-        return drawRepo.getDrawById(id);
-    }
-
-    // Método para actualizar un dibujo.
-    public void updateDraw(int drawId, String drawName, String originalCreationDate, String modificationDate, String figures, String login) {
-        Draw existDraw = new Draw();
-        existDraw.setId(drawId);
-        existDraw.setName(drawName);
-        existDraw.setCreationDate(originalCreationDate);
-        existDraw.setModificationDate(modificationDate);
-        existDraw.setFigures(figures);
-        existDraw.setCreatedByUser(login);
-        drawRepo.updateDraw(existDraw);
-    }
-     */
 }
