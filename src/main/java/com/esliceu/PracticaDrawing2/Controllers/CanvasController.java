@@ -28,6 +28,7 @@ public class CanvasController {
 
     @GetMapping("/CanvasDraw")
     public String CanvasDraw(Model model) {
+        //Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
         model.addAttribute("user", user.getLogin());
         return "CanvasDraw";
@@ -35,7 +36,7 @@ public class CanvasController {
 
     @PostMapping("/CanvasDraw")
     public String PostCanvasDraw(Model model, @RequestParam String figures, @RequestParam String NomImage) {
-        //Obtenemos el id atual
+        //Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
         int owner_id = user.getId();
 

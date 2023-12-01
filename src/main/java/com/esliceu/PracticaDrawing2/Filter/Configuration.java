@@ -12,6 +12,6 @@ public class Configuration implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry){
         registry.addInterceptor(sessionInterceptor)
                 .addPathPatterns("/CanvasDraw","/UserDraw","/AllDraw",
-                        "/ViewDraw","/ModifyCanvas");
+                        "/ViewDraw","/ModifyCanvas","/TrashDraw");
     }
 }

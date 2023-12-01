@@ -71,6 +71,15 @@ public class DrawRepoImpl implements DrawRepo {
         String sql = "UPDATE draw SET intTheTrash = 1 WHERE id = ? AND owner_id = ?";
         jdbcTemplate.update(sql, id, id_user);
     }
+
+    @Override
+    public List<DrawWithVersionDTO> getDrawsTrash(int id) {
+        String sql = "SELECT draw.*, version.figures, version.modificationDate FROM draw JOIN version ON " +
+                "draw.id = version.id_draw WHERE (draw.visualization = 1 AND draw.intTheTrash = 1) " +
+                "OR (draw.owner_id = ? AND draw.intTheTrash = 1)";
+        List<DrawWithVersionDTO> allDrawWhithVersion = jdbcTemplate.query(sql,
+                new BeanPropertyRowMapper<>(DrawWithVersionDTO.class),id);
+        return allDrawWhithVersion;    }
     /*
 
     @Override

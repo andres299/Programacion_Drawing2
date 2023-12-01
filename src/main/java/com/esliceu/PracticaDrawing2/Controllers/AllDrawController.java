@@ -42,6 +42,17 @@ public class AllDrawController {
         return "AllDraw";
     }
 
+    @PostMapping("/AllDraw")
+    public String PostAllDraw(@RequestParam int id){
+        //La sesion del usuario actual
+        User user = (User) session.getAttribute("user");
+        //Metodo para actualizar la imagen a Papelera.
+        drawService.updateDraw(id, user.getId());
+        //Metodo para borrar la imagen y nor redirige a AllDraw.
+        //drawService.deleteDraw(id,login);
+        return "redirect:/AllDraw";
+    }
+
     // Método para contar figuras
     private int countFiguresInJson(String figures) {
         try {
@@ -58,17 +69,5 @@ public class AllDrawController {
             return 0;
         }
     }
-
-    @PostMapping("/AllDraw")
-    public String PostAllDraw(@RequestParam int id){
-        //La sesion del usuario actual
-        User user = (User) session.getAttribute("user");
-        //Metodo para actualizar la imagen a Papelera.
-        drawService.updateDraw(id, user.getId());
-        //Metodo para borrar la imagen y nor redirige a AllDraw.
-        //drawService.deleteDraw(id,login);
-        return "redirect:/AllDraw";
-    }
-
 }
 

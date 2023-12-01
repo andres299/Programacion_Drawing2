@@ -42,6 +42,10 @@ public class DrawService {
         drawRepo.updateDraw(id,id_user);
     }
 
+    public List<DrawWithVersionDTO> getDrawsTrash(int id) {
+        return drawRepo.getDrawsTrash(id);
+    }
+
     // Método para obtener todos los dibujos de la lista.
 
 
