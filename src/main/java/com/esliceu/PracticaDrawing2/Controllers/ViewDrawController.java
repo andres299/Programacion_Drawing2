@@ -34,7 +34,7 @@ public class ViewDrawController {
         boolean OwnerDraw = draw.getOwner_id() == user.getId();
 
         // Obtener el dibujo por su ID
-        Version selectedDraw = versionService.getVersionById(draw.getId());
+        Version selectedDraw = drawService.getVersionById(draw.getId());
 
         // Estos atributos se enviarán a la página JSP asociada para poder mostrarlos.
         model.addAttribute("selectedFiguresJson", selectedDraw.getFigures());
