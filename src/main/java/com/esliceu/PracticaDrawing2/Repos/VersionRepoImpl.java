@@ -17,22 +17,6 @@ public class VersionRepoImpl implements VersionRepo{
                 version.getId_draw(),version.getFigures(), version.getNumFigures() ,version.getId_user()
         );
     }
-
-    @Override
-    public boolean isTheOwnerOfDraw(int drawId, int id_user) {
-        String checkPermissionsSql = "SELECT COUNT(*) FROM draw WHERE id = ? AND owner_id = ?";
-        int count = jdbcTemplate.queryForObject(checkPermissionsSql, Integer.class, drawId, id_user);
-        return count > 0;
-    }
-
-    @Override
-    public Version getVersionById(int drawId) {
-        String sql = "SELECT * FROM version WHERE id_draw = ? ORDER BY modificationDate DESC LIMIT 1";
-        try {
-            return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Version.class), drawId);
-        } catch (EmptyResultDataAccessException e) {
-            return null;
-        }
-    }
+    
 
 }
