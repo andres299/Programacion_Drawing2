@@ -23,7 +23,7 @@ public class ViewDrawController {
 
     @GetMapping("/ViewDraw")
     public String ViewDraw(Model model, @RequestParam String drawName,
-                           @RequestParam int drawId)  {
+                           @RequestParam int drawId, @RequestParam boolean visualization)  {
         //Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
 
@@ -41,7 +41,8 @@ public class ViewDrawController {
 
     // Manejo de la solicitud POST para procesar el formulario de registro
     @PostMapping("/ViewDraw")
-    public String PostViewDraw() {
+    public String PostViewDraw(Model model, @RequestParam String visibility) {
+        System.out.println(visibility);
         return "ViewDraw";
     }
 }

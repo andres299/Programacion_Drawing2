@@ -44,6 +44,7 @@
                 <form action="/ViewDraw" method="get">
                     <input type="hidden" name="drawId" th:value="${draw.id}" />
                     <input type="hidden" name="drawName" th:value="${draw.nameDraw}">
+                    <input type="hidden" name="visualization" th:value="${draw.visualization}">
                     <button class="view" type="submit">View</button>
                 </form>
                     <form action="/AllDraw" method="post">

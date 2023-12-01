@@ -64,20 +64,13 @@ const draw = (parsedFigures,ctx) => {
 //Llamo funcion draw pasandole las figuras que recibo
 draw(parsedFigures,newCtx);
 
-var botonEnviar = document.getElementById('sendButton');
+const visibilitys = document.querySelectorAll('.visibility');
+const visibility = document.querySelector('#visibility');
 
-botonEnviar.addEventListener('click', function () {
-    enviarSeleccion();
+visibilitys.forEach((radio) => {
+      radio.addEventListener('change', () => {
+          if (radio.checked) {
+             visibility.value = radio.value;
+         }
+   });
 });
-
-function enviarSeleccion() {
-    var radios = document.getElementsByName('visibility');
-    var seleccion = null;
-  
-    for (var i = 0; i < radios.length; i++) {
-      if (radios[i].checked) {
-        seleccion = radios[i].value;
-        break;
-      }
-    }
-}
