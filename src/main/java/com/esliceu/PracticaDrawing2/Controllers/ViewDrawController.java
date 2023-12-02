@@ -45,6 +45,15 @@ public class ViewDrawController {
         //Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
         System.out.println(jsonData);
+        String drawName = drawService.generateRandomName();
+        boolean visibility = false;
+        // Guardar el dibujo
+        Draw savedDraw = drawService.saveDraw(drawName, user.getId(), String.valueOf(visibility));
+        // Obtener la ID del dibujo recién creado
+        int drawId = savedDraw.getId();
+
+        // Guardar la versión
+        versionService.saveVersion(drawId, jsonData, user.getId());
         return "ViewDraw";
     }
 }
