@@ -1,0 +1,13 @@
+.container-title{
+    background-color: #6A1A99;
+    padding: 10px;
+    color: #fff;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+}
+
+.container-title h1 {
+    text-align: center;
+}
