@@ -2,7 +2,6 @@
 const newCanvas = document.getElementById("ViewCanvas");
 const newCtx = newCanvas.getContext("2d");
 const figuresDataElement = document.getElementById("selectedFigures").value;
-console.log(figuresDataElement);
 const parsedFigures = JSON.parse(figuresDataElement);
 
 // Función para dibujar figuras

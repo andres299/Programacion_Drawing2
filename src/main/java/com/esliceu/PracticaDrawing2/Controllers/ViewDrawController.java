@@ -44,11 +44,14 @@ public class ViewDrawController {
     public String PostViewDraw(Model model, @RequestParam String jsonData) {
         //Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
-        System.out.println(jsonData);
+
+        //Generemos un nombre aleatorio y estable la visibilidad por defecto
         String drawName = drawService.generateRandomName();
         boolean visibility = false;
+
         // Guardar el dibujo
         Draw savedDraw = drawService.saveDraw(drawName, user.getId(), String.valueOf(visibility));
+        
         // Obtener la ID del dibujo recién creado
         int drawId = savedDraw.getId();
 
