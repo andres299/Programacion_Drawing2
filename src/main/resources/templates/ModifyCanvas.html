@@ -19,7 +19,7 @@
     </nav>
 </div>
 <div class="container">
-    <form action="/ModifyCanvas" method="post" class="canvas-form" id="Formulario">
+    <section class="canvas-form" id="Formulario">
         <h1>Modify CanvasDraw</h1>
         <p>Bienvenido a mi página.</p>
         <p>Selecciona una forma:</p>
@@ -40,11 +40,11 @@
             <input type="checkbox" id="fillFigure" name="fillFigure">
             <label for="fillFigure">Rellenar figura</label>
         </div>
+        <input type="hidden" id="selectedFigures" name="selectedFiguresJson" th:value='${selectedFiguresJson}'>
+        <input type="hidden" name="drawId" id="drawId" th:value="${drawId}">
 
         <!-- Elementos ocultos
-        <input type="hidden" id="selectedFigures" name="selectedFiguresJson" th:value='${selectedFiguresJson}'>
         <input type="hidden" name="figures" id="figures" value="">
-        <input type="hidden" name="drawId" id="drawId" th:value="${drawId}">
         -->
         
         <label> Visibilidad:</label>
@@ -64,7 +64,7 @@
          </div><br>
 
         <button id="sendButton">Enviar</button>
-    </form>
+    </section>
     <div class="canvas-container">
         <canvas id="ModifyCanvas" width="400" height="300" class="canvas"></canvas>
 

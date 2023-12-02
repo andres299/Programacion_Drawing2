@@ -16,7 +16,8 @@ let figures = [];
 let isDrawingLine = false;
 let currentPath = [];
 let currentFigure = "circle";
-let visibility = ${visibility};
+let visibility = document.querySelector('input[name="type_visibility"]:checked').value;
+console.log(visibility);
 
 // Función para establecer la visibilidad
 function setVisibility(value) {
@@ -223,11 +224,10 @@ async function saveFigures() {
         formData.append("drawName", imageName);
 
         // Enviar las figuras y la imagen al servidor
-        const response = await fetch('/CanvasDraw', {
+        const response = await fetch('/ModifyCanvas', {
             method: 'POST',
             body: formData,
         });
-
         // Manejar la respuesta del servidor
         if (response.ok) {
             console.log('Operación exitosa');

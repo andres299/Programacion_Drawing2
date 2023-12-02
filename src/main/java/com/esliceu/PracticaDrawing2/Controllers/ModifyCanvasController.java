@@ -43,7 +43,7 @@ public class ModifyCanvasController {
 
         //Metodo para obtener la visibilidad
         boolean visibility = drawService.getVisibility(drawId);
-        System.out.println(visibility);
+
         // Convertir la cadena de figuras a una cadena JSON
         String selectedFiguresJson = selectedDraw.getFigures();
 
@@ -58,10 +58,16 @@ public class ModifyCanvasController {
 
     @PostMapping("/ModifyCanvas")
     public String PostModifyCanvas(Model model,
+                                   @RequestParam int drawId,
                                    @RequestParam String figures,
-                                   @RequestParam int drawId, @RequestParam String drawName) {
+                                    @RequestParam String visibility,
+                                    @RequestParam String drawName) {
         //La sesion del usuario actual
         User user = (User) session.getAttribute("user");
+        System.out.println(drawId);
+        System.out.println(figures);
+        System.out.println(visibility);
+        System.out.println(drawName);
 
         // Verificar si hay al menos una figura
         if (figures.isEmpty()) {
