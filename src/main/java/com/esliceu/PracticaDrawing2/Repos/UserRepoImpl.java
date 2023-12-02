@@ -38,4 +38,11 @@ public class UserRepoImpl implements UserRepo{
         String sql = "SELECT * FROM user WHERE login = ?";
         return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), login);
     }
+
+    @Override
+    public List<User> allUsers(int idUser) {
+        String sql = "SELECT * FROM user WHERE id <> ?";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class), idUser);
+    }
+
 }

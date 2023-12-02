@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
     @Autowired
@@ -32,4 +34,6 @@ public class UserService {
     public User user(String login) {
         return userRepo.user(login);
     }
+
+    public List<User> allUsers(int id_user) { return userRepo.allUsers(id_user);}
 }
