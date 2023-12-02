@@ -37,6 +37,7 @@ public class AllDrawController {
         List<DrawWithVersionDTO> drawWithVersionList = drawService.getDraws(user.getId());
         // Agregar la lista de DTOs al modelo
         model.addAttribute("allDraws", drawWithVersionList);
+        model.addAttribute("current_id",user.getId());
         return "AllDraw";
     }
 
@@ -44,10 +45,10 @@ public class AllDrawController {
     public String PostAllDraw(@RequestParam int id){
         //La sesion del usuario actual
         User user = (User) session.getAttribute("user");
-        if (drawService.hasPermissionsWriting(id, user.getId())){
-            //Metodo para actualizar la imagen a Papelera.
-            drawService.updateDraw(id, user.getId());
-        }
+
+        //Metodo para actualizar la imagen a Papelera.
+        drawService.updateDraw(id, user.getId());
+
         return "redirect:/AllDraw";
     }
 

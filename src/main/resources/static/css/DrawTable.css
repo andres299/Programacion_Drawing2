@@ -89,7 +89,7 @@ li {
 
 .share{
     width: 80px;
-    background-color: rgb(95, 119, 224);
+    background-color: rgb(82, 82, 83);
     color: #fff;
     padding:10px;
     border-radius: 5px;
@@ -99,7 +99,7 @@ li {
 }
 
 .share:hover{
-    background-color: rgb(1, 18, 253)
+    background-color: rgb(2, 2, 2)
 }
 
 .restore{

@@ -55,7 +55,7 @@
                         <input type="hidden" name="drawName" th:value="${draw.nameDraw}">
                         <button class="modify" type="submit">Modify</button>
                     </form>
-                    <form action="/ShareDraw" method="get">
+                    <form action="/ShareDraw" method="get" th:if="${current_id eq draw.owner_id}">
                         <input type="hidden" name="drawId" th:value="${draw.id}" />
                         <button class="share" type="submit">Share</button>
                     </form>
