@@ -26,4 +26,6 @@ public interface DrawRepo {
     boolean propietaryDraw(int idUser, int drawId);
 
     boolean getVisibility(int drawId);
+
+    void updateVisibility(int drawId, boolean visibility);
 }

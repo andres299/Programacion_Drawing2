@@ -123,6 +123,12 @@ public class DrawRepoImpl implements DrawRepo {
         String checkVisibilityDraw = "SELECT visualization FROM draw WHERE id = ?";
         return jdbcTemplate.queryForObject(checkVisibilityDraw, boolean.class, drawId);
          }
+
+    @Override
+    public void updateVisibility(int drawId, boolean visibility) {
+        String sql = "UPDATE draw SET visualization = ? WHERE id = ?";
+        jdbcTemplate.update(sql, visibility, drawId);
+    }
     /*
 
     @Override

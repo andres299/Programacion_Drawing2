@@ -70,4 +70,12 @@ public class DrawService {
     public boolean getVisibility(int drawId) {
         return drawRepo.getVisibility(drawId);
     }
+
+    public void updateVisibility(int drawId, String visibility) {
+        drawRepo.updateVisibility(drawId,convertToBoolean(visibility));
+    }
+
+    public static boolean convertToBoolean(String visibility) {
+        return "public".equalsIgnoreCase(visibility);
+    }
 }

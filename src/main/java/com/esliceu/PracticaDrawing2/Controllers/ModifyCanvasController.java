@@ -62,22 +62,27 @@ public class ModifyCanvasController {
                                    @RequestParam String figures,
                                     @RequestParam String visibility,
                                     @RequestParam String drawName) {
-        //La sesion del usuario actual
+        //Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
-        System.out.println(drawId);
-        System.out.println(figures);
-        System.out.println(visibility);
-        System.out.println(drawName);
+        int owner_id = user.getId();
 
+        //Comprobar si las figuras estan vacias
+        if (figures.isEmpty()) {
+            model.addAttribute("error", "No se han dibujado figuras. Debes dibujar al menos una figura.");
+            return "CanvasDraw";
+        }
         // Verificar si hay al menos una figura
         if (figures.isEmpty()) {
             model.addAttribute("error", "No se han dibujado figuras. Debes dibujar al menos una figura.");
             return "ModifyCanvas";
         }
 
-
         //Si el nombre esta vacia , genera uno aleatorio
         String newName = drawName.isEmpty() ? drawService.generateRandomName() : drawName;
+        //Actualizar el draw
+        drawService.updateVisibility(drawId, visibility);
+        // Guardar la versión
+        versionService.saveVersion(drawId, figures, owner_id);
 
         //Actualizar los datos del dibujo
         return "redirect:/AllDraw";
