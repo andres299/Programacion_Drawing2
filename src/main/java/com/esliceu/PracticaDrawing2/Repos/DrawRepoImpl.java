@@ -50,8 +50,16 @@ public class DrawRepoImpl implements DrawRepo {
     //Metodo para mostrar las imagenes
     @Override
     public List<DrawWithVersionDTO> getDraws(int id) {
+        /*
         String sql = "SELECT draw.*, version.figures, version.numFigures, version.modificationDate FROM draw JOIN version ON " +
                 "draw.id = version.id_draw WHERE (draw.visualization = 1 AND draw.inTheTrash = 0) " +
+                "OR (draw.owner_id = ? AND draw.inTheTrash = 0)";
+         */
+        String sql = "SELECT draw.*, version.figures, version.numFigures, version.modificationDate " +
+                "FROM draw JOIN (SELECT id_draw, MAX(modificationDate) AS maxModificationDate " +
+                "FROM version GROUP BY id_draw) AS latest_version ON draw.id = latest_version.id_draw " +
+                "JOIN version ON draw.id = version.id_draw AND latest_version.maxModificationDate = " +
+                "version.modificationDate WHERE (draw.visualization = 1 AND draw.inTheTrash = 0) " +
                 "OR (draw.owner_id = ? AND draw.inTheTrash = 0)";
         List<DrawWithVersionDTO> allDrawWhithVersion = jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper<>(DrawWithVersionDTO.class),id);
