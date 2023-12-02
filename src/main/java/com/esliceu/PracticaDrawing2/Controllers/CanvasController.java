@@ -44,7 +44,6 @@ public class CanvasController {
         //Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
         int owner_id = user.getId();
-        System.out.println(visibility);
 
         //Comprobar si las figuras estan vacias
         if (figures.isEmpty()) {

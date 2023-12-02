@@ -16,7 +16,14 @@ let figures = [];
 let isDrawingLine = false;
 let currentPath = [];
 let currentFigure = "circle";
-let visibility = document.querySelector('input[name="type_visibility"]:checked').value;
+let visibility = document.querySelector('input[name="type_visibility"]:checked');
+// Verifica si hay algún botón de opción seleccionado
+if (visibility) {
+  visibility = visibility.value;
+} else {
+  // En caso de que no haya ninguno seleccionado, asigna un valor predeterminado
+  visibility = 'private'; // o 'private', según tu lógica predeterminada
+}
 console.log(visibility);
 
 // Función para establecer la visibilidad
