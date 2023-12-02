@@ -45,6 +45,15 @@
         <input type="hidden" id="selectedFigures" name="selectedFiguresJson" th:value='${selectedFiguresJson}'>
         <input type="hidden" name="figures" id="figures" value="">
         <input type="hidden" name="drawId" id="drawId" th:value="${drawId}">
+        
+        <label> Visibilidad:</label>
+        <div class="radio-label">
+            <input type="radio" name="type_visibility" class="visibility" value="public" th:checked="${visibility eq 'public'}" onclick="setVisibility('public')"> Público
+        </div>
+        <div class="radio-label">
+            <input type="radio" name="type_visibility" class="visibility" value="private" th:checked="${visibility eq 'private' or visibility eq null}" onclick="setVisibility('private')"> Privado
+        </div>
+        <div class="separador"></div>
 
         <label for="drawName">Nombre de la imagen:</label>
         <input type="text" name="drawName" id="drawName" th:value="${drawName}"><br>

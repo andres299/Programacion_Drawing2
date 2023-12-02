@@ -183,3 +183,16 @@ canvas {
 .error{
     color: red;
 }
+
+.radio-label {
+  display: flex;
+  align-items: center;
+}
+
+.radio-label input {
+    margin-right: 5px;
+}
+
+.separador {
+    margin-top: 10px;
+}
