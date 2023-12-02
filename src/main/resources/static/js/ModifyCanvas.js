@@ -16,31 +16,16 @@ let figures = [];
 let isDrawingLine = false;
 let currentPath = [];
 let currentFigure = "circle";
-let visibility = document.querySelector('input[name="type_visibility"]:checked');
-// Verifica si hay algún botón de opción seleccionado
-if (visibility) {
-  visibility = visibility.value;
-} else {
-  // En caso de que no haya ninguno seleccionado, asigna un valor predeterminado
-  visibility = 'private'; // o 'private', según tu lógica predeterminada
-}
-console.log(visibility);
+const visibilitys = document.querySelectorAll('.visibility');
+const visibility = document.querySelector('#visibility');
 
-// Función para establecer la visibilidad
-function setVisibility(value) {
-    visibility = value;
-}
-
-// Marcar la opción inicial según el valor del modelo
-document.addEventListener("DOMContentLoaded", function() {
-    const radios = document.getElementsByName("type_visibility");
-
-    radios.forEach(function(radio) {
-        if ((radio.value === "public" && visibility) || (radio.value === "private" && !visibility)) {
-            radio.checked = true;
+visibilitys.forEach((radio) => {
+    radio.addEventListener('change',() => {
+        if(radio.checked){
+            visibility.value = radio.value;
         }
-    });
-});
+    })
+})
 
 // Función para eliminar una figura
 const removeFigure = (i) => {
@@ -223,8 +208,11 @@ async function saveFigures() {
         // Adjuntar las figuras en formato JSON
         formData.append("figures", figuresJSON);
 
-        // Adjuntar la visibilidad
-        formData.append("visibility", visibility);
+        // Obtener el valor de visibilidad seleccionado
+        const selectedVisibility = document.querySelector('input[name="type_visibility"]:checked').value;
+        // Actualizar el valor del campo oculto de visibilidad
+        document.getElementById("visibility").value = selectedVisibility;
+        formData.append("visibility", selectedVisibility);
 
         // Obtener el valor del nombre
         const imageName = document.getElementById("drawName").value;

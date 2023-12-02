@@ -40,20 +40,21 @@
             <input type="checkbox" id="fillFigure" name="fillFigure">
             <label for="fillFigure">Rellenar figura</label>
         </div>
-        <input type="hidden" id="selectedFigures" name="selectedFiguresJson" th:value='${selectedFiguresJson}'>
-        <input type="hidden" name="drawId" id="drawId" th:value="${drawId}">
-
         <!-- Elementos ocultos
         <input type="hidden" name="figures" id="figures" value="">
         -->
-        
+        <input type="hidden" id="selectedFigures" name="selectedFiguresJson" th:value='${selectedFiguresJson}'>
+        <input type="hidden" name="drawId" id="drawId" th:value="${drawId}">
+        <input type="hidden" id="visibility" name="visibility" th:value="${visibility}">
+
         <label> Visibilidad:</label>
         <div class="radio-label">
-            <input type="radio" name="type_visibility" class="visibility" value="public" th:checked="${visibility eq 'public'}" onclick="setVisibility('public')"> Público
+            <input type="radio" name="type_visibility" class="visibility" value="public" th:checked="${visibility}"> Público
         </div>
         <div class="radio-label">
-            <input type="radio" name="type_visibility" class="visibility" value="private" th:checked="${visibility eq 'private' or visibility eq null}" onclick="setVisibility('private')"> Privado
+            <input type="radio" name="type_visibility" class="visibility" value="private" th:checked="${!visibility}"> Privado
         </div>
+
         <div class="separador"></div>
 
         <label for="drawName">Nombre de la imagen:</label>
