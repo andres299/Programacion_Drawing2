@@ -28,12 +28,13 @@ public class DrawRepoImpl implements DrawRepo {
 
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(
-                    "INSERT INTO draw (nameDraw, owner_id, creationDate) VALUES (?, ?, NOW())",
+                    "INSERT INTO draw (nameDraw, owner_id, creationDate, visualization) VALUES (?, ?, NOW(), ?)",
                     Statement.RETURN_GENERATED_KEYS
             );
 
             ps.setString(1, draw.getNameDraw());
             ps.setInt(2, draw.getOwner_id());
+            ps.setBoolean(3, draw.isVisualization());
             return ps;
         }, keyHolder);
 

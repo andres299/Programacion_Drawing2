@@ -23,8 +23,15 @@ public class DrawService {
     public String generateRandomName() {return "image_" + UUID.randomUUID().toString();}
 
     //Metodo para guardar el dibujo
-    public Draw saveDraw(String newName, int owner_id) {
-        Draw draw = new Draw(newName,owner_id);
+    public Draw saveDraw(String newName, int owner_id, String visibility) {
+        //Pasar a booleano el String visibility
+        boolean booleanVisibility;
+        if ("public".equalsIgnoreCase(visibility)) {
+            booleanVisibility = true;
+        } else {
+            booleanVisibility = false;
+        }
+        Draw draw = new Draw(newName,owner_id,booleanVisibility);
         return drawRepo.saveDraw(draw);
     }
 

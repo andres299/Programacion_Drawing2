@@ -191,14 +191,12 @@ async function saveFigures() {
     try {
         // Convierte el array "figures" a una cadena JSON
         var figuresJSON = JSON.stringify(figures);
-        console.log('Figuras JSON:', figuresJSON);
 
         const formData = new FormData();
         // Adjuntar las figuras en formato JSON
         formData.append("figures", figuresJSON);
 
-        console.log(visibility)
-        // Adjuntar la visibilidad al formulario
+        // Adjuntar la visibilidad
         formData.append("visibility", visibility);
 
         // Obtener el valor del nombre desde un campo de entrada en tu formulario
