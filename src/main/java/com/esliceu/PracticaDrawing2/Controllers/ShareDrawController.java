@@ -26,13 +26,18 @@ public class ShareDrawController {
            return "redirect:/AllDraw";
         }
         List<User> users = userService.allUsers(user.getId());
+        model.addAttribute("users",users);
         model.addAttribute("drawId",drawId);
         return "ShareDraw";
     }
 
     // Manejo de la solicitud POST para procesar el formulario de registro
     @PostMapping("/ShareDraw")
-    public String PostShareDraw(Model model){
-        return "ShareDraw";
+    public String PostShareDraw(Model model,@RequestParam int drawId, @RequestParam int userId,
+                                @RequestParam String permission){
+        System.out.println(drawId);
+        System.out.println(userId);
+        System.out.println(permission);
+        return "redirect:/AllDraw";
     }
 }

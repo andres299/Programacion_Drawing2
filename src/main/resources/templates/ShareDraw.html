@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Permisos los Dibujos</title>
     <link rel="stylesheet" href="/css/CanvasDrawStyle.css">
-    <link rel="stylesheet" href="/css/ShareDrawStyle.css">
+    <link rel="stylesheet" href="/css/DrawTable.css">
     <script src="https://kit.fontawesome.com/2684e8a577.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -18,7 +18,41 @@
     </nav>
 </div>
 <div class="container-title">
-    <h1>Permisos Dibujos</h1>
+  <h1>Permisos Dibujos</h1>
 </div>
+
+<table>
+      <tr>
+         <th>ID</th>
+         <th>Login</th>
+         <th>Nombre</th>
+         <th>Permisos</th>
+      <th>Enviar</th>
+      </tr>
+      <th:each th:each="user : ${users}">
+           <tr>
+              <td th:text="${user.id}"></td>
+              <td th:text="${user.login}"></td>
+              <td th:text="${user.name}"></td>
+              <td>
+                  <select name="permisos" id="permisos" onchange="actualizarCampoOculto(this)">
+                      <option value="lectura">Lectura</option>
+                      <option value="escritura">Escritura</option>
+                  </select>
+              </td>
+              <td>
+                  <form action="/ShareDraw" >
+                    <input type="hidden" name="drawId" th:value="${drawId}"/>
+                    <input type="hidden" name="userId" th:value="${user.id}"/>
+                    <input type="hidden" name="permission" id="permission"/>
+
+                  <button type="button" class="permission">Enviar Permisos</button>
+                  </form>
+              </td>
+           </tr>
+      </th:each>
+</table>
+</form>
+<script src="/js/ShareDraw.js"></script>
 </body>
 </html>

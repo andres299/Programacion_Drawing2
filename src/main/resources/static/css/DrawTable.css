@@ -130,3 +130,19 @@ li {
 .container-title h1 {
     text-align: center;
 }
+
+
+.permission{
+    width: 80px;
+    background-color: rgb(13, 227, 38);
+    color: #fff;
+    padding:10px;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: black;
+    display: inline-block;
+}
+
+.permission:hover{
+    background-color: rgb(2, 66, 15)
+}
