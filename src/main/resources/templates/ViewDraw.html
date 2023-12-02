@@ -24,15 +24,7 @@
     </div>
     <input type="hidden" id="selectedFigures" name="selectedFiguresJson" th:value="${selectedFiguresJson}" />
     <canvas id="ViewCanvas" class="canvas" width="400" height="300"></canvas>
-
-    <form th:if="${OwnerDraw == true}" action="/ViewDraw" method="post" class="canvas-form">
-        <label for="visibility">Visibilidad:</label>
-        <input type="radio" name="type_visibility" class="visibility" value="public" th:checked="${visibility}"> Público
-        <input type="radio" name="type_visibility" class="visibility" value="private" th:checked="${not visibility}"> Privado
-        <input type="hidden" id="visibility" name="visibility" th:value="${visualization}">
-
-        <button id="sendButton" type="submit">Enviar</button>
-    </form>
+    <button id="copyButton" class="copyButton">Copiar</button>
 
 </div>
 <script src="/js/ViewCanvas.js"></script>

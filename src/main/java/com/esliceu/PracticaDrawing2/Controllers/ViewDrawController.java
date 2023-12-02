@@ -27,9 +27,6 @@ public class ViewDrawController {
     VersionService versionService;
     @GetMapping("/ViewDraw")
     public String ViewDraw(Model model, @RequestParam int drawId , @RequestParam String drawName)  {
-        //Obtenemos el usuario actual
-        User user = (User) session.getAttribute("user");
-
         // Obtener el dibujo por su ID
         Version selectedDraw = versionService.getVersionById(drawId);
 
@@ -44,7 +41,10 @@ public class ViewDrawController {
 
     // Manejo de la solicitud POST para procesar el formulario de registro
     @PostMapping("/ViewDraw")
-    public String PostViewDraw(Model model) {
+    public String PostViewDraw(Model model, @RequestParam String jsonData) {
+        //Obtenemos el usuario actual
+        User user = (User) session.getAttribute("user");
+        System.out.println(jsonData);
         return "ViewDraw";
     }
 }

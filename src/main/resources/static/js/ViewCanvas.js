@@ -63,3 +63,17 @@ const draw = (parsedFigures,ctx) => {
 
 //Llamo funcion draw pasandole las figuras que recibo
 draw(parsedFigures,newCtx);
+
+document.getElementById("copyButton").addEventListener("click", function() {
+    // Crear un objeto FormData
+        const formData = new FormData();
+
+    // Convertir el JSON a cadena y agregarlo al FormData
+    const jsonString = JSON.stringify(figuresDataElement);
+    formData.append("jsonData", jsonString);
+    // Realizar una solicitud Fetch para enviar los datos al servidor
+       fetch('/ViewDraw', {
+            method: 'POST',
+            body: formData
+    })
+});
