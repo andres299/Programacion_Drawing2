@@ -30,18 +30,12 @@ public class ViewDrawController {
         //Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
 
-        //Metodo para comprobar si el usuario es el que ha creado la imagen
-        boolean OwnerDraw = drawService.propietaryDraw(user.getId(),drawId);
         // Obtener el dibujo por su ID
         Version selectedDraw = versionService.getVersionById(drawId);
-        //Metodo para obtener la visibilidad
-        boolean visibility = drawService.getVisibility(drawId);
 
         // Estos atributos se enviarán a la página JSP asociada para poder mostrarlos.
         model.addAttribute("selectedFiguresJson", selectedDraw.getFigures());
         model.addAttribute("drawName", drawName);
-        model.addAttribute("OwnerDraw", OwnerDraw);
-        model.addAttribute("visibility", visibility);
 
         // Mostrar la vista si tiene permisos
         return "ViewDraw";
@@ -50,8 +44,7 @@ public class ViewDrawController {
 
     // Manejo de la solicitud POST para procesar el formulario de registro
     @PostMapping("/ViewDraw")
-    public String PostViewDraw(Model model, @RequestParam String visibility) {
-        System.out.println(visibility);
+    public String PostViewDraw(Model model) {
         return "ViewDraw";
     }
 }

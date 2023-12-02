@@ -41,6 +41,9 @@ public class ModifyCanvasController {
             return "redirect:/AllDraw";
         }
 
+        //Metodo para obtener la visibilidad
+        //boolean visibility = drawService.getVisibility(drawId);
+
         // Convertir la cadena de figuras a una cadena JSON
         String selectedFiguresJson = selectedDraw.getFigures();
 
