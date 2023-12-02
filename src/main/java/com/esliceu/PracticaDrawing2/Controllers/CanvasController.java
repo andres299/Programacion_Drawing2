@@ -39,11 +39,12 @@ public class CanvasController {
     }
 
     @PostMapping("/CanvasDraw")
-    public String PostCanvasDraw(Model model, @RequestParam String figures, @RequestParam String NomImage) {
+    public String PostCanvasDraw(Model model, @RequestParam String figures, @RequestParam String NomImage,
+                                 @RequestParam String visibility) {
         //Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
         int owner_id = user.getId();
-
+        System.out.println(visibility);
         if (figures.isEmpty()) {
             model.addAttribute("error", "No se han dibujado figuras. Debes dibujar al menos una figura.");
             return "CanvasDraw";

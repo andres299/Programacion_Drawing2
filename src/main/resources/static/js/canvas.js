@@ -15,6 +15,14 @@ let isDrawingLine = false;
 let currentPath = [];
 let currentFigure = "circle";
 
+// Declaración de la variable visibility
+let visibility = "private";
+
+// Función para establecer la visibilidad
+function setVisibility(value) {
+    visibility = value;
+}
+
 // Función para eliminar una figura
 const removeFigure = (i) => {
     figures.splice(i, 1);
@@ -172,6 +180,7 @@ clearButton.addEventListener("click", () => {
     figures = [];
     render(figures);
 });
+
 // Event listener para el botón de guardar
 saveButton.addEventListener("click", () => {
     saveFigures();
@@ -187,6 +196,10 @@ async function saveFigures() {
         const formData = new FormData();
         // Adjuntar las figuras en formato JSON
         formData.append("figures", figuresJSON);
+
+        console.log(visibility)
+        // Adjuntar la visibilidad al formulario
+        formData.append("visibility", visibility);
 
         // Obtener el valor del nombre desde un campo de entrada en tu formulario
         const imageName = document.getElementById("NomImage").value;

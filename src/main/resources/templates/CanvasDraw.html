@@ -41,6 +41,11 @@
             <label for="fillFigure">Rellenar figura</label>
         </div>
 
+        <label> Visibilidad:</label>
+        <input type="radio" name="type_visibility" class="visibility" value="public" th:checked="${visibility eq 'public'}" onclick="setVisibility('public')"> Público
+        <input type="radio" name="type_visibility" class="visibility" value="private" th:checked="${visibility eq 'private' or visibility eq null}" onclick="setVisibility('private')"> Privado
+
+
         <label for="NomImage">Nombre de la imagen:</label>
         <input type="text" name="NomImage" id="NomImage"><br>
 
