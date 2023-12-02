@@ -16,6 +16,23 @@ let figures = [];
 let isDrawingLine = false;
 let currentPath = [];
 let currentFigure = "circle";
+let visibility = ${visibility};
+
+// Función para establecer la visibilidad
+function setVisibility(value) {
+    visibility = value;
+}
+
+// Marcar la opción inicial según el valor del modelo
+document.addEventListener("DOMContentLoaded", function() {
+    const radios = document.getElementsByName("type_visibility");
+
+    radios.forEach(function(radio) {
+        if ((radio.value === "public" && visibility) || (radio.value === "private" && !visibility)) {
+            radio.checked = true;
+        }
+    });
+});
 
 // Función para eliminar una figura
 const removeFigure = (i) => {
@@ -179,12 +196,45 @@ clearButton.addEventListener("click", () => {
     render(figures);
 });
 
-//Enviar los datos
+// Event listener para el botón de guardar
 saveButton.addEventListener("click", () => {
-    // Convierte el array "figures" a una cadena JSON
-    var figuresJSON = JSON.stringify(figures);
-    // Asigna la cadena JSON al campo oculto "figures"
-    document.getElementById("figures").value = figuresJSON;
-    // Enviar el formulario para procesar los datos en el servlet
-    document.getElementById("Formulario").submit();
+    saveFigures();
 });
+
+// Función para guardar figuras
+async function saveFigures() {
+    try {
+        // Convierte el array "figures" a una cadena JSON
+        var figuresJSON = JSON.stringify(figures);
+        const formData = new FormData();
+
+        //Obtener el id del dibujo
+        const drawId = document.getElementById("drawId").value;
+        formData.append("drawId", drawId);
+
+        // Adjuntar las figuras en formato JSON
+        formData.append("figures", figuresJSON);
+
+        // Adjuntar la visibilidad
+        formData.append("visibility", visibility);
+
+        // Obtener el valor del nombre
+        const imageName = document.getElementById("drawName").value;
+        formData.append("drawName", imageName);
+
+        // Enviar las figuras y la imagen al servidor
+        const response = await fetch('/CanvasDraw', {
+            method: 'POST',
+            body: formData,
+        });
+
+        // Manejar la respuesta del servidor
+        if (response.ok) {
+            console.log('Operación exitosa');
+        } else {
+            console.error('Error en la solicitud:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error al realizar la solicitud:', error);
+    }
+}

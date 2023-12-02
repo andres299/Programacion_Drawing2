@@ -199,7 +199,7 @@ async function saveFigures() {
         // Adjuntar la visibilidad
         formData.append("visibility", visibility);
 
-        // Obtener el valor del nombre desde un campo de entrada en tu formulario
+        // Obtener el valor del nombre
         const imageName = document.getElementById("NomImage").value;
         formData.append("NomImage", imageName);
 

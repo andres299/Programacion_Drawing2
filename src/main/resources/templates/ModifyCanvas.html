@@ -41,17 +41,18 @@
             <label for="fillFigure">Rellenar figura</label>
         </div>
 
-        <!-- Elementos ocultos-->
+        <!-- Elementos ocultos
         <input type="hidden" id="selectedFigures" name="selectedFiguresJson" th:value='${selectedFiguresJson}'>
         <input type="hidden" name="figures" id="figures" value="">
         <input type="hidden" name="drawId" id="drawId" th:value="${drawId}">
+        -->
         
         <label> Visibilidad:</label>
         <div class="radio-label">
-            <input type="radio" name="type_visibility" class="visibility" value="public" th:checked="${visibility eq 'public'}" onclick="setVisibility('public')"> Público
+            <input type="radio" name="type_visibility" class="visibility" value="public" th:checked="${visibility}" onclick="setVisibility(true)"> Público
         </div>
         <div class="radio-label">
-            <input type="radio" name="type_visibility" class="visibility" value="private" th:checked="${visibility eq 'private' or visibility eq null}" onclick="setVisibility('private')"> Privado
+            <input type="radio" name="type_visibility" class="visibility" value="private" th:checked="${!visibility}" onclick="setVisibility(false)"> Privado
         </div>
         <div class="separador"></div>
 

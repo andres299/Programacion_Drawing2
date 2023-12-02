@@ -51,7 +51,7 @@ public class ViewDrawController {
 
         // Guardar el dibujo
         Draw savedDraw = drawService.saveDraw(drawName, user.getId(), String.valueOf(visibility));
-        
+
         // Obtener la ID del dibujo recién creado
         int drawId = savedDraw.getId();
 
