@@ -41,12 +41,11 @@
                   </select>
               </td>
               <td>
-                  <form action="/ShareDraw" >
+                  <form action="/ShareDraw" method="post">
                     <input type="hidden" name="drawId" th:value="${drawId}"/>
                     <input type="hidden" name="userId" th:value="${user.id}"/>
-                    <input type="hidden" name="permission" id="permission"/>
-
-                  <button type="button" class="permission">Enviar Permisos</button>
+                    <input type="hidden" name="permission" id="permission" value="lectura"/>
+                    <button type="submit" class="permission">Enviar Permisos</button>
                   </form>
               </td>
            </tr>

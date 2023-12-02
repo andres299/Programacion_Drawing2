@@ -4,4 +4,5 @@ function actualizarCampoOculto(select) {
 
    // Actualizar el valor del campo oculto con el valor seleccionado
    document.getElementById('permission').value = valorSeleccionado;
+   console.log(valorSeleccionado);
 }
