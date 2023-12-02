@@ -45,14 +45,11 @@ public class TrashDrawController {
     public String PostTrashDrawController(Model model, @RequestParam int id, @RequestParam String action) {
         //Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
-
-        if (drawService.hasPermissionsWriting(id, user.getId())){
-            if ("delete".equals(action)) {
-                drawService.deleteDraw(id);
-            } else if ("restore".equals(action)) {
-                drawService.restoreDraw(id);
-            }
-    }
+        if ("delete".equals(action)) {
+             drawService.deleteDraw(id);
+        } else if ("restore".equals(action)) {
+             drawService.restoreDraw(id);
+        }
         return "redirect:/TrashDraw";
     }
 }
