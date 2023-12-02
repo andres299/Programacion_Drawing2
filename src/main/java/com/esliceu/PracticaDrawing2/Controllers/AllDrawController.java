@@ -27,8 +27,6 @@ public class AllDrawController {
     HttpSession session;
     @Autowired
     DrawService drawService;
-    @Autowired
-    ObjectCounter objectCounter;
 
     @GetMapping("/AllDraw")
     public String AllDraw(Model model) {

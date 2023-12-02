@@ -24,14 +24,7 @@ public class DrawService {
 
     //Metodo para guardar el dibujo
     public Draw saveDraw(String newName, int owner_id, String visibility) {
-        //Pasar a booleano el String visibility
-        boolean booleanVisibility;
-        if ("public".equalsIgnoreCase(visibility)) {
-            booleanVisibility = true;
-        } else {
-            booleanVisibility = false;
-        }
-        Draw draw = new Draw(newName,owner_id,booleanVisibility);
+        Draw draw = new Draw(newName,owner_id,convertToBoolean(visibility));
         return drawRepo.saveDraw(draw);
     }
 

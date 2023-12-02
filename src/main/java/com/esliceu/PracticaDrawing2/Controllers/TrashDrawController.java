@@ -35,10 +35,6 @@ public class TrashDrawController {
 
         // Crear una lista para almacenar información sobre el dibujo y su versión
         List<DrawWithVersionDTO> drawWithVersionList = drawService.getDrawsTrash(user.getId());
-        for (DrawWithVersionDTO drawWithVersion : drawWithVersionList){
-            int figureCount = objectCounter.countFiguresInJson(drawWithVersion.getFigures());
-            model.addAttribute("figuresCount", figureCount);
-        }
 
         // Agregar la lista de DTOs al modelo
         model.addAttribute("allDraws", drawWithVersionList);
