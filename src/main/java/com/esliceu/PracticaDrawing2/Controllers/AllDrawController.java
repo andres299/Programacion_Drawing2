@@ -45,9 +45,14 @@ public class AllDrawController {
         boolean UserPermission = drawService.hasPermissionsWriting(id, user.getId());
         System.out.println(UserPermission);
         //Si no tienes te redirige.
-        if (!OwnerPropietary) {
+        if (!OwnerPropietary && !UserPermission) {
             return "redirect:/AllDraw";
-        } else if(UserPermission){
+        }
+
+        //Metodo para actualizar la imagen a Papelera.
+        if (OwnerPropietary) {
+            drawService.updateTrash(id, user.getId());
+        } else if(UserPermission) {
             drawService.updateYourTrash(id, user.getId());
         }
 
