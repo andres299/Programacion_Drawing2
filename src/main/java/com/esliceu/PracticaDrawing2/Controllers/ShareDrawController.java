@@ -39,9 +39,6 @@ public class ShareDrawController {
     @PostMapping("/ShareDraw")
     public String PostShareDraw(Model model,@RequestParam int drawId, @RequestParam int userId,
                                 @RequestParam String permission){
-        System.out.println(drawId);
-        System.out.println(userId);
-        System.out.println(permission);
         permissionService.permissionUser(drawId,userId,permission);
         return "redirect:/AllDraw";
     }
