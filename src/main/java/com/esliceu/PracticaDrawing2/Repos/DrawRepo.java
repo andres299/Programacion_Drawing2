@@ -23,7 +23,7 @@ public interface DrawRepo {
 
     void restoreDraw(int id_draw);
 
-    boolean propietaryDraw(int idUser, int drawId);
+    boolean propietaryDraw(int drawId, int id_user);
 
     boolean getVisibility(int drawId);
 

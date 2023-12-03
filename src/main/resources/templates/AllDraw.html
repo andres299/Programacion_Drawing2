@@ -57,7 +57,6 @@
                     </form>
                     <form action="/ShareDraw" method="get" th:if="${current_id eq draw.owner_id}">
                         <input type="hidden" name="drawId" th:value="${draw.id}" />
-                        <input type="hidden" name="owner_id" th:value="${draw.owner_id}" />
                         <button class="share" type="submit">Share</button>
                     </form>
                 </div>

@@ -124,7 +124,7 @@ public class DrawRepoImpl implements DrawRepo {
     }
 
     @Override
-    public boolean propietaryDraw(int idUser, int drawId) {
+    public boolean propietaryDraw(int drawId, int idUser) {
         String checkUserDraw = "SELECT COUNT(*) FROM draw WHERE id = ? AND owner_id = ?";
         int count = jdbcTemplate.queryForObject(checkUserDraw, Integer.class, drawId, idUser);
         return count > 0;

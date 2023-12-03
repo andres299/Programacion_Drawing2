@@ -56,8 +56,8 @@ public class DrawService {
     //Metodo restaurar el dibujo
     public void restoreDraw(int id_draw) {drawRepo.restoreDraw(id_draw);}
 
-    public boolean propietaryDraw(int id_user, int drawId) {
-        return drawRepo.propietaryDraw(id_user,drawId);
+    public boolean propietaryDraw(int drawId, int id_user) {
+        return drawRepo.propietaryDraw(drawId, id_user);
     }
 
     public boolean getVisibility(int drawId) {
