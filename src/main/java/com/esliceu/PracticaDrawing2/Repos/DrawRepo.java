@@ -27,5 +27,5 @@ public interface DrawRepo {
 
     boolean getVisibility(int drawId);
 
-    void updateVisibility(int drawId, boolean visibility);
+    void updateVisibility(String newName,int drawId, boolean visibility);
 }

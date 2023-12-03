@@ -50,18 +50,6 @@ public class DrawRepoImpl implements DrawRepo {
     //Metodo para mostrar las imagenes
     @Override
     public List<DrawWithVersionDTO> getDraws(int id_user) {
-        /*
-        String sql = "SELECT draw.*, version.figures, version.numFigures, version.modificationDate FROM draw JOIN version ON " +
-                "draw.id = version.id_draw WHERE (draw.visualization = 1 AND draw.inTheTrash = 0) " +
-                "OR (draw.owner_id = ? AND draw.inTheTrash = 0)";
-
-        String sql = "SELECT draw.*, version.figures, version.numFigures, version.modificationDate " +
-                "FROM draw JOIN (SELECT id_draw, MAX(modificationDate) AS maxModificationDate " +
-                "FROM version GROUP BY id_draw) AS latest_version ON draw.id = latest_version.id_draw " +
-                "JOIN version ON draw.id = version.id_draw AND latest_version.maxModificationDate = " +
-                "version.modificationDate WHERE (draw.visualization = 1 AND draw.inTheTrash = 0) " +
-                "OR (draw.owner_id = ? AND draw.inTheTrash = 0)";
-         */
         String sql = "SELECT draw.*,MAX(version.figures) AS figures, " +
                 "MAX(version.numFigures) AS numFigures, MAX(version.modificationDate) " +
                 "AS modificationDate FROM draw JOIN version ON draw.id = version.id_draw LEFT JOIN " +
@@ -144,42 +132,10 @@ public class DrawRepoImpl implements DrawRepo {
          }
 
     @Override
-    public void updateVisibility(int drawId, boolean visibility) {
-        String sql = "UPDATE draw SET visualization = ? WHERE id = ?";
-        jdbcTemplate.update(sql, visibility, drawId);
+    public void updateVisibility(String newName,int drawId, boolean visibility) {
+        String sql = "UPDATE draw SET nameDraw = ? visualization = ? WHERE id = ?";
+        jdbcTemplate.update(sql, newName, visibility, drawId);
     }
-    /*
-
-    @Override
-    public List<Draw> getDraws() {
-        String selectSql = "SELECT * FROM Draw";
-        return jdbcTemplate.query(selectSql, new BeanPropertyRowMapper<>(Draw.class));
-    }
-
-    @Override
-    public void deleteDraw(int id, String login) {
-        jdbcTemplate.update("DELETE FROM Draw WHERE id = ? AND createdByUser = ?", id, login);
-    }
-
-    @Override
-    public List<Draw> getDrawByUser(String login) {
-        return jdbcTemplate.query("SELECT * FROM Draw WHERE createdByUser = ?",
-                new Object[]{login}, new BeanPropertyRowMapper<>(Draw.class));
-    }
-
-    @Override
-    public Draw getDrawById(int id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM Draw WHERE id = ?",
-                new Object[]{id}, new BeanPropertyRowMapper<>(Draw.class));
-    }
-
-    @Override
-    public void updateDraw(Draw existDraw) {
-        jdbcTemplate.update("UPDATE Draw SET name = ?, creationDate = ?, modificationDate = ?, figures = ?, createdByUser = ? WHERE id = ?",
-                existDraw.getName(), existDraw.getCreationDate(), existDraw.getModificationDate(),
-                existDraw.getFigures(), existDraw.getCreatedByUser(), existDraw.getId());
-    }
-     */
 }
 
 
