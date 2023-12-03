@@ -62,6 +62,7 @@ public class DrawRepoImpl implements DrawRepo {
         return allDrawWhithVersion;
     }
 
+
     // Método para actualizar el campo inTheTrash en la tabla draw
     @Override
     public void updateDraw(int id, int id_user) {
