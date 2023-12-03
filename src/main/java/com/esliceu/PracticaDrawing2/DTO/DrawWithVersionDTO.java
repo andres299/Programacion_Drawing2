@@ -14,6 +14,9 @@ public class DrawWithVersionDTO {
     private String figures;
     private int numFigures;
     private String modificationDate;
+    private String permissions;
+
+    private boolean in_your_trash;
 
     public DrawWithVersionDTO() {
     }
@@ -88,5 +91,21 @@ public class DrawWithVersionDTO {
 
     public void setModificationDate(String modificationDate) {
         this.modificationDate = modificationDate;
+    }
+
+    public String getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(String permissions) {
+        this.permissions = permissions;
+    }
+
+    public boolean isIn_your_trash() {
+        return in_your_trash;
+    }
+
+    public void setIn_your_trash(boolean in_your_trash) {
+        this.in_your_trash = in_your_trash;
     }
 }

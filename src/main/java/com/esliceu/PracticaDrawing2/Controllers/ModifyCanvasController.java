@@ -74,6 +74,7 @@ public class ModifyCanvasController {
 
         //Si el nombre esta vacia , genera uno aleatorio
         String newName = drawName.isEmpty() ? drawService.generateRandomName() : drawName;
+
         //Actualizar el draw
         drawService.updateVisibility(newName,drawId, visibility);
         // Guardar la versión

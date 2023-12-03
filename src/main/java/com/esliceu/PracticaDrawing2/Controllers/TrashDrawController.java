@@ -38,7 +38,7 @@ public class TrashDrawController {
 
         // Agregar la lista de DTOs al modelo
         model.addAttribute("allDraws", drawWithVersionList);
-        return "TrashDraw"; // Nombre de tu vista que mostrará la lista de dibujos
+        return "TrashDraw";
     }
 
     @PostMapping("/TrashDraw")

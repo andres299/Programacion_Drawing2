@@ -27,9 +27,16 @@ public class ViewDrawController {
     VersionService versionService;
     @GetMapping("/ViewDraw")
     public String ViewDraw(Model model, @RequestParam int drawId , @RequestParam String drawName)  {
+        //Obtenemos el usuario actual
+        User user = (User) session.getAttribute("user");
+
         // Obtener el dibujo por su ID
         Version selectedDraw = versionService.getVersionById(drawId);
 
+        boolean isTheOwner = drawService.userCanSee(drawId,user.getId());
+        if (!isTheOwner){
+            return "redirect:/AllDraw";
+        }
         // Estos atributos se enviarán a la página JSP asociada para poder mostrarlos.
         model.addAttribute("selectedFiguresJson", selectedDraw.getFigures());
         model.addAttribute("drawName", drawName);
