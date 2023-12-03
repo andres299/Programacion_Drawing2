@@ -71,11 +71,6 @@ public class ModifyCanvasController {
             model.addAttribute("error", "No se han dibujado figuras. Debes dibujar al menos una figura.");
             return "CanvasDraw";
         }
-        // Verificar si hay al menos una figura
-        if (figures.isEmpty()) {
-            model.addAttribute("error", "No se han dibujado figuras. Debes dibujar al menos una figura.");
-            return "ModifyCanvas";
-        }
 
         //Si el nombre esta vacia , genera uno aleatorio
         String newName = drawName.isEmpty() ? drawService.generateRandomName() : drawName;
