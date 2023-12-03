@@ -141,14 +141,14 @@ public class DrawRepoImpl implements DrawRepo {
 
     @Override
     public void updateVisibility(String newName,int drawId, boolean visibility) {
-        String sql = "UPDATE draw SET nameDraw = ? visualization = ? WHERE id = ?";
+        String sql = "UPDATE draw SET nameDraw = ?, visualization = ? WHERE id = ?";
         jdbcTemplate.update(sql, newName, visibility, drawId);
     }
 
     @Override
     public boolean userCanSee(int drawId, int idUser) {
     String sql = "SELECT COUNT(*) FROM draw LEFT JOIN permissions ON draw.id = permissions.id_draw" +
-            "LEFT JOIN user ON permissions.id_user WHERE draw.id = ? AND in_the_trash = false " +
+            "LEFT JOIN user ON permissions.id_user WHERE draw.id = ? AND inTheTrash = false " +
             "AND ((id_owner = ?) OR (draw.is_public = true) OR (permission.id_user = ?));";
         int count = jdbcTemplate.queryForObject(sql, Integer.class, drawId, idUser, idUser);
         return count > 0;
