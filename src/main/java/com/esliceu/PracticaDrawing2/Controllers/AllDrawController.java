@@ -46,6 +46,11 @@ public class AllDrawController {
     public String PostAllDraw(@RequestParam int id){
         //La sesion del usuario actual
         User user = (User) session.getAttribute("user");
+        boolean OwnerPropietary = drawService.propietaryDraw(id, user.getId());
+        boolean UserPermission = drawService.hasPermissionsWriting(id, user.getId());
+        if (!OwnerPropietary || !UserPermission) {
+            return "redirect:/AllDraw";
+        }
 
         //Metodo para actualizar la imagen a Papelera.
         drawService.updateDraw(id, user.getId());

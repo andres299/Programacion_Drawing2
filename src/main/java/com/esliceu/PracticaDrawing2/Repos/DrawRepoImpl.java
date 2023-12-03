@@ -88,16 +88,10 @@ public class DrawRepoImpl implements DrawRepo {
         return allDrawWhithVersion;
     }
 
-    //Metodo para crear permisos del usuario
-    @Override
-    public void userPermissions(int drawId, int owner_id) {
-        String sql = "INSERT INTO permissions (id_draw, id_user, writing, reading) VALUES (?, ?, 1, 1)";
-        jdbcTemplate.update(sql, drawId, owner_id);
-    }
-
     @Override
     public boolean hasPermissionsWriting(int id_draw, int id_user) {
-        String checkPermissionsSql = "SELECT COUNT(*) FROM permissions WHERE id_draw = ? AND id_user = ? AND writing = 1";
+        String checkPermissionsSql = "SELECT COUNT(*) FROM permissions WHERE id_draw = ? " +
+                "AND id_user = ? AND writing = 'RW'";
         int count = jdbcTemplate.queryForObject(checkPermissionsSql, Integer.class, id_draw, id_user);
         return count > 0;
     }

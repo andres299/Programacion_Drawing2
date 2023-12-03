@@ -15,8 +15,6 @@ public interface DrawRepo {
 
     List<DrawWithVersionDTO> getDrawsTrash(int id);
 
-    void userPermissions(int drawId, int owner_id);
-
     boolean hasPermissionsWriting(int id_draw, int id_user);
 
     void deleteDraw(int id_draw);
