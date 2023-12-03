@@ -14,6 +14,7 @@ public class DrawWithVersionDTO {
     private String figures;
     private int numFigures;
     private String modificationDate;
+    private String permissions;
 
     public DrawWithVersionDTO() {
     }
@@ -88,5 +89,13 @@ public class DrawWithVersionDTO {
 
     public void setModificationDate(String modificationDate) {
         this.modificationDate = modificationDate;
+    }
+
+    public String getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(String permissions) {
+        this.permissions = permissions;
     }
 }
