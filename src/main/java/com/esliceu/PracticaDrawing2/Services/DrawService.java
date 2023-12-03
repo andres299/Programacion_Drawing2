@@ -64,8 +64,8 @@ public class DrawService {
         return drawRepo.getVisibility(drawId);
     }
 
-    public void updateVisibility(int drawId, String visibility) {
-        drawRepo.updateVisibility(drawId,convertToBoolean(visibility));
+    public void updateVisibility(String newName , int drawId, String visibility) {
+        drawRepo.updateVisibility(newName,drawId,convertToBoolean(visibility));
     }
 
     public static boolean convertToBoolean(String visibility) {
