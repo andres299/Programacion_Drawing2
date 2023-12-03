@@ -52,8 +52,7 @@ public class DrawRepoImpl implements DrawRepo {
     public List<DrawWithVersionDTO> getDraws(int id_user) {
         String sql = "SELECT draw.*, MAX(version.figures) AS figures, " +
                 "MAX(version.numFigures) AS numFigures, MAX(version.modificationDate) AS modificationDate, " +
-                "permissions.permissions AS drawPermissions " +
-                "FROM draw " +
+                "permissions.permissions FROM draw " +
                 "JOIN version ON draw.id = version.id_draw " +
                 "LEFT JOIN permissions ON draw.id = permissions.id_draw AND permissions.id_user = ? " +
                 "WHERE (draw.visualization = 1 OR draw.owner_id = ? " +
