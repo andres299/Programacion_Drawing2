@@ -36,15 +36,15 @@
               <td th:text="${user.name}"></td>
               <td>
                   <select name="permisos" id="permisos" onchange="actualizarCampoOculto(this)">
-                      <option value="lectura">Lectura</option>
-                      <option value="escritura">Escritura</option>
+                      <option value="R">Lectura</option>
+                      <option value="RW">Escritura</option>
                   </select>
               </td>
               <td>
                   <form action="/ShareDraw" method="post">
                     <input type="hidden" name="drawId" th:value="${drawId}"/>
                     <input type="hidden" name="userId" th:value="${user.id}"/>
-                    <input type="hidden" name="permission" id="permission" value="lectura"/>
+                    <input type="hidden" name="permission" id="permission" value="R"/>
                     <button type="submit" class="permission">Enviar Permisos</button>
                   </form>
               </td>

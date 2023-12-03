@@ -1,6 +1,7 @@
 package com.esliceu.PracticaDrawing2.Controllers;
 
 import com.esliceu.PracticaDrawing2.Entities.User;
+import com.esliceu.PracticaDrawing2.Services.PermissionService;
 import com.esliceu.PracticaDrawing2.Services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class ShareDrawController {
     HttpSession session;
     @Autowired
     UserService userService;
+    @Autowired
+    PermissionService permissionService;
+
     @GetMapping("/ShareDraw")
     public String ShareDraw(Model model, @RequestParam int drawId, @RequestParam int owner_id) {
         //La sesion del usuario actual
@@ -31,13 +35,14 @@ public class ShareDrawController {
         return "ShareDraw";
     }
 
-    // Manejo de la solicitud POST para procesar el formulario de registro
+    // Manejo de la solicitud POST
     @PostMapping("/ShareDraw")
     public String PostShareDraw(Model model,@RequestParam int drawId, @RequestParam int userId,
                                 @RequestParam String permission){
         System.out.println(drawId);
         System.out.println(userId);
         System.out.println(permission);
+        permissionService.permissionUser(drawId,userId,permission);
         return "redirect:/AllDraw";
     }
 }
