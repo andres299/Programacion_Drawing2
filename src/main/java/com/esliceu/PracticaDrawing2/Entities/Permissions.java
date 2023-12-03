@@ -1,14 +1,14 @@
 package com.esliceu.PracticaDrawing2.Entities;
 
-public class permissions {
+public class Permissions {
     private int id_draw;
     private int id_users;
-    private int permissions;
+    private String permissions;
 
-    public permissions() {
+    public Permissions() {
     }
 
-    public permissions(int id_draw, int id_users, int permissions) {
+    public Permissions(int id_draw, int id_users, String permissions) {
         this.id_draw = id_draw;
         this.id_users = id_users;
         this.permissions = permissions;
@@ -30,11 +30,11 @@ public class permissions {
         this.id_users = id_users;
     }
 
-    public int getPermissions() {
+    public String getPermissions() {
         return permissions;
     }
 
-    public void setPermissions(int permissions) {
+    public void setPermissions(String permissions) {
         this.permissions = permissions;
     }
 }
