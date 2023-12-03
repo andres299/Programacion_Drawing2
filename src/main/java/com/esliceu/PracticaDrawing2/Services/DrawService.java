@@ -71,4 +71,8 @@ public class DrawService {
     public static boolean convertToBoolean(String visibility) {
         return "public".equalsIgnoreCase(visibility);
     }
+
+    public boolean userCanSee(int drawId, int id) {
+
+    }
 }
