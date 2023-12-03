@@ -57,8 +57,7 @@ public class DrawRepoImpl implements DrawRepo {
                 "LEFT JOIN permissions ON draw.id = permissions.id_draw AND permissions.id_user = ? " +
                 "WHERE (draw.visualization = 1 OR draw.owner_id = ? " +
                 "OR (permissions.permissions IN ('R', 'RW') AND permissions.id_user = ?)) " +
-                "AND draw.inTheTrash = 0 AND permissions.in_your_trash = 0" +
-                "GROUP BY draw.id;";
+                "AND draw.inTheTrash = 0 GROUP BY draw.id;";
         List<DrawWithVersionDTO> allDrawWhithVersion = jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper<>(DrawWithVersionDTO.class),id_user, id_user, id_user);
         return allDrawWhithVersion;
@@ -145,10 +144,12 @@ public class DrawRepoImpl implements DrawRepo {
 
     @Override
     public boolean userCanSee(int drawId, int idUser) {
-    String sql = "SELECT COUNT(*) FROM draw LEFT JOIN permissions ON draw.id = permissions.id_draw" +
-            "LEFT JOIN user ON permissions.id_user WHERE draw.id = ? AND inTheTrash = false " +
-            "AND ((id_owner = ?) OR (draw.is_public = true) OR (permission.id_user = ?));";
-        int count = jdbcTemplate.queryForObject(sql, Integer.class, drawId, idUser, idUser);
+    String sql = "SELECT COUNT(*) FROM draw LEFT JOIN permissions ON draw.id = permissions.id_draw AND permissions.id_user = ? " +
+            "LEFT JOIN user ON permissions.id_user = user.id WHERE draw.id = ? " +
+            "AND inTheTrash = false AND ( (owner_id = ?) OR (draw.visualization = true AND " +
+            "(permissions.id_user IS NULL OR permissions.id_user <> ?)) OR (permissions.id_user = ? " +
+            "AND in_your_trash = false));";
+        int count = jdbcTemplate.queryForObject(sql, Integer.class, idUser, drawId, idUser, idUser, idUser);
         return count > 0;
     }
 }

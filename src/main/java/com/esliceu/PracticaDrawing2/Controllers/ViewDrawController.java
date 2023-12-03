@@ -34,9 +34,8 @@ public class ViewDrawController {
         Version selectedDraw = versionService.getVersionById(drawId);
 
         boolean isTheOwner = drawService.userCanSee(drawId,user.getId());
-        if (!isTheOwner){
-            return "redirect:/AllDraw";
-        }
+        if (!isTheOwner) {return "redirect:/AllDraw";}
+
         // Estos atributos se enviarán a la página JSP asociada para poder mostrarlos.
         model.addAttribute("selectedFiguresJson", selectedDraw.getFigures());
         model.addAttribute("drawName", drawName);
