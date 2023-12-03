@@ -73,6 +73,13 @@ public class DrawRepoImpl implements DrawRepo {
     }
 
     @Override
+    public void uodateYourTrash(int id, int id_user) {
+//      Aquí verificamos que el id_user es el propietario de la imagen antes de realizar la actualización
+        String sql = "UPDATE permissions SET in_your_trash = 1 WHERE id_draw = ? AND id_user = ?";
+        jdbcTemplate.update(sql, id, id_user);
+    }
+
+    @Override
     public List<DrawWithVersionDTO> getDrawsTrash(int id) {
         String sql = "SELECT draw.*, MAX(version.figures) AS figures, " +
                 "MAX(version.numFigures) AS numFigures, MAX(version.modificationDate) AS modificationDate, " +
@@ -91,7 +98,7 @@ public class DrawRepoImpl implements DrawRepo {
     @Override
     public boolean hasPermissionsWriting(int id_draw, int id_user) {
         String checkPermissionsSql = "SELECT COUNT(*) FROM permissions WHERE id_draw = ? " +
-                "AND id_user = ? AND writing = 'RW'";
+                "AND id_user = ? AND permissions = 'RW'";
         int count = jdbcTemplate.queryForObject(checkPermissionsSql, Integer.class, id_draw, id_user);
         return count > 0;
     }

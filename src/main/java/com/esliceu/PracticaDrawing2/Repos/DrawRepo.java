@@ -28,4 +28,6 @@ public interface DrawRepo {
     void updateVisibility(String newName,int drawId, boolean visibility);
 
     boolean userCanSee(int drawId, int idUser);
+
+    void uodateYourTrash(int id, int id_user);
 }

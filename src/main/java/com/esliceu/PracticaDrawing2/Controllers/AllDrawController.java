@@ -1,16 +1,9 @@
 package com.esliceu.PracticaDrawing2.Controllers;
 
 import com.esliceu.PracticaDrawing2.DTO.DrawWithVersionDTO;
-import com.esliceu.PracticaDrawing2.Entities.Draw;
 import com.esliceu.PracticaDrawing2.Entities.User;
-import com.esliceu.PracticaDrawing2.Entities.Version;
 import com.esliceu.PracticaDrawing2.Services.DrawService;
-import com.esliceu.PracticaDrawing2.utils.ObjectCounter;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
-import jdk.jshell.execution.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -46,14 +38,21 @@ public class AllDrawController {
     public String PostAllDraw(@RequestParam int id){
         //La sesion del usuario actual
         User user = (User) session.getAttribute("user");
+        //Metodo para comprobar si eres el propietario del dibujo.
         boolean OwnerPropietary = drawService.propietaryDraw(id, user.getId());
+        System.out.println(OwnerPropietary);
+        //Metodo para comprobar si tienes permisos de escritura.
         boolean UserPermission = drawService.hasPermissionsWriting(id, user.getId());
-        if (!OwnerPropietary || !UserPermission) {
+        System.out.println(UserPermission);
+        //Si no tienes te redirige.
+        if (!OwnerPropietary) {
             return "redirect:/AllDraw";
+        } else if(UserPermission){
+            drawService.updateYourTrash(id, user.getId());
         }
 
         //Metodo para actualizar la imagen a Papelera.
-        drawService.updateDraw(id, user.getId());
+        drawService.updateTrash(id, user.getId());
 
         return "redirect:/AllDraw";
     }
