@@ -29,8 +29,8 @@ public class DrawService {
     }
 
     //Obtener una lista de los dibujos
-    public List<DrawWithVersionDTO> getDraws(int id) {
-        return drawRepo.getDraws(id);
+    public List<DrawWithVersionDTO> getDraws(int id_user) {
+        return drawRepo.getDraws(id_user);
     }
 
     //Actualizar el dibujo a la papelera

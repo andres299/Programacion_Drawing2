@@ -9,7 +9,7 @@ import java.util.List;
 public interface DrawRepo {
     Draw saveDraw(Draw draw);
 
-    List<DrawWithVersionDTO> getDraws(int id);
+    List<DrawWithVersionDTO> getDraws(int id_user);
 
     void updateDraw(int id, int id_user);
 

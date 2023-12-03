@@ -49,20 +49,28 @@ public class DrawRepoImpl implements DrawRepo {
 
     //Metodo para mostrar las imagenes
     @Override
-    public List<DrawWithVersionDTO> getDraws(int id) {
+    public List<DrawWithVersionDTO> getDraws(int id_user) {
         /*
         String sql = "SELECT draw.*, version.figures, version.numFigures, version.modificationDate FROM draw JOIN version ON " +
                 "draw.id = version.id_draw WHERE (draw.visualization = 1 AND draw.inTheTrash = 0) " +
                 "OR (draw.owner_id = ? AND draw.inTheTrash = 0)";
-         */
+
         String sql = "SELECT draw.*, version.figures, version.numFigures, version.modificationDate " +
                 "FROM draw JOIN (SELECT id_draw, MAX(modificationDate) AS maxModificationDate " +
                 "FROM version GROUP BY id_draw) AS latest_version ON draw.id = latest_version.id_draw " +
                 "JOIN version ON draw.id = version.id_draw AND latest_version.maxModificationDate = " +
                 "version.modificationDate WHERE (draw.visualization = 1 AND draw.inTheTrash = 0) " +
                 "OR (draw.owner_id = ? AND draw.inTheTrash = 0)";
+         */
+        String sql = "SELECT draw.id,MAX(version.figures) AS figures, " +
+                "MAX(version.numFigures) AS numFigures, MAX(version.modificationDate) " +
+                "AS modificationDate FROM draw JOIN version ON draw.id = version.id_draw LEFT JOIN " +
+                "permissions ON draw.id = permissions.id_draw AND permissions.id_user = ? WHERE (draw.visualization = 1 " +
+                "AND draw.inTheTrash = 0) OR (draw.owner_id = 2 AND draw.inTheTrash = 0) " +
+                "OR (permissions.permissions = 'R' AND draw.inTheTrash = 0) " +
+                "OR (permissions.permissions = 'RW' AND draw.inTheTrash = 0) GROUP BY draw.id;";
         List<DrawWithVersionDTO> allDrawWhithVersion = jdbcTemplate.query(sql,
-                new BeanPropertyRowMapper<>(DrawWithVersionDTO.class),id);
+                new BeanPropertyRowMapper<>(DrawWithVersionDTO.class),id_user);
         return allDrawWhithVersion;
     }
 
