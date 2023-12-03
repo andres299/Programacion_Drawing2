@@ -76,12 +76,16 @@ public class DrawRepoImpl implements DrawRepo {
 
     @Override
     public List<DrawWithVersionDTO> getDrawsTrash(int id) {
-        String sql = "SELECT draw.*, version.figures, version.numFigures, version.modificationDate " +
-                "FROM draw JOIN (SELECT id_draw, MAX(modificationDate) AS maxModificationDate " +
-                "FROM version GROUP BY id_draw) AS latest_version ON draw.id = latest_version.id_draw " +
-                "JOIN version ON draw.id = version.id_draw AND latest_version.maxModificationDate = " +
-                "version.modificationDate WHERE (draw.visualization = 1 AND draw.inTheTrash = 1) " +
-                "OR (draw.owner_id = ? AND draw.inTheTrash = 1)";
+        String sql = "SELECT draw.*, MAX(version.figures) AS figures, " +
+                "MAX(version.numFigures) AS numFigures, MAX(version.modificationDate) AS modificationDate, " +
+                "permissions.permissions AS drawPermissions " +
+                "FROM draw " +
+                "JOIN version ON draw.id = version.id_draw " +
+                "LEFT JOIN permissions ON draw.id = permissions.id_draw AND permissions.id_user = ? " +
+                "WHERE (draw.visualization = 1 OR draw.owner_id = ? " +
+                "OR (permissions.permissions IN ('R', 'RW') AND permissions.id_user = ?)) " +
+                "AND draw.inTheTrash = 0 " +
+                "GROUP BY draw.id;";
         List<DrawWithVersionDTO> allDrawWhithVersion = jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper<>(DrawWithVersionDTO.class),id);
         return allDrawWhithVersion;
@@ -139,6 +143,15 @@ public class DrawRepoImpl implements DrawRepo {
     public void updateVisibility(String newName,int drawId, boolean visibility) {
         String sql = "UPDATE draw SET nameDraw = ? visualization = ? WHERE id = ?";
         jdbcTemplate.update(sql, newName, visibility, drawId);
+    }
+
+    @Override
+    public boolean userCanSee(int drawId, int idUser) {
+    String sql = "SELECT COUNT(*) FROM draw LEFT JOIN permissions ON draw.id = permissions.id_draw" +
+            "LEFT JOIN user ON permissions.id_user WHERE draw.id = ? AND in_the_trash = false " +
+            "AND ((id_owner = ?) OR (draw.is_public = true) OR (permission.id_user = ?));";
+        int count = jdbcTemplate.queryForObject(sql, Integer.class, drawId, idUser, idUser);
+        return count > 0;
     }
 }
 

@@ -72,7 +72,7 @@ public class DrawService {
         return "public".equalsIgnoreCase(visibility);
     }
 
-    public boolean userCanSee(int drawId, int id) {
-
+    public boolean userCanSee(int drawId, int id_user) {
+        return drawRepo.userCanSee(drawId,id_user);
     }
 }
