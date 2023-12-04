@@ -50,26 +50,6 @@ public class DrawRepoImpl implements DrawRepo {
     //Metodo para mostrar las imagenes
     @Override
     public List<DrawWithVersionDTO> getDraws(int id_user) {
-        /*
-        String sql = "SELECT draw.*, MAX(version.figures) AS figures, " +
-                "MAX(version.numFigures) AS numFigures, MAX(version.modificationDate) AS modificationDate, " +
-                "permissions.permissions FROM draw " +
-                "JOIN version ON draw.id = version.id_draw " +
-                "LEFT JOIN permissions ON draw.id = permissions.id_draw AND permissions.id_user = ? " +
-                "WHERE (draw.visualization = 1 OR draw.owner_id = ? " +
-                "OR (permissions.permissions IN ('R', 'RW') AND permissions.id_user = ?)) " +
-                "AND draw.inTheTrash = 0 AND GROUP BY draw.id;";
-
-        String sql = "SELECT draw.*, MAX(version.figures) AS figures, " +
-                "MAX(version.numFigures) AS numFigures, MAX(version.modificationDate) AS modificationDate, " +
-                "permissions.permissions FROM draw " +
-                "JOIN version ON draw.id = version.id_draw " +
-                "LEFT JOIN permissions ON draw.id = permissions.id_draw AND permissions.id_user = ? " +
-                "WHERE (draw.visualization = 1 OR draw.owner_id = ? " +
-                "OR (permissions.permissions IN ('R', 'RW') AND permissions.id_user = ?) " +
-                "AND draw.inTheTrash = 0 AND (permissions.id_user IS NULL OR permissions.id_user <> ?) " +
-                "OR (permissions.id_user = ? AND in_your_trash = false)) GROUP BY draw.id;";
-         */
         String sql = "SELECT draw.*, MAX(version.figures) AS figures, " +
                 "MAX(version.numFigures) AS numFigures, " +
                 "MAX(version.modificationDate) AS modificationDate, " +
@@ -107,22 +87,6 @@ public class DrawRepoImpl implements DrawRepo {
 
     @Override
     public List<DrawWithVersionDTO> getDrawsTrash(int id) {
-        /*
-        String sql = "SELECT draw.*, MAX(version.figures) AS figures, " +
-                "MAX(version.numFigures) AS numFigures, " +
-                "MAX(version.modificationDate) AS modificationDate, " +
-                "permissions.permissions " +
-                "FROM draw " +
-                "JOIN version ON draw.id = version.id_draw " +
-                "LEFT JOIN permissions ON draw.id = permissions.id_draw AND permissions.id_user = ? " +
-                "WHERE (draw.visualization = 1 OR draw.owner_id = ? " +
-                "OR (permissions.permissions IN ('R', 'RW') AND permissions.id_user = ?)) " +
-                "AND draw.inTheTrash = 1 " +
-                "AND ((permissions.id_user IS NULL OR permissions.id_user <> ?) " +
-                "OR (permissions.id_user = ? AND in_your_trash = true)) " +
-                "GROUP BY draw.id;";
-         */
-
         String sql = "SELECT draw.*, MAX(version.figures) AS figures, " +
                 "MAX(version.numFigures) AS numFigures, " +
                 "MAX(version.modificationDate) AS modificationDate, " +

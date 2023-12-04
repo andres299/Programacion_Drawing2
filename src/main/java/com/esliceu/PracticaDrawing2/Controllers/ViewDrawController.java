@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class ViewDrawController {
@@ -29,12 +30,15 @@ public class ViewDrawController {
     public String ViewDraw(Model model, @RequestParam int drawId , @RequestParam String drawName)  {
         //Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
-
-        // Obtener el dibujo por su ID
-        Version selectedDraw = versionService.getVersionById(drawId);
-
+        //Comprobar si puedes ver.
         boolean isTheOwner = drawService.userCanSee(drawId,user.getId());
         if (!isTheOwner) {return "redirect:/AllDraw";}
+
+        // Obtener el dibujo por su ID.
+        Version selectedDraw = versionService.getVersionById(drawId);
+        //Obtener todas las versiones.
+        List<Version> allVersionsOfTheDraw = versionService.getAllVersionById(drawId);
+        System.out.println(allVersionsOfTheDraw);
 
         // Estos atributos se enviarán a la página JSP asociada para poder mostrarlos.
         model.addAttribute("selectedFiguresJson", selectedDraw.getFigures());

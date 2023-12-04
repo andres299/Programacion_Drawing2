@@ -7,6 +7,8 @@ import com.esliceu.PracticaDrawing2.utils.ObjectCounter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class VersionService {
     @Autowired
@@ -23,5 +25,10 @@ public class VersionService {
     //Metodo para obtener las figuras de la version del dibujo
     public Version getVersionById(int drawId) {
         return versionRepo.getVersionById(drawId);
+    }
+
+
+    public List<Version> getAllVersionById(int drawId) {
+        return versionRepo.getAllVersionById(drawId);
     }
 }

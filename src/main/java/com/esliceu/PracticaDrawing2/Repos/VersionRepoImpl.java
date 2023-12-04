@@ -1,11 +1,14 @@
 package com.esliceu.PracticaDrawing2.Repos;
 
+import com.esliceu.PracticaDrawing2.DTO.DrawWithVersionDTO;
 import com.esliceu.PracticaDrawing2.Entities.Version;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class VersionRepoImpl implements VersionRepo{
@@ -28,4 +31,11 @@ public class VersionRepoImpl implements VersionRepo{
         }
     }
 
+    @Override
+    public List<Version> getAllVersionById(int drawId) {
+        String sql = "SELECT * FROM version WHERE id_draw = ?";
+        List<Version> allVersion = jdbcTemplate.query(sql,
+                new BeanPropertyRowMapper<>(Version.class),drawId);
+        return allVersion;
+    }
 }
