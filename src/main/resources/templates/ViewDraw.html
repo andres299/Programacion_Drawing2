@@ -24,6 +24,18 @@
     </div>
     <input type="hidden" id="selectedFigures" name="selectedFiguresJson" th:value="${selectedFiguresJson}" />
     <canvas id="ViewCanvas" class="canvas" width="400" height="300"></canvas>
+
+    <div class="select-container">
+        <label for="modificationDateSelect">Seleccionar por Fecha de Modificación:</label>
+        <select id="modificationDateSelect" name="modificationDateSelect">
+            <option value="">Seleccione una fecha</option>
+            <option th:each="version : ${allVersionsOfTheDraw}"
+                    th:if="${version.modificationDate != null}"
+                    th:value="${#dates.format(version.modificationDate, 'yyyy-MM-dd HH:mm:ss')}"
+                    th:text="${#dates.format(version.modificationDate, 'yyyy-MM-dd HH:mm:ss')}"></option>
+        </select>
+    </div>
+
     <button id="copyButton" class="copyButton">Copiar</button>
 
 </div>

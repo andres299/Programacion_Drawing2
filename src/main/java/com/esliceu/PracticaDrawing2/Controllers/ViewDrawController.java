@@ -43,7 +43,7 @@ public class ViewDrawController {
         // Estos atributos se enviarán a la página JSP asociada para poder mostrarlos.
         model.addAttribute("selectedFiguresJson", selectedDraw.getFigures());
         model.addAttribute("drawName", drawName);
-
+        model.addAttribute("allVersionsOfTheDraw",allVersionsOfTheDraw);
         // Mostrar la vista si tiene permisos
         return "ViewDraw";
 
