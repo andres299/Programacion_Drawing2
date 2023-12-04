@@ -59,7 +59,7 @@ public class DrawRepoImpl implements DrawRepo {
                 "WHERE (draw.visualization = 1 OR draw.owner_id = ? " +
                 "OR (permissions.permissions IN ('R', 'RW') AND permissions.id_user = ?)) " +
                 "AND draw.inTheTrash = 0 AND GROUP BY draw.id;";
-         */
+
         String sql = "SELECT draw.*, MAX(version.figures) AS figures, " +
                 "MAX(version.numFigures) AS numFigures, MAX(version.modificationDate) AS modificationDate, " +
                 "permissions.permissions FROM draw " +
@@ -69,6 +69,20 @@ public class DrawRepoImpl implements DrawRepo {
                 "OR (permissions.permissions IN ('R', 'RW') AND permissions.id_user = ?) " +
                 "AND draw.inTheTrash = 0 AND (permissions.id_user IS NULL OR permissions.id_user <> ?) " +
                 "OR (permissions.id_user = ? AND in_your_trash = false)) GROUP BY draw.id;";
+         */
+        String sql = "SELECT draw.*, MAX(version.figures) AS figures, " +
+                "MAX(version.numFigures) AS numFigures, " +
+                "MAX(version.modificationDate) AS modificationDate, " +
+                "permissions.permissions " +
+                "FROM draw " +
+                "JOIN version ON draw.id = version.id_draw " +
+                "LEFT JOIN permissions ON draw.id = permissions.id_draw AND permissions.id_user = ? " +
+                "WHERE (draw.visualization = 1 OR draw.owner_id = ? " +
+                "OR (permissions.permissions IN ('R', 'RW') AND permissions.id_user = ?)) " +
+                "AND draw.inTheTrash = 0 " +
+                "AND ((permissions.id_user IS NULL OR permissions.id_user <> ?) " +
+                "OR (permissions.id_user = ? AND in_your_trash = false)) " +
+                "GROUP BY draw.id;";
 
         List<DrawWithVersionDTO> allDrawWhithVersion = jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper<>(DrawWithVersionDTO.class),id_user, id_user, id_user, id_user, id_user);
@@ -106,14 +120,18 @@ public class DrawRepoImpl implements DrawRepo {
          */
 
         String sql = "SELECT draw.*, MAX(version.figures) AS figures, " +
-                "MAX(version.numFigures) AS numFigures, MAX(version.modificationDate) AS modificationDate, " +
-                "permissions.permissions FROM draw " +
+                "MAX(version.numFigures) AS numFigures, " +
+                "MAX(version.modificationDate) AS modificationDate, " +
+                "permissions.permissions " +
+                "FROM draw " +
                 "JOIN version ON draw.id = version.id_draw " +
                 "LEFT JOIN permissions ON draw.id = permissions.id_draw AND permissions.id_user = ? " +
                 "WHERE (draw.visualization = 1 OR draw.owner_id = ? " +
-                "OR (permissions.permissions IN ('R', 'RW') AND permissions.id_user = ?) " +
-                "AND draw.inTheTrash = 1 AND (permissions.id_user IS NULL OR permissions.id_user <> ?) " +
-                "OR (permissions.id_user = ? AND in_your_trash = true)) GROUP BY draw.id;";
+                "OR (permissions.permissions IN ('R', 'RW') AND permissions.id_user = ?)) " +
+                "AND draw.inTheTrash = 1 " +
+                "AND ((permissions.id_user IS NULL OR permissions.id_user <> ?) " +
+                "OR (permissions.id_user = ? AND in_your_trash = true)) " +
+                "GROUP BY draw.id;";
         List<DrawWithVersionDTO> allDrawWhithVersion = jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper<>(DrawWithVersionDTO.class),id,id,id,id,id);
         return allDrawWhithVersion;
