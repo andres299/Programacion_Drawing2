@@ -93,6 +93,7 @@ public class DrawRepoImpl implements DrawRepo {
 
     @Override
     public List<DrawWithVersionDTO> getDrawsTrash(int id) {
+        /*
         String sql = "SELECT draw.*, MAX(version.figures) AS figures, " +
                 "MAX(version.numFigures) AS numFigures, MAX(version.modificationDate) AS modificationDate, " +
                 "permissions.permissions FROM draw " +
@@ -102,8 +103,19 @@ public class DrawRepoImpl implements DrawRepo {
                 "OR (permissions.permissions IN ('R', 'RW') AND permissions.id_user = ?)) " +
                 "AND draw.inTheTrash = 1 " +
                 "GROUP BY draw.id;";
+         */
+
+        String sql = "SELECT draw.*, MAX(version.figures) AS figures, " +
+                "MAX(version.numFigures) AS numFigures, MAX(version.modificationDate) AS modificationDate, " +
+                "permissions.permissions FROM draw " +
+                "JOIN version ON draw.id = version.id_draw " +
+                "LEFT JOIN permissions ON draw.id = permissions.id_draw AND permissions.id_user = ? " +
+                "WHERE (draw.visualization = 1 OR draw.owner_id = ? " +
+                "OR (permissions.permissions IN ('R', 'RW') AND permissions.id_user = ?) " +
+                "AND draw.inTheTrash = 1 AND (permissions.id_user IS NULL OR permissions.id_user <> ?) " +
+                "OR (permissions.id_user = ? AND in_your_trash = true)) GROUP BY draw.id;";
         List<DrawWithVersionDTO> allDrawWhithVersion = jdbcTemplate.query(sql,
-                new BeanPropertyRowMapper<>(DrawWithVersionDTO.class),id,id,id);
+                new BeanPropertyRowMapper<>(DrawWithVersionDTO.class),id,id,id,id,id);
         return allDrawWhithVersion;
     }
 
@@ -128,17 +140,6 @@ public class DrawRepoImpl implements DrawRepo {
         // Eliminar de la tabla draw
         String deleteDrawSql = "DELETE FROM draw WHERE id = ?";
         jdbcTemplate.update(deleteDrawSql, id_draw);
-
-        /*
-        // Eliminar de las tablas permissions, version y draw
-        String deleteSql = "DELETE permissions, version, draw "
-                + "FROM permissions "
-                + "JOIN version ON permissions.id_draw = version.id_draw "
-                + "JOIN draw ON permissions.id_draw = draw.id "
-                + "WHERE permissions.id_draw = ?";
-        jdbcTemplate.update(deleteSql, id_draw);
-
-         */
     }
 
     @Override
