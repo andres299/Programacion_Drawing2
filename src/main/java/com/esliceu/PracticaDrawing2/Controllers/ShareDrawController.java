@@ -41,7 +41,6 @@ public class ShareDrawController {
         return "ShareDraw";
     }
 
-    // Manejo de la solicitud POST
     @PostMapping("/ShareDraw")
     public String PostShareDraw(Model model,@RequestParam int drawId, @RequestParam int userId,
                                 @RequestParam String permission){
