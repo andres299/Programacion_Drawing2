@@ -12,11 +12,15 @@
 }
 
 .modal-content {
-  background-color: #fefefe;
+  background-color: #000000;
+  color: #fff;
   margin: 15% auto;
   padding: 20px;
-  border: 1px solid #888;
-  width: 60%; 
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: rgb(0, 0, 0);
+  border-style: solid;
+    width: 60%; 
   max-width: 400px; 
 }
 
@@ -25,7 +29,7 @@
   color: #fff; 
   border-radius: 5px;
   border-width: 1px;
-  border-color: #333;
+  border-color: #ffA500;
   border-style: solid;
   padding: 10px 15px;
   margin-right: 10px;
@@ -39,12 +43,12 @@
   color: #333; 
   border-radius: 5px;
   border-width: 1px;
-  border-color: #333;
+  border-color: #ffA500;
   border-style: solid;  padding: 10px 15px;
   cursor: pointer;
 }
 
-.modal-delete:hover{
+.modal-cancel:hover{
   background-color: #1d1d1d;
 }
 .close {
