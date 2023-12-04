@@ -1,6 +1,7 @@
 package com.esliceu.PracticaDrawing2.Controllers;
 
 import com.esliceu.PracticaDrawing2.Entities.User;
+import com.esliceu.PracticaDrawing2.Services.DrawService;
 import com.esliceu.PracticaDrawing2.Services.PermissionService;
 import com.esliceu.PracticaDrawing2.Services.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -19,16 +20,21 @@ public class ShareDrawController {
     HttpSession session;
     @Autowired
     UserService userService;
+
+    @Autowired
+    DrawService drawService;
     @Autowired
     PermissionService permissionService;
 
     @GetMapping("/ShareDraw")
-    public String ShareDraw(Model model, @RequestParam int drawId, @RequestParam int owner_id) {
+    public String ShareDraw(Model model, @RequestParam int drawId) {
         //La sesion del usuario actual
         User user = (User) session.getAttribute("user");
-        if (owner_id != user.getId()){
-           return "redirect:/AllDraw";
+        boolean OwnerPropietary = drawService.propietaryDraw(drawId, user.getId());
+        if (!OwnerPropietary) {
+            return "redirect:/AllDraw";
         }
+        
         List<User> users = userService.allUsers(user.getId());
         model.addAttribute("users",users);
         model.addAttribute("drawId",drawId);

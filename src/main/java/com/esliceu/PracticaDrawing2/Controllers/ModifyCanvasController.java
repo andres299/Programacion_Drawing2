@@ -35,9 +35,13 @@ public class ModifyCanvasController {
         // Obtener el dibujo por su ID
         Version selectedDraw = versionService.getVersionById(drawId);
 
-        // Verificar si existDraw es nulo y si el usuario que creó la imagen es el que está intentando modificarla
-        if (selectedDraw == null ) {
-            // Redirigir a la página de todos los dibujos si el dibujo no existe o no pertenece al usuario
+        //Metodo para comprobar si eres el propietario del dibujo.
+        boolean OwnerPropietary = drawService.propietaryDraw(drawId, user.getId());
+        //Metodo para comprobar si tienes permisos de escritura.
+        boolean UserPermission = drawService.hasPermissionsWriting(drawId, user.getId());
+        System.out.println(UserPermission);
+        //Si no tienes te redirige.
+        if (!OwnerPropietary && !UserPermission) {
             return "redirect:/AllDraw";
         }
 

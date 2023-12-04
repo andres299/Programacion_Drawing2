@@ -15,19 +15,19 @@ public interface DrawRepo {
 
     List<DrawWithVersionDTO> getDrawsTrash(int id);
 
-    void userPermissions(int drawId, int owner_id);
-
     boolean hasPermissionsWriting(int id_draw, int id_user);
 
     void deleteDraw(int id_draw);
 
     void restoreDraw(int id_draw);
 
-    boolean propietaryDraw(int idUser, int drawId);
+    boolean propietaryDraw(int drawId, int id_user);
 
     boolean getVisibility(int drawId);
 
     void updateVisibility(String newName,int drawId, boolean visibility);
 
     boolean userCanSee(int drawId, int idUser);
+
+    void uodateYourTrash(int id, int id_user);
 }
