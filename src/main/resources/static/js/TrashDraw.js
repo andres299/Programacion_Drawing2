@@ -15,4 +15,5 @@ function closeModal() {
 function deleteDraw() {
     // Puedes agregar aquí la lógica para enviar el formulario de eliminación
     document.getElementById('deleteForm').submit();
+    closeModal();
 }

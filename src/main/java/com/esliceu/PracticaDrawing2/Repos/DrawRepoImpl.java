@@ -57,7 +57,8 @@ public class DrawRepoImpl implements DrawRepo {
                 "LEFT JOIN permissions ON draw.id = permissions.id_draw AND permissions.id_user = ? " +
                 "WHERE (draw.visualization = 1 OR draw.owner_id = ? " +
                 "OR (permissions.permissions IN ('R', 'RW') AND permissions.id_user = ?)) " +
-                "AND draw.inTheTrash = 0 GROUP BY draw.id;";
+                "AND draw.inTheTrash = 0 AND (permissions.id_user IS NULL OR permissions.id_user <> ?)) " +
+                "OR (permissions.id_user = ? AND in_your_trash = false)) GROUP BY draw.id;";
         List<DrawWithVersionDTO> allDrawWhithVersion = jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper<>(DrawWithVersionDTO.class),id_user, id_user, id_user);
         return allDrawWhithVersion;
