@@ -18,7 +18,7 @@
   padding: 20px;
   border-radius: 5px;
   border-width: 1px;
-  border-color: rgb(0, 0, 0);
+  border-color: #ffA500;
   border-style: solid;
     width: 60%; 
   max-width: 400px; 
@@ -49,6 +49,7 @@
 }
 
 .modal-cancel:hover{
+  color: #fff;
   background-color: #1d1d1d;
 }
 .close {
@@ -60,7 +61,7 @@
 
 .close:hover,
 .close:focus {
-  color: black;
+  color: rgb(247, 242, 242);
   text-decoration: none;
   cursor: pointer;
 }

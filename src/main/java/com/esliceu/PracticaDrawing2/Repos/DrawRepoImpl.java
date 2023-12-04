@@ -66,9 +66,10 @@ public class DrawRepoImpl implements DrawRepo {
                 "JOIN version ON draw.id = version.id_draw " +
                 "LEFT JOIN permissions ON draw.id = permissions.id_draw AND permissions.id_user = ? " +
                 "WHERE (draw.visualization = 1 OR draw.owner_id = ? " +
-                "OR (permissions.permissions IN ('R', 'RW') AND permissions.id_user = ?)) " +
-                "AND draw.inTheTrash = 0 AND (permissions.id_user IS NULL OR permissions.id_user <> ?)) " +
+                "OR (permissions.permissions IN ('R', 'RW') AND permissions.id_user = ?) " +
+                "AND draw.inTheTrash = 0 AND (permissions.id_user IS NULL OR permissions.id_user <> ?) " +
                 "OR (permissions.id_user = ? AND in_your_trash = false)) GROUP BY draw.id;";
+
         List<DrawWithVersionDTO> allDrawWhithVersion = jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper<>(DrawWithVersionDTO.class),id_user, id_user, id_user, id_user, id_user);
         return allDrawWhithVersion;
@@ -127,8 +128,25 @@ public class DrawRepoImpl implements DrawRepo {
         // Eliminar de la tabla draw
         String deleteDrawSql = "DELETE FROM draw WHERE id = ?";
         jdbcTemplate.update(deleteDrawSql, id_draw);
+
+        /*
+        // Eliminar de las tablas permissions, version y draw
+        String deleteSql = "DELETE permissions, version, draw "
+                + "FROM permissions "
+                + "JOIN version ON permissions.id_draw = version.id_draw "
+                + "JOIN draw ON permissions.id_draw = draw.id "
+                + "WHERE permissions.id_draw = ?";
+        jdbcTemplate.update(deleteSql, id_draw);
+
+         */
     }
 
+    @Override
+    public void deletPermissionUser(int id, int idUser) {
+        // Eliminar de la tabla permissions
+        String deletePermissionsSql = "DELETE FROM permissions WHERE id_draw = ? AND id_user = ?";
+        jdbcTemplate.update(deletePermissionsSql, id, idUser);
+    }
     @Override
     public void restoreDraw(int id_draw) {
         String sql = "UPDATE draw SET inTheTrash = 0 WHERE id = ?";

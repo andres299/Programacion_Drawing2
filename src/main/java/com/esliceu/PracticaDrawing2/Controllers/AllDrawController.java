@@ -40,10 +40,8 @@ public class AllDrawController {
         User user = (User) session.getAttribute("user");
         //Metodo para comprobar si eres el propietario del dibujo.
         boolean OwnerPropietary = drawService.propietaryDraw(id, user.getId());
-        System.out.println(OwnerPropietary);
         //Metodo para comprobar si tienes permisos de escritura.
         boolean UserPermission = drawService.hasPermissionsWriting(id, user.getId());
-        System.out.println(UserPermission);
         //Si no tienes te redirige.
         if (!OwnerPropietary && !UserPermission) {
             return "redirect:/AllDraw";

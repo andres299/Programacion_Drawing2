@@ -79,4 +79,8 @@ public class DrawService {
     public boolean userCanSee(int drawId, int id_user) {
         return drawRepo.userCanSee(drawId, id_user);
     }
+
+    public void deletePermissionUser(int id, int id_user) {
+        drawRepo.deletPermissionUser(id,id_user);
+    }
 }

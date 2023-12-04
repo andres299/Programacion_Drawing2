@@ -45,8 +45,17 @@ public class TrashDrawController {
     public String PostTrashDrawController(Model model, @RequestParam int id, @RequestParam String action) {
         //Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
+        //Metodo para comprobar si eres el propietario del dibujo.
+        boolean OwnerPropietary = drawService.propietaryDraw(id, user.getId());
+        //Metodo para comprobar si tienes permisos de escritura.
+        boolean UserPermission = drawService.hasPermissionsWriting(id, user.getId());
+
         if ("delete".equals(action)) {
-             drawService.deleteDraw(id);
+            if (OwnerPropietary) {
+                drawService.deleteDraw(id);
+            } else if (UserPermission) {
+                drawService.deletePermissionUser(id,user.getId());
+            }
         } else if ("restore".equals(action)) {
              drawService.restoreDraw(id);
         }
