@@ -45,7 +45,12 @@ public class ShareDrawController {
     @PostMapping("/ShareDraw")
     public String PostShareDraw(Model model,@RequestParam int drawId, @RequestParam int userId,
                                 @RequestParam String permission){
-        permissionService.permissionUser(drawId,userId,permission);
+        boolean existPermission = permissionService.ExistpermissionUser(drawId,userId);
+        if (existPermission){
+            permissionService.updatePermission(drawId,userId,permission);
+        } else {
+            permissionService.permissionUser(drawId, userId, permission);
+        }
         return "redirect:/AllDraw";
     }
 }

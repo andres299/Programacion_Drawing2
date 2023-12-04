@@ -14,4 +14,13 @@ public class PermissionService {
         Permissions permissions = new Permissions(drawId,userId,permission);
         permissionRepo.permissionUser(permissions);
     }
+
+    public boolean ExistpermissionUser(int drawId, int userId) {
+        return permissionRepo.ExistpermissionUser(drawId,userId);
+    }
+
+    public void updatePermission(int drawId, int userId, String permission) {
+        Permissions permissions = new Permissions(drawId,userId,permission);
+        permissionRepo.updatePermission(permissions);
+    }
 }
