@@ -30,6 +30,7 @@ public class ShareDrawController {
     public String ShareDraw(Model model, @RequestParam int drawId) {
         //La sesion del usuario actual
         User user = (User) session.getAttribute("user");
+        //Comprobamos si el usuario es el propietario
         boolean OwnerPropietary = drawService.propietaryDraw(drawId, user.getId());
         if (!OwnerPropietary) {
             return "redirect:/AllDraw";
@@ -44,6 +45,10 @@ public class ShareDrawController {
     @PostMapping("/ShareDraw")
     public String PostShareDraw(Model model,@RequestParam int drawId, @RequestParam int userId,
                                 @RequestParam String permission){
+        //La sesion del usuario actual
+        User user = (User) session.getAttribute("user");
+
+        //Si ya tiene permisos lo actualiza, sino los añade.
         boolean existPermission = permissionService.ExistpermissionUser(drawId,userId);
         if (existPermission){
             permissionService.updatePermission(drawId,userId,permission);
@@ -55,7 +60,11 @@ public class ShareDrawController {
 
     @PostMapping("/DeletePermissions")
     public String PostDeletePermissions(Model model, @RequestParam int drawId, @RequestParam int userId) {
+        //La sesion del usuario actual
+        User user = (User) session.getAttribute("user");
+
+        //Restaura la imagen.
         permissionService.deletePermissionsUser(drawId, userId);
         return "redirect:/AllDraw";
-}
+    }
 }
