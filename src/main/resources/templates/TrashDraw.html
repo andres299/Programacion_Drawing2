@@ -5,6 +5,7 @@
     <title>Todos los Dibujos</title>
     <link rel="stylesheet" href="/css/CanvasDrawStyle.css">
     <link rel="stylesheet" href="/css/DrawTable.css">
+    <link rel="stylesheet" href="/css/TrashDraw.css">
     <script src="https://kit.fontawesome.com/2684e8a577.js" crossorigin="anonymous"></script>
 </head>
 
@@ -12,9 +13,9 @@
 <div class="header">
     <nav>
         <ul class="nav-list">
-            <li class="nav-item"><a href="/CanvasDraw">CanvasDraw</a></li>
-            <li class="nav-item"><a href="/AllDraw">Todos Dibujos</a></li>
-            <li class="nav-item"><a href="/TrashDraw">Papelera</a></li>
+            <li class="nav-item"><a href="/CanvasDraw"><i class="fa-solid fa-paintbrush"></i> CanvasDraw</a></li>
+            <li class="nav-item"><a href="/AllDraw"><i class="fa-solid fa-list"></i> Todos Dibujos</a></li>
+            <li class="nav-item"><a href="/TrashDraw"><i class="fa-solid fa-trash"></i> Papelera</a></li>
             <li class="nav-item"><a href="/Logout"><i class="fa-solid fa-user"></i> Cerrar Sesion</a></li>
         </ul>
     </nav>
@@ -41,10 +42,10 @@
         <td th:text="${draw.owner_id}"></td>
         <td>
             <div class="button-container">
-                <form action="/TrashDraw" method="post">
+                <form id="deleteForm" action="/TrashDraw" method="post">
                     <input type="hidden" name="id" th:value="${draw.id}">
                     <input type="hidden" name="action" th:value="'delete'" />
-                    <button class="delete" type="submit">Eliminar</button>
+                    <button class="delete" type="button" onclick="confirmDelete()">Eliminar</button>
                 </form>
                 <form action="/TrashDraw" method="post">
                     <input type="hidden" name="id" th:value="${draw.id}" />
@@ -55,6 +56,14 @@
         </td>
     </tr>
 </table>
+<div id="deleteModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <p>¿Estás seguro que quieres eliminar?</p>
+        <button class="modal-delete" onclick="deleteDraw()">Sí, eliminar</button>
+        <button class="modal-cancel" onclick="closeModal()">No, cancelar</button>
+    </div>
+<script src="/js/TrashDraw.js"></script>
 </body>
 
 </html>

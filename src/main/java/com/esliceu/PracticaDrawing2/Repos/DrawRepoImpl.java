@@ -50,6 +50,7 @@ public class DrawRepoImpl implements DrawRepo {
     //Metodo para mostrar las imagenes
     @Override
     public List<DrawWithVersionDTO> getDraws(int id_user) {
+        /*
         String sql = "SELECT draw.*, MAX(version.figures) AS figures, " +
                 "MAX(version.numFigures) AS numFigures, MAX(version.modificationDate) AS modificationDate, " +
                 "permissions.permissions FROM draw " +
@@ -57,9 +58,34 @@ public class DrawRepoImpl implements DrawRepo {
                 "LEFT JOIN permissions ON draw.id = permissions.id_draw AND permissions.id_user = ? " +
                 "WHERE (draw.visualization = 1 OR draw.owner_id = ? " +
                 "OR (permissions.permissions IN ('R', 'RW') AND permissions.id_user = ?)) " +
-                "AND draw.inTheTrash = 0 GROUP BY draw.id;";
+                "AND draw.inTheTrash = 0 AND GROUP BY draw.id;";
+
+        String sql = "SELECT draw.*, MAX(version.figures) AS figures, " +
+                "MAX(version.numFigures) AS numFigures, MAX(version.modificationDate) AS modificationDate, " +
+                "permissions.permissions FROM draw " +
+                "JOIN version ON draw.id = version.id_draw " +
+                "LEFT JOIN permissions ON draw.id = permissions.id_draw AND permissions.id_user = ? " +
+                "WHERE (draw.visualization = 1 OR draw.owner_id = ? " +
+                "OR (permissions.permissions IN ('R', 'RW') AND permissions.id_user = ?) " +
+                "AND draw.inTheTrash = 0 AND (permissions.id_user IS NULL OR permissions.id_user <> ?) " +
+                "OR (permissions.id_user = ? AND in_your_trash = false)) GROUP BY draw.id;";
+         */
+        String sql = "SELECT draw.*, MAX(version.figures) AS figures, " +
+                "MAX(version.numFigures) AS numFigures, " +
+                "MAX(version.modificationDate) AS modificationDate, " +
+                "permissions.permissions " +
+                "FROM draw " +
+                "JOIN version ON draw.id = version.id_draw " +
+                "LEFT JOIN permissions ON draw.id = permissions.id_draw AND permissions.id_user = ? " +
+                "WHERE (draw.visualization = 1 OR draw.owner_id = ? " +
+                "OR (permissions.permissions IN ('R', 'RW') AND permissions.id_user = ?)) " +
+                "AND draw.inTheTrash = 0 " +
+                "AND ((permissions.id_user IS NULL OR permissions.id_user <> ?) " +
+                "OR (permissions.id_user = ? AND in_your_trash = false)) " +
+                "GROUP BY draw.id;";
+
         List<DrawWithVersionDTO> allDrawWhithVersion = jdbcTemplate.query(sql,
-                new BeanPropertyRowMapper<>(DrawWithVersionDTO.class),id_user, id_user, id_user);
+                new BeanPropertyRowMapper<>(DrawWithVersionDTO.class),id_user, id_user, id_user, id_user, id_user);
         return allDrawWhithVersion;
     }
 
@@ -81,6 +107,7 @@ public class DrawRepoImpl implements DrawRepo {
 
     @Override
     public List<DrawWithVersionDTO> getDrawsTrash(int id) {
+        /*
         String sql = "SELECT draw.*, MAX(version.figures) AS figures, " +
                 "MAX(version.numFigures) AS numFigures, MAX(version.modificationDate) AS modificationDate, " +
                 "permissions.permissions FROM draw " +
@@ -90,8 +117,23 @@ public class DrawRepoImpl implements DrawRepo {
                 "OR (permissions.permissions IN ('R', 'RW') AND permissions.id_user = ?)) " +
                 "AND draw.inTheTrash = 1 " +
                 "GROUP BY draw.id;";
+         */
+
+        String sql = "SELECT draw.*, MAX(version.figures) AS figures, " +
+                "MAX(version.numFigures) AS numFigures, " +
+                "MAX(version.modificationDate) AS modificationDate, " +
+                "permissions.permissions " +
+                "FROM draw " +
+                "JOIN version ON draw.id = version.id_draw " +
+                "LEFT JOIN permissions ON draw.id = permissions.id_draw AND permissions.id_user = ? " +
+                "WHERE (draw.visualization = 1 OR draw.owner_id = ? " +
+                "OR (permissions.permissions IN ('R', 'RW') AND permissions.id_user = ?)) " +
+                "AND draw.inTheTrash = 1 " +
+                "AND ((permissions.id_user IS NULL OR permissions.id_user <> ?) " +
+                "OR (permissions.id_user = ? AND in_your_trash = true)) " +
+                "GROUP BY draw.id;";
         List<DrawWithVersionDTO> allDrawWhithVersion = jdbcTemplate.query(sql,
-                new BeanPropertyRowMapper<>(DrawWithVersionDTO.class),id,id,id);
+                new BeanPropertyRowMapper<>(DrawWithVersionDTO.class),id,id,id,id,id);
         return allDrawWhithVersion;
     }
 
@@ -118,6 +160,12 @@ public class DrawRepoImpl implements DrawRepo {
         jdbcTemplate.update(deleteDrawSql, id_draw);
     }
 
+    @Override
+    public void deletPermissionUser(int id, int idUser) {
+        // Eliminar de la tabla permissions
+        String deletePermissionsSql = "DELETE FROM permissions WHERE id_draw = ? AND id_user = ?";
+        jdbcTemplate.update(deletePermissionsSql, id, idUser);
+    }
     @Override
     public void restoreDraw(int id_draw) {
         String sql = "UPDATE draw SET inTheTrash = 0 WHERE id = ?";

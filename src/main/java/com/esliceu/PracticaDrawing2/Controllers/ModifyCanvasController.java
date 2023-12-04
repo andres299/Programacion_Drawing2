@@ -39,7 +39,7 @@ public class ModifyCanvasController {
         boolean OwnerPropietary = drawService.propietaryDraw(drawId, user.getId());
         //Metodo para comprobar si tienes permisos de escritura.
         boolean UserPermission = drawService.hasPermissionsWriting(drawId, user.getId());
-        System.out.println(UserPermission);
+
         //Si no tienes te redirige.
         if (!OwnerPropietary && !UserPermission) {
             return "redirect:/AllDraw";

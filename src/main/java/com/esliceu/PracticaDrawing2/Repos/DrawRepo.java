@@ -30,4 +30,6 @@ public interface DrawRepo {
     boolean userCanSee(int drawId, int idUser);
 
     void uodateYourTrash(int id, int id_user);
+
+    void deletPermissionUser(int id, int idUser);
 }

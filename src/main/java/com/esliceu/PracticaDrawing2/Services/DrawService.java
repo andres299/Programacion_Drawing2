@@ -15,9 +15,6 @@ public class DrawService {
     @Autowired
     DrawRepo drawRepo;
 
-    @Autowired
-    ObjectCounter objectCounter;
-
     // Método que genera un nombre aleatorio para una imagen.
     public String generateRandomName() {
         return "image_" + UUID.randomUUID().toString();
@@ -71,12 +68,15 @@ public class DrawService {
     public void updateVisibility(String newName, int drawId, String visibility) {
         drawRepo.updateVisibility(newName, drawId, convertToBoolean(visibility));
     }
+    public boolean userCanSee(int drawId, int id_user) {
+        return drawRepo.userCanSee(drawId, id_user);
+    }
+
+    public void deletePermissionUser(int id, int id_user) {
+        drawRepo.deletPermissionUser(id,id_user);
+    }
 
     public static boolean convertToBoolean(String visibility) {
         return "public".equalsIgnoreCase(visibility);
-    }
-
-    public boolean userCanSee(int drawId, int id_user) {
-        return drawRepo.userCanSee(drawId, id_user);
     }
 }
