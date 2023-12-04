@@ -5,6 +5,7 @@
     <title>Todos los Dibujos</title>
     <link rel="stylesheet" href="/css/CanvasDrawStyle.css">
     <link rel="stylesheet" href="/css/DrawTable.css">
+    <link rel="stylesheet" href="/css/TrashDraw.css">
     <script src="https://kit.fontawesome.com/2684e8a577.js" crossorigin="anonymous"></script>
 </head>
 
@@ -41,10 +42,10 @@
         <td th:text="${draw.owner_id}"></td>
         <td>
             <div class="button-container">
-                <form action="/TrashDraw" method="post">
+                <form id="deleteForm" action="/TrashDraw" method="post">
                     <input type="hidden" name="id" th:value="${draw.id}">
                     <input type="hidden" name="action" th:value="'delete'" />
-                    <button class="delete" type="submit">Eliminar</button>
+                    <button class="delete" type="button" onclick="confirmDelete()">Eliminar</button>
                 </form>
                 <form action="/TrashDraw" method="post">
                     <input type="hidden" name="id" th:value="${draw.id}" />
@@ -55,14 +56,12 @@
         </td>
     </tr>
 </table>
-<!-- Agrega este modal al final de tu cuerpo HTML -->
-<div id="deleteConfirmationModal" class="modal">
+<div id="deleteModal" class="modal">
     <div class="modal-content">
-        <p>¿Estás seguro de que quieres eliminar esta imagen?</p>
-        <button id="confirmDeleteBtn" class="delete">Sí, eliminar</button>
-        <button id="cancelDeleteBtn" class="cancel">Cancelar</button>
+        <span class="close" onclick="closeModal()">&times;</span>
+        <p>¿Estás seguro que quieres eliminar?</p>
+        <button onclick="deleteDraw()">Sí, eliminar</button>
     </div>
-</div>
 <script src="/js/TrashDraw.js"></script>
 </body>
 
