@@ -68,7 +68,15 @@ public class ModifyCanvasController {
                                     @RequestParam String drawName) {
         //Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
-        int owner_id = user.getId();
+        //Metodo para comprobar si eres el propietario del dibujo.
+        boolean OwnerPropietary = drawService.propietaryDraw(drawId, user.getId());
+        //Metodo para comprobar si tienes permisos de escritura.
+        boolean UserPermission = drawService.hasPermissionsWriting(drawId, user.getId());
+
+        //Si no tienes te redirige.
+        if (!OwnerPropietary && !UserPermission) {
+            return "redirect:/AllDraw";
+        }
 
         //Comprobar si las figuras estan vacias
         if (figures.isEmpty()) {
@@ -82,7 +90,7 @@ public class ModifyCanvasController {
         //Actualizar el draw
         drawService.updateVisibility(newName,drawId, visibility);
         // Guardar la versión
-        versionService.saveVersion(drawId, figures, owner_id);
+        versionService.saveVersion(drawId, figures, user.getId());
 
         //Actualizar los datos del dibujo
         return "redirect:/AllDraw";
