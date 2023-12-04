@@ -8,4 +8,6 @@ public interface PermissionRepo {
     void updatePermission(Permissions permissions);
 
     boolean ExistpermissionUser(int drawId, int userId);
+
+    void deletePermissionsUser(int drawId, int userId);
 }

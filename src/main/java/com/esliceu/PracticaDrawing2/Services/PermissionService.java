@@ -23,4 +23,8 @@ public class PermissionService {
         Permissions permissions = new Permissions(drawId,userId,permission);
         permissionRepo.updatePermission(permissions);
     }
+
+    public void deletePermissionsUser(int drawId, int userId) {
+        permissionRepo.deletePermissionsUser(drawId,userId);
+    }
 }

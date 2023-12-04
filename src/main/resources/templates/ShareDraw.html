@@ -27,7 +27,8 @@
          <th>Login</th>
          <th>Nombre</th>
          <th>Permisos</th>
-      <th>Enviar</th>
+         <th>Enviar</th>
+         <th>Eliminar</th>
       </tr>
       <th:each th:each="user : ${users}">
            <tr>
@@ -47,6 +48,13 @@
                     <input type="hidden" name="permission" id="permission" value="R"/>
                     <button type="submit" class="permission">Enviar Permisos</button>
                   </form>
+              </td>
+              <td>
+                <form action="/DeletePermissions" method="post">
+                    <input type="hidden" name="drawId" th:value="${drawId}"/>
+                    <input type="hidden" name="userId" th:value="${user.id}"/>
+                    <button type="submit" class="delete">Eliminar Permisos</button>
+                </form>
               </td>
            </tr>
       </th:each>

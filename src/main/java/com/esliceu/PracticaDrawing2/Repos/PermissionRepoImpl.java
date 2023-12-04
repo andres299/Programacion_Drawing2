@@ -27,4 +27,10 @@ public class PermissionRepoImpl implements PermissionRepo{
         String selectSql = "SELECT COUNT(*) FROM permissions WHERE id_draw = ? AND id_user = ?";
         int count = jdbcTemplate.queryForObject(selectSql, Integer.class, drawId, userId);
         return count > 0;    }
+
+    @Override
+    public void deletePermissionsUser(int drawId, int userId) {
+        String deleteSql = "DELETE FROM permissions WHERE id_draw = ? AND id_user = ?";
+        jdbcTemplate.update(deleteSql, drawId, userId);
+    }
 }

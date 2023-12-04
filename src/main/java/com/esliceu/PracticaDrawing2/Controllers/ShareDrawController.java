@@ -53,4 +53,10 @@ public class ShareDrawController {
         }
         return "redirect:/AllDraw";
     }
+
+    @PostMapping("/DeletePermissions")
+    public String PostDeletePermissions(Model model, @RequestParam int drawId, @RequestParam int userId) {
+        permissionService.deletePermissionsUser(drawId, userId);
+        return "redirect:/AllDraw";
+}
 }
