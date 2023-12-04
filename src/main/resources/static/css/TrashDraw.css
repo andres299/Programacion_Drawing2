@@ -8,7 +8,7 @@
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(241, 9, 9, 0.4);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal-content {
@@ -16,9 +16,37 @@
   margin: 15% auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%;
+  width: 60%; 
+  max-width: 400px; 
 }
 
+.modal-delete {
+  background-color: #ff4d4d; 
+  color: #fff; 
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: #333;
+  border-style: solid;
+  padding: 10px 15px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.modal-delete:hover{
+  background-color: #700000;
+}
+.modal-cancel {
+  background-color: #ccc; 
+  color: #333; 
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: #333;
+  border-style: solid;  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.modal-delete:hover{
+  background-color: #1d1d1d;
+}
 .close {
   color: #aaa;
   float: right;
