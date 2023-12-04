@@ -27,4 +27,8 @@ public class PermissionService {
     public void deletePermissionsUser(int drawId, int userId) {
         permissionRepo.deletePermissionsUser(drawId,userId);
     }
+
+    public void updatePermissionTrash(int id) {
+        permissionRepo.updatePermissionTrash(id);
+    }
 }

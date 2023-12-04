@@ -33,4 +33,10 @@ public class PermissionRepoImpl implements PermissionRepo{
         String deleteSql = "DELETE FROM permissions WHERE id_draw = ? AND id_user = ?";
         jdbcTemplate.update(deleteSql, drawId, userId);
     }
+
+    @Override
+    public void updatePermissionTrash(int id) {
+        String updateTrash = "UPDATE permissions SET in_your_trash = 0 WHERE id_draw = ?";
+        jdbcTemplate.update(updateTrash,id);
+    }
 }

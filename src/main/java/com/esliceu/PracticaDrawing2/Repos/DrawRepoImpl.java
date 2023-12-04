@@ -109,17 +109,6 @@ public class DrawRepoImpl implements DrawRepo {
     public List<DrawWithVersionDTO> getDrawsTrash(int id) {
         /*
         String sql = "SELECT draw.*, MAX(version.figures) AS figures, " +
-                "MAX(version.numFigures) AS numFigures, MAX(version.modificationDate) AS modificationDate, " +
-                "permissions.permissions FROM draw " +
-                "JOIN version ON draw.id = version.id_draw " +
-                "LEFT JOIN permissions ON draw.id = permissions.id_draw AND permissions.id_user = ? " +
-                "WHERE (draw.visualization = 1 OR draw.owner_id = ? " +
-                "OR (permissions.permissions IN ('R', 'RW') AND permissions.id_user = ?)) " +
-                "AND draw.inTheTrash = 1 " +
-                "GROUP BY draw.id;";
-         */
-
-        String sql = "SELECT draw.*, MAX(version.figures) AS figures, " +
                 "MAX(version.numFigures) AS numFigures, " +
                 "MAX(version.modificationDate) AS modificationDate, " +
                 "permissions.permissions " +
@@ -132,8 +121,20 @@ public class DrawRepoImpl implements DrawRepo {
                 "AND ((permissions.id_user IS NULL OR permissions.id_user <> ?) " +
                 "OR (permissions.id_user = ? AND in_your_trash = true)) " +
                 "GROUP BY draw.id;";
+         */
+
+        String sql = "SELECT draw.*, MAX(version.figures) AS figures, " +
+                "MAX(version.numFigures) AS numFigures, " +
+                "MAX(version.modificationDate) AS modificationDate, " +
+                "permissions.permissions " +
+                "FROM draw " +
+                "JOIN version ON draw.id = version.id_draw " +
+                "LEFT JOIN permissions ON draw.id = permissions.id_draw AND permissions.id_user = ? " +
+                "WHERE (draw.inTheTrash = true AND draw.owner_id = ?) OR (permissions.id_user = ? AND " +
+                "permissions.in_your_trash = true) GROUP BY draw.id;";
+        //String sql = "SELECT COUNT (*) FROM draw LEFT "
         List<DrawWithVersionDTO> allDrawWhithVersion = jdbcTemplate.query(sql,
-                new BeanPropertyRowMapper<>(DrawWithVersionDTO.class),id,id,id,id,id);
+                new BeanPropertyRowMapper<>(DrawWithVersionDTO.class),id,id,id);
         return allDrawWhithVersion;
     }
 

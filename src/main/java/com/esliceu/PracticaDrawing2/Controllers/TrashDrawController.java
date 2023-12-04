@@ -3,6 +3,7 @@ package com.esliceu.PracticaDrawing2.Controllers;
 import com.esliceu.PracticaDrawing2.DTO.DrawWithVersionDTO;
 import com.esliceu.PracticaDrawing2.Entities.User;
 import com.esliceu.PracticaDrawing2.Services.DrawService;
+import com.esliceu.PracticaDrawing2.Services.PermissionService;
 import com.esliceu.PracticaDrawing2.utils.ObjectCounter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -25,9 +26,9 @@ public class TrashDrawController {
 
     @Autowired
     DrawService drawService;
-
     @Autowired
-    ObjectCounter objectCounter;
+    PermissionService permissionService;
+
     @GetMapping("/TrashDraw")
     public String TrashDrawController(Model model) {
         //Obtenemos el usuario actual
@@ -49,7 +50,7 @@ public class TrashDrawController {
         boolean OwnerPropietary = drawService.propietaryDraw(id, user.getId());
         //Metodo para comprobar si tienes permisos de escritura.
         boolean UserPermission = drawService.hasPermissionsWriting(id, user.getId());
-
+        System.out.println(UserPermission);
         if ("delete".equals(action)) {
             if (OwnerPropietary) {
                 drawService.deleteDraw(id);
@@ -57,7 +58,11 @@ public class TrashDrawController {
                 drawService.deletePermissionUser(id,user.getId());
             }
         } else if ("restore".equals(action)) {
-             drawService.restoreDraw(id);
+            if (OwnerPropietary) {
+                drawService.restoreDraw(id);
+            } else if (UserPermission) {
+                permissionService.updatePermissionTrash(id);
+            }
         }
         return "redirect:/TrashDraw";
     }

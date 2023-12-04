@@ -10,4 +10,6 @@ public interface PermissionRepo {
     boolean ExistpermissionUser(int drawId, int userId);
 
     void deletePermissionsUser(int drawId, int userId);
+
+    void updatePermissionTrash(int id);
 }
