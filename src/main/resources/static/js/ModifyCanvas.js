@@ -225,9 +225,9 @@ async function saveFigures() {
         });
         // Manejar la respuesta del servidor
         if (response.ok) {
-            alert("¡Se ha guardado correctamente!");
+            alert("¡Se ha modificado correctamente!");
         } else {
-            alert("Error al guardar. Por favor, inténtalo de nuevo.");
+            alert("Error al modificar. Por favor, inténtalo de nuevo.");
         }
     } catch (error) {
             alert("Error de red. Por favor, inténtalo de nuevo más tarde.");
