@@ -5,6 +5,7 @@ import com.esliceu.PracticaDrawing2.Entities.User;
 import com.esliceu.PracticaDrawing2.Entities.Version;
 import com.esliceu.PracticaDrawing2.Services.DrawService;
 import com.esliceu.PracticaDrawing2.Services.VersionService;
+import com.esliceu.PracticaDrawing2.utils.ObjectCounter;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,9 +24,10 @@ public class ModifyCanvasController {
     HttpSession session;
     @Autowired
     DrawService drawService;
-
     @Autowired
     VersionService versionService;
+    @Autowired
+    ObjectCounter objectCounter;
 
     @GetMapping("/ModifyCanvas")
     public String ModifyCanvas(Model model, @RequestParam String drawName,
@@ -79,11 +81,10 @@ public class ModifyCanvasController {
         }
 
         //Comprobar si las figuras estan vacias
-        if (figures.isEmpty()) {
+        if (objectCounter.countFiguresInJson(figures) == 0) {
             model.addAttribute("error", "No se han dibujado figuras. Debes dibujar al menos una figura.");
             return "CanvasDraw";
         }
-
         //Si el nombre esta vacia , genera uno aleatorio
         String newName = drawName.isEmpty() ? drawService.generateRandomName() : drawName;
 

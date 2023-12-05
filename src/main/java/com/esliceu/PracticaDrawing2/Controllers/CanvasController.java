@@ -4,6 +4,7 @@ import com.esliceu.PracticaDrawing2.Entities.Draw;
 import com.esliceu.PracticaDrawing2.Entities.User;
 import com.esliceu.PracticaDrawing2.Services.DrawService;
 import com.esliceu.PracticaDrawing2.Services.VersionService;
+import com.esliceu.PracticaDrawing2.utils.ObjectCounter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,9 +27,10 @@ public class CanvasController {
     HttpSession session;
     @Autowired
     DrawService drawService;
-
     @Autowired
     VersionService versionService;
+    @Autowired
+    ObjectCounter objectCounter;
 
     @GetMapping("/CanvasDraw")
     public String CanvasDraw(Model model) {
@@ -46,7 +48,7 @@ public class CanvasController {
         int owner_id = user.getId();
 
         //Comprobar si las figuras estan vacias
-        if (figures.isEmpty()) {
+        if (objectCounter.countFiguresInJson(figures) == 0) {
             model.addAttribute("error", "No se han dibujado figuras. Debes dibujar al menos una figura.");
             return "CanvasDraw";
         }
