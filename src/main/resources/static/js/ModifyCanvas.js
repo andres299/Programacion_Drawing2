@@ -225,11 +225,11 @@ async function saveFigures() {
         });
         // Manejar la respuesta del servidor
         if (response.ok) {
-            console.log('Operación exitosa');
+            alert("¡Se ha guardado correctamente!");
         } else {
-            console.error('Error en la solicitud:', response.statusText);
+            alert("Error al guardar. Por favor, inténtalo de nuevo.");
         }
     } catch (error) {
-        console.error('Error al realizar la solicitud:', error);
+            alert("Error de red. Por favor, inténtalo de nuevo más tarde.");
     }
 }

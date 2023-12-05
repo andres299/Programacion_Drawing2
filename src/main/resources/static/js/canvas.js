@@ -243,16 +243,6 @@ saveButton.addEventListener("click", () => {
     saveFigures();
 });
 
-// Función para mostrar mensajes en la pantalla
-function showMessage(message, isSuccess) {
-    console.log('Mostrando mensaje:', message);
-    const messageContainer = document.getElementById("messageContainer");
-    messageContainer.textContent = message;
-    messageContainer.style.color = isSuccess ? 'green' : 'red';
-    messageContainer.style.display = 'block';
-    messageContainer.style.marginBottom = '20px';
-}
-
 // Función para guardar figuras
 async function saveFigures() {
     try {
@@ -275,14 +265,13 @@ async function saveFigures() {
             method: 'POST',
             body: formData,
         });
-
        // Manejar la respuesta del servidor
         if (response.ok) {
-            showMessage('Operación exitosa', true);
+            alert("¡Se ha guardado correctamente!");
         } else {
-            showMessage('Error en la solicitud: ' + response.statusText, false);
+            alert("Error al guardar. Por favor, inténtalo de nuevo.");
         }
     } catch (error) {
-            showMessage('Error al realizar la solicitud: ' + error.message, false);
+            alert("Error de red. Por favor, inténtalo de nuevo más tarde.");
     }
 }
