@@ -21,6 +21,7 @@ let visibility = "private";
 // Función para establecer la visibilidad
 function setVisibility(value) {
     visibility = value;
+    localStorage.setItem('visibility', value);
 }
 
 // Función para eliminar una figura
@@ -28,6 +29,20 @@ const removeFigure = (i) => {
     figures.splice(i, 1);
     render(figures);
 };
+
+// Recupera el valor de visibilidad del localStorage al cargar la página
+window.addEventListener('load', () => {
+    const storedVisibility = localStorage.getItem('visibility');
+    if (storedVisibility) {
+        visibility = storedVisibility;
+        // Selecciona el radio button correspondiente después de que el HTML esté completamente cargado
+        if (storedVisibility === 'public') {
+            document.querySelector("input[value='public']").checked = true;
+        } else if (storedVisibility === 'private') {
+            document.querySelector("input[value='private']").checked = true;
+        }
+    }
+});
 
 // Función para renderizar las figuras y actualizar los registros
 const render = (figures) => {
@@ -181,6 +196,48 @@ clearButton.addEventListener("click", () => {
     render(figures);
 });
 
+//Al cargar la pagina
+window.addEventListener('load', () => {
+    // Recuperamos valores si existen
+    const storedFigure = localStorage.getItem('figure');
+    const storedColor = localStorage.getItem('color');
+    const storedSize = localStorage.getItem('size');
+    const storedFillFigure = localStorage.getItem('fillFigure');
+    const storedVisibility = localStorage.getItem('visibility');
+
+    // Establece los valores recuperados en los elementos del formulario
+    if (storedFigure) {
+        figureSelect.value = storedFigure;
+    }
+    if (storedColor) {
+        colorInput.value = storedColor;
+    }
+    if (storedSize) {
+        sizeInput.value = storedSize;
+    }
+    if (storedFillFigure) {
+        fillFigureCheckbox.checked = storedFillFigure === 'true';
+    }
+});
+
+// Agregamos event listeners para detectar cambios y guardar en localStorage
+figureSelect.addEventListener('change', function () {
+    localStorage.setItem('figure', figureSelect.value);
+});
+
+colorInput.addEventListener('input', function () {
+    localStorage.setItem('color', colorInput.value);
+});
+
+sizeInput.addEventListener('input', function () {
+    localStorage.setItem('size', sizeInput.value);
+});
+
+fillFigureCheckbox.addEventListener('change', function () {
+    localStorage.setItem('fillFigure', fillFigureCheckbox.checked);
+});
+
+
 // Event listener para el botón de guardar
 saveButton.addEventListener("click", () => {
     saveFigures();
@@ -199,7 +256,7 @@ function showMessage(message, isSuccess) {
 // Función para guardar figuras
 async function saveFigures() {
     try {
-        // Convierte el array "figures" a una cadena JSON
+        // Convertimos el array "figures" a una cadena JSON
         var figuresJSON = JSON.stringify(figures);
 
         const formData = new FormData();
