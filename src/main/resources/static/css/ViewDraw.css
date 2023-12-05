@@ -80,3 +80,31 @@ body{
 .copyButton:hover{
     background-color: rgb(87, 65, 6);
 }
+
+.select-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+    background-color: rgb(26, 153, 142);
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid #6A1A99;
+    width: 380px;
+}
+
+.select-container select {
+    border: 2px solid #841a99;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 5px;
+    background-color: white;
+    width: 100%;
+}
+
+.select-container p {
+    color: #ffffff;
+    margin: 0;
+    font-weight: bold;
+    margin-right: 10px;
+}

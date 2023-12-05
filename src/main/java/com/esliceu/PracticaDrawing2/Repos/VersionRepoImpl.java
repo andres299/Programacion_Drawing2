@@ -33,7 +33,7 @@ public class VersionRepoImpl implements VersionRepo{
 
     @Override
     public List<Version> getAllVersionById(int drawId) {
-        String sql = "SELECT * FROM version WHERE id_draw = ?";
+        String sql = "SELECT * FROM version WHERE id_draw = ? ORDER BY modificationDate DESC";
         List<Version> allVersion = jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper<>(Version.class),drawId);
         return allVersion;

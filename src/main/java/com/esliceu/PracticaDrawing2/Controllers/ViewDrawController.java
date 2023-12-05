@@ -34,14 +34,10 @@ public class ViewDrawController {
         boolean isTheOwner = drawService.userCanSee(drawId,user.getId());
         if (!isTheOwner) {return "redirect:/AllDraw";}
 
-        // Obtener el dibujo por su ID.
-        Version selectedDraw = versionService.getVersionById(drawId);
         //Obtener todas las versiones.
         List<Version> allVersionsOfTheDraw = versionService.getAllVersionById(drawId);
-        System.out.println(allVersionsOfTheDraw);
 
         // Estos atributos se enviarán a la página JSP asociada para poder mostrarlos.
-        model.addAttribute("selectedFiguresJson", selectedDraw.getFigures());
         model.addAttribute("drawName", drawName);
         model.addAttribute("allVersionsOfTheDraw",allVersionsOfTheDraw);
         // Mostrar la vista si tiene permisos
@@ -54,7 +50,7 @@ public class ViewDrawController {
     public String PostViewDraw(Model model, @RequestParam String jsonData) {
         //Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
-
+        System.out.println(jsonData);
         //Generemos un nombre aleatorio y estable la visibilidad por defecto
         String drawName = drawService.generateRandomName();
         boolean visibility = false;

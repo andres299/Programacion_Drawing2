@@ -22,24 +22,27 @@
     <div class="container-title">
         <p>Este es el dibujo, <span th:text="${drawName}"></span></p>
     </div>
-    <input type="hidden" id="selectedFigures" name="selectedFiguresJson" th:value="${selectedFiguresJson}" />
-    <canvas id="ViewCanvas" class="canvas" width="400" height="300"></canvas>
 
     <div class="select-container">
-        <label for="modificationDateSelect">Seleccionar por Fecha de Modificación:</label>
-        <select id="modificationDateSelect" name="modificationDateSelect">
-            <option value="">Seleccione una fecha</option>
-            <option th:each="version : ${allVersionsOfTheDraw}"
-                    th:if="${version.modificationDate != null}"
-                    th:value="${#dates.format(version.modificationDate, 'yyyy-MM-dd HH:mm:ss')}"
-                    th:text="${#dates.format(version.modificationDate, 'yyyy-MM-dd HH:mm:ss')}"></option>
+        <p>Lista de versiones</p>
+        <select id="versionSelect" onchange="updateCanvas()">
+            <option th:each="version, status : ${allVersionsOfTheDraw}"
+                    th:value="${version.id}"
+                    th:data-figures="${version.figures}"
+                    th:selected="${status.index == 0}"
+                    th:text="${version.modificationDate}">
+            </option>
         </select>
     </div>
 
+    <input type="hidden" id="selectedFigures" name="selectedFiguresJson" th:value="${selectedFiguresJson}" />
+
+
+    <canvas id="ViewCanvas" class="canvas" width="400" height="300"></canvas>
     <button id="copyButton" class="copyButton">Copiar</button>
 
-</div>
-<script src="/js/ViewCanvas.js"></script>
-</body>
+    </div>
+    <script src="/js/ViewCanvas.js"></script>
+    </body>
 
-</html>
+    </html>
