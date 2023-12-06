@@ -37,20 +37,6 @@ const removeFigure = (i) => {
     render(figures);
 };
 
-// Recupera el valor de visibilidad del localStorage al cargar la página
-window.addEventListener('load', () => {
-    const storedVisibility = localStorage.getItem('visibility');
-    if (storedVisibility) {
-        visibility = storedVisibility;
-        // Selecciona el radio button correspondiente después de que el HTML esté completamente cargado
-        if (storedVisibility === 'public') {
-            document.querySelector("input[value='public']").checked = true;
-        } else if (storedVisibility === 'private') {
-            document.querySelector("input[value='private']").checked = true;
-        }
-    }
-});
-
 // Función para renderizar las figuras y actualizar los registros
 const render = (figures) => {
     logs.innerHTML = "";
@@ -244,6 +230,19 @@ fillFigureCheckbox.addEventListener('change', function () {
     localStorage.setItem('fillFigure', fillFigureCheckbox.checked);
 });
 
+// Recupera el valor de visibilidad del localStorage al cargar la página
+window.addEventListener('load', () => {
+    const storedVisibility = localStorage.getItem('visibility');
+    if (storedVisibility) {
+        visibility = storedVisibility;
+        // Selecciona el radio button correspondiente después de que el HTML esté completamente cargado
+        if (storedVisibility === 'public') {
+            document.querySelector("input[value='public']").checked = true;
+        } else if (storedVisibility === 'private') {
+            document.querySelector("input[value='private']").checked = true;
+        }
+    }
+});
 
 // Event listener para el botón de guardar
 saveButton.addEventListener("click", () => {
