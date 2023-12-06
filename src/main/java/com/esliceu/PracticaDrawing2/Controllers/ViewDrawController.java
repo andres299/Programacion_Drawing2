@@ -52,9 +52,8 @@ public class ViewDrawController {
         User user = (User) session.getAttribute("user");
         System.out.println(jsonData);
         //Generemos un nombre aleatorio y estable la visibilidad por defecto
-        String drawName = drawService.generateRandomName();
+        String drawName = "Copia " + drawService.generateRandomName();
         boolean visibility = false;
-
         // Guardar el dibujo
         Draw savedDraw = drawService.saveDraw(drawName, user.getId(), String.valueOf(visibility));
 
