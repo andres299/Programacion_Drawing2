@@ -54,7 +54,7 @@ public class ModifyCanvasController {
         model.addAttribute("drawId", drawId);
         model.addAttribute("selectedFiguresJson", selectedFiguresJson);
         model.addAttribute("visibility", visibility);
-        model.addAttribute("ownerPropietary", drawService.propietaryDraw(drawId, user.getId()));
+        model.addAttribute("OwnerPropietary", drawService.propietaryDraw(drawId, user.getId()));
         return "ModifyCanvas";
     }
 
