@@ -19,6 +19,8 @@ public class DrawService {
     @Autowired
     VersionService versionService;
     @Autowired
+    PermissionService permissionService;
+    @Autowired
     ObjectCounter objectCounter;
 
     //Actualizar el dibujo a la papelera
@@ -157,5 +159,27 @@ public class DrawService {
         // Guardar la versión
         versionService.saveVersion(drawId, jsonData, user.getId());
         return null;
+    }
+
+    public void deleteTrashDraw(int id, String action, User user) {
+        // Método para comprobar si eres el propietario del dibujo.
+        boolean ownerPropietary = propietaryDraw(id, user.getId());
+
+        // Método para comprobar si tienes permisos de escritura.
+        boolean userPermission = hasPermissionsWriting(id, user.getId());
+
+        if ("delete".equals(action)) {
+            if (ownerPropietary) {
+                deleteDraw(id);
+            } else if (userPermission) {
+                deletePermissionUser(id, user.getId());
+            }
+        } else if ("restore".equals(action)) {
+            if (ownerPropietary) {
+                restoreDraw(id);
+            } else if (userPermission) {
+                permissionService.updatePermissionTrash(id);
+            }
+        }
     }
 }
