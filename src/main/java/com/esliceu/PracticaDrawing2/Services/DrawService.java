@@ -174,28 +174,23 @@ public class DrawService {
 
         // Método para comprobar si está en la papelera del usuario.
         boolean inYourTrash = in_your_trash(id);
-        System.out.println(ownerPropietary);
-        System.out.println(userPermission);
-        System.out.println(trashDraw);
-        System.out.println(inYourTrash);
-            if ("delete".equals(action)) {
-                if (ownerPropietary) {
-                    if (!trashDraw) {
+        if ("delete".equals(action)) {
+            if (ownerPropietary) {
+                if (!trashDraw) {
                         deleteDraw(id);
-                    }
-                } else if (userPermission) {
-                    if (!inYourTrash) {
+                }
+            } else if (userPermission) {
+                if (!inYourTrash) {
                         deletePermissionUser(id, user.getId());
                     }
                 }
-            } else if ("restore".equals(action)) {
+        } else if ("restore".equals(action)) {
                 if (ownerPropietary) {
-                    restoreDraw(id);
-                } else if (userPermission) {
-                    permissionService.updatePermissionTrash(id);
-                }
+                        restoreDraw(id);
+            } else if (userPermission) {
+                        permissionService.updatePermissionTrash(id);
             }
-
+        }
     }
 
     public boolean validateDrawModifyAndTrash(int drawId, User user) {
