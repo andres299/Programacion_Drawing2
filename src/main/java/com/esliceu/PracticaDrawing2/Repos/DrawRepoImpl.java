@@ -80,7 +80,7 @@ public class DrawRepoImpl implements DrawRepo {
 
     @Override
     public void uodateYourTrash(int id, int id_user) {
-//      Aquí verificamos que el id_user es el propietario de la imagen antes de realizar la actualización
+    //Aquí verificamos que el id_user es el propietario de la imagen antes de realizar la actualización
         String sql = "UPDATE permissions SET in_your_trash = 1 WHERE id_draw = ? AND id_user = ?";
         jdbcTemplate.update(sql, id, id_user);
     }

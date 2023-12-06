@@ -57,7 +57,7 @@ public class ViewDrawController {
         }
 
         //Metdodo para guardar el dibujo y la version.
-        String copiDrawAndVersion = drawService.copiDrawAndVersion(user, model, jsonData);
+        String copiDrawAndVersion = drawService.copiDrawAndVersion(user, jsonData);
         if (copiDrawAndVersion != null) {
             return "ViewDraw";
         }

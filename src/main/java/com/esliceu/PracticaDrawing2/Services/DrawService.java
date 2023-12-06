@@ -142,13 +142,19 @@ public class DrawService {
         // Comprobar si eres el propietario del dibujo.
         boolean isTheOwner = userCanSee(drawId, user.getId());
 
+        // Método para comprobar si tienes permisos de escritura.
+        boolean userPermission = hasPermissionsWriting(drawId, user.getId());
+
         // Comprobamos que no esté en la basura.
-        boolean trashDraw = trashDraw(drawId);
+        boolean trashDrawGeneral = trashDraw(drawId);
 
-        return isTheOwner || trashDraw;
-    }
+        // Método para comprobar si está en la papelera del usuario.
+        boolean inYourTrash = in_your_trash(drawId);
 
-    public String copiDrawAndVersion(User user, Model model, String jsonData) {
+        return isTheOwner && trashDrawGeneral || inYourTrash && userPermission;
+        }
+
+    public String copiDrawAndVersion(User user, String jsonData) {
         String drawName = "Copia " + generateRandomName();
         boolean visibility = false;
         // Guardar el dibujo
