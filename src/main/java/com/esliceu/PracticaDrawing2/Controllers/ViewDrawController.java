@@ -42,6 +42,7 @@ public class ViewDrawController {
         // Estos atributos se enviarán a la página JSP asociada para poder mostrarlos.
         model.addAttribute("drawName", drawName);
         model.addAttribute("allVersionsOfTheDraw",allVersionsOfTheDraw);
+        model.addAttribute("drawId",drawId);
         // Mostrar la vista si tiene permisos
         return "ViewDraw";
 
@@ -49,10 +50,12 @@ public class ViewDrawController {
 
     // Manejo de la solicitud POST para procesar el formulario de registro
     @PostMapping("/ViewDraw")
-    public String PostViewDraw(Model model, @RequestParam String jsonData) {
+    public String PostViewDraw(Model model, @RequestParam String jsonData, @RequestParam int draw_Id) {
         //Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
-        System.out.println(jsonData);
+        System.out.println(draw_Id);
+        //Comprobar si eres el usuario.
+        boolean isTheOwner = drawService.userCanSee(draw_Id,user.getId());
         //Generemos un nombre aleatorio y estable la visibilidad por defecto
         String drawName = "Copia " + drawService.generateRandomName();
         boolean visibility = false;

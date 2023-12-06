@@ -135,14 +135,14 @@ public class DrawRepoImpl implements DrawRepo {
     @Override
     public boolean trashDraw(int drawId) {
         // Consulta SQL para verificar si el dibujo está en la papelera en ambas tablas
-        String sql = "SELECT COUNT(*) FROM draw WHERE d.id = ? AND inTheTrash = false";
+        String sql = "SELECT COUNT(*) FROM draw WHERE id = ? AND inTheTrash = false";
         int count = jdbcTemplate.queryForObject(sql, Integer.class, drawId);
         return count > 0;
     }
 
     @Override
     public boolean in_your_trash(int drawId) {
-        String sql = "SELECT COUNT(*) FROM permissions WHERE d.id = ? AND in_your_trash = false";
+        String sql = "SELECT COUNT(*) FROM permissions WHERE id = ? AND in_your_trash = false";
         int count = jdbcTemplate.queryForObject(sql, Integer.class, drawId);
         return count > 0;
     }

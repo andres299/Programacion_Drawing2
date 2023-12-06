@@ -82,11 +82,11 @@ updateCanvas();
 document.getElementById("copyButton").addEventListener("click", function() {
    // Obténemos las figuras actualizadas del input hidden
    const figuresDataElement = document.getElementById("selectedFigures").value;
-
+   const drawId = document.getElementById("drawId").value;
    // Crea un objeto FormData y agrega las figuras
    const formData = new FormData();
    formData.append("jsonData", figuresDataElement);
-
+   formData.append("draw_Id", drawId);
    // Realiza la solicitud Fetch para enviar los datos al servidor
    fetch('/ViewDraw', {
         method: 'POST',
