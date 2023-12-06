@@ -15,7 +15,7 @@ public class PermissionService {
         permissionRepo.permissionUser(permissions);
     }
 
-    public boolean ExistpermissionUser(int drawId, int userId) {
+    public boolean existpermissionUser(int drawId, int userId) {
         return permissionRepo.ExistpermissionUser(drawId,userId);
     }
 

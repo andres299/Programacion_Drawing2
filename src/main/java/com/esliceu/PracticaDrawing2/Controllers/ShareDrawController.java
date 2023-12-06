@@ -30,11 +30,8 @@ public class ShareDrawController {
     public String ShareDraw(Model model, @RequestParam int drawId) {
         //La sesion del usuario actual
         User user = (User) session.getAttribute("user");
-        //Comprobamos si el usuario es el propietario
-        boolean OwnerPropietary = drawService.propietaryDraw(drawId, user.getId());
-        //Metodo para comprobamr que no este en la basura.
-        boolean TrashDraw = drawService.trashDraw(drawId);
-        if (!OwnerPropietary || OwnerPropietary && !TrashDraw) {
+        //Comprobar si eres el propietrio y no esta en la basura.
+        if (!drawService.canUserAccessDraw(drawId, user)) {
             return "redirect:/AllDraw";
         }
         
@@ -49,22 +46,8 @@ public class ShareDrawController {
                                 @RequestParam String permission){
         //La sesion del usuario actual
         User user = (User) session.getAttribute("user");
-        //Comprobamos si el usuario es el propietario
-        boolean OwnerPropietary = drawService.propietaryDraw(drawId, user.getId());
-        //Metodo para comprobamr que no este en la basura.
-        boolean TrashDraw = drawService.trashDraw(drawId);
-
-        //Si ya tiene permisos lo actualiza, sino los añade.
-        boolean existPermission = permissionService.ExistpermissionUser(drawId,userId);
-        if (OwnerPropietary && TrashDraw) {
-            if (permission.equals("R") || permission.equals("RW")) {
-                if (existPermission) {
-                    permissionService.updatePermission(drawId, userId, permission);
-                } else {
-                    permissionService.permissionUser(drawId, userId, permission);
-                }
-            }
-        }
+        // Llamamos al servicio para procesar el compartir dibujo
+        drawService.ShareDraw(drawId, userId, permission, user);
         return "redirect:/AllDraw";
     }
 
@@ -72,7 +55,10 @@ public class ShareDrawController {
     public String PostDeletePermissions(Model model, @RequestParam int drawId, @RequestParam int userId) {
         //La sesion del usuario actual
         User user = (User) session.getAttribute("user");
-
+        //Comprobar si eres el propietrio y no esta en la basura.
+        if (!drawService.canUserAccessDraw(drawId, user)) {
+            return "redirect:/AllDraw";
+        }
         //Restaura la imagen.
         permissionService.deletePermissionsUser(drawId, userId);
         return "redirect:/AllDraw";

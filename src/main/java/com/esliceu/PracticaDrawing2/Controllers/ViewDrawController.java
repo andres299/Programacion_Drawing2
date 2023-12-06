@@ -30,7 +30,7 @@ public class ViewDrawController {
     public String ViewDraw(Model model, @RequestParam int drawId , @RequestParam String drawName)  {
         //Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
-        //Comprobar si eres el usuario y no esta en la basura.
+        //Comprobar si eres el propietrio y no esta en la basura.
         if (!drawService.canUserAccessDraw(drawId, user)) {
             return "redirect:/AllDraw";
         }

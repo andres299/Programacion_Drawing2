@@ -169,17 +169,22 @@ public class DrawService {
         // Método para comprobar si tienes permisos de escritura.
         boolean userPermission = hasPermissionsWriting(id, user.getId());
 
-        if ("delete".equals(action)) {
-            if (ownerPropietary) {
-                deleteDraw(id);
-            } else if (userPermission) {
-                deletePermissionUser(id, user.getId());
-            }
-        } else if ("restore".equals(action)) {
-            if (ownerPropietary) {
-                restoreDraw(id);
-            } else if (userPermission) {
-                permissionService.updatePermissionTrash(id);
+        // Método para comprobar que no esté en la basura general.
+        boolean trashDraw = trashDraw(id);
+
+        if(!trashDraw) {
+            if ("delete".equals(action)) {
+                if (ownerPropietary) {
+                    deleteDraw(id);
+                } else if (userPermission) {
+                    deletePermissionUser(id, user.getId());
+                }
+            } else if ("restore".equals(action)) {
+                if (ownerPropietary) {
+                    restoreDraw(id);
+                } else if (userPermission) {
+                    permissionService.updatePermissionTrash(id);
+                }
             }
         }
     }
@@ -225,5 +230,28 @@ public class DrawService {
 
         // Guardar la nueva versión
         versionService.saveVersion(drawId, figures, user.getId());
+    }
+
+    public void ShareDraw(int drawId, int userId, String permission, User user) {
+        // Comprobamos si el usuario es el propietario
+        boolean ownerPropietary = propietaryDraw(drawId, user.getId());
+
+        // Método para comprobar que no esté en la basura.
+        boolean trashDraw = trashDraw(drawId);
+
+        // Si el usuario es el propietario y el dibujo no está en la basura,
+        // procedemos a compartir el dibujo.
+        if (ownerPropietary && trashDraw) {
+            // Si ya tiene permisos, los actualiza, sino los añade.
+            boolean existPermission = permissionService.existpermissionUser(drawId, userId);
+
+            if (permission.equals("R") || permission.equals("RW")) {
+                if (existPermission) {
+                    permissionService.updatePermission(drawId, userId, permission);
+                } else {
+                    permissionService.permissionUser(drawId, userId, permission);
+                }
+            }
+        }
     }
 }
