@@ -30,11 +30,10 @@ public class ViewDrawController {
     public String ViewDraw(Model model, @RequestParam int drawId , @RequestParam String drawName)  {
         //Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
-        //Comprobar si eres el usuario.
-        boolean isTheOwner = drawService.userCanSee(drawId,user.getId());
-        //Comprobamos que no este en la basura.
-        boolean TrashDraw = drawService.trashDraw(drawId);
-        if (!isTheOwner && !TrashDraw) {return "redirect:/AllDraw";}
+        //Comprobar si eres el usuario y no esta en la basura.
+        if (!drawService.canUserAccessDraw(drawId, user)) {
+            return "redirect:/AllDraw";
+        }
 
         //Obtener todas las versiones.
         List<Version> allVersionsOfTheDraw = versionService.getAllVersionById(drawId);
@@ -45,7 +44,6 @@ public class ViewDrawController {
         model.addAttribute("drawId",drawId);
         // Mostrar la vista si tiene permisos
         return "ViewDraw";
-
 }
 
     // Manejo de la solicitud POST para procesar el formulario de registro
@@ -53,20 +51,16 @@ public class ViewDrawController {
     public String PostViewDraw(Model model, @RequestParam String jsonData, @RequestParam int draw_Id) {
         //Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
-        System.out.println(draw_Id);
-        //Comprobar si eres el usuario.
-        boolean isTheOwner = drawService.userCanSee(draw_Id,user.getId());
-        //Generemos un nombre aleatorio y estable la visibilidad por defecto
-        String drawName = "Copia " + drawService.generateRandomName();
-        boolean visibility = false;
-        // Guardar el dibujo
-        Draw savedDraw = drawService.saveDraw(drawName, user.getId(), String.valueOf(visibility));
+        //Comprobar si eres el usuario y no esta en la basura.
+        if (!drawService.canUserAccessDraw(draw_Id, user)) {
+            return "redirect:/AllDraw";
+        }
 
-        // Obtener la ID del dibujo recién creado
-        int drawId = savedDraw.getId();
-
-        // Guardar la versión
-        versionService.saveVersion(drawId, jsonData, user.getId());
-        return "ViewDraw";
+        //Metdodo para guardar el dibujo y la version.
+        String copiDrawAndVersion = drawService.copiDrawAndVersion(user, model, jsonData);
+        if (copiDrawAndVersion != null) {
+            return "ViewDraw";
+        }
+            return "redirect:/AllDraw";
     }
 }

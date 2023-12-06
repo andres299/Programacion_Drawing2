@@ -134,4 +134,28 @@ public class DrawService {
             return false; // Indica que el usuario no es propietario ni tiene permisos.
         }
     }
+
+    public boolean canUserAccessDraw(int drawId, User user) {
+        // Comprobar si eres el propietario del dibujo.
+        boolean isTheOwner = userCanSee(drawId, user.getId());
+
+        // Comprobamos que no esté en la basura.
+        boolean trashDraw = trashDraw(drawId);
+
+        return isTheOwner || trashDraw;
+    }
+
+    public String copiDrawAndVersion(User user, Model model, String jsonData) {
+        String drawName = "Copia " + generateRandomName();
+        boolean visibility = false;
+        // Guardar el dibujo
+        Draw savedDraw = saveDraw(drawName, user.getId(), String.valueOf(visibility));
+
+        // Obtener la ID del dibujo recién creado
+        int drawId = savedDraw.getId();
+
+        // Guardar la versión
+        versionService.saveVersion(drawId, jsonData, user.getId());
+        return null;
+    }
 }
