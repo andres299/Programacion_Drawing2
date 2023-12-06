@@ -196,11 +196,10 @@ public class DrawService {
 
         // Método para comprobar si está en la papelera del usuario.
         boolean inYourTrash = in_your_trash(drawId);
-
         // Si eres el propietario y el dibujo no está en la basura general,
         // o tienes permisos de escritura y el dibujo no está en tu papelera,
         // redirige a la página principal de dibujos.
-        if ((ownerPropietary && !trashDraw) || (userPermission && !inYourTrash)) {
+        if ((ownerPropietary && trashDraw) || (userPermission && inYourTrash)) {
             return true; // Acceso válido
         } else {
             return false; // No tienes acceso, redirige a /AllDraw

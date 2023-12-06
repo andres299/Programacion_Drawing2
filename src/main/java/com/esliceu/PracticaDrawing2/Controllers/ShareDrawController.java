@@ -56,7 +56,7 @@ public class ShareDrawController {
 
         //Si ya tiene permisos lo actualiza, sino los añade.
         boolean existPermission = permissionService.ExistpermissionUser(drawId,userId);
-        if (OwnerPropietary && !TrashDraw) {
+        if (OwnerPropietary && TrashDraw) {
             if (permission.equals("R") || permission.equals("RW")) {
                 if (existPermission) {
                     permissionService.updatePermission(drawId, userId, permission);
