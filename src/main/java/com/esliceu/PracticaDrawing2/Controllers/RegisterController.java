@@ -22,13 +22,13 @@ public class RegisterController {
     public String PostRegister(Model model, @RequestParam String login,
                                @RequestParam String name,
                                @RequestParam String password) {
-        //
-        String registrationError = userService.registerUser(login, name, password);
-
-        if (registrationError != null) {
-            model.addAttribute("error", registrationError);
+        //Metodo para registrar el usuario.
+        String register = userService.registerUser(login, name, password);
+        //Si no cumple con los requisitos te manda mensaje de error.
+        if (register != null) {
+            model.addAttribute("error", register);
             return "/register";
-        } else {
+        } else { //Si se ha guardado correctamente te redirige a login.
             return "redirect:/login";
         }
     }

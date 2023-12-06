@@ -60,17 +60,11 @@ public class UserService {
     }
 
 
-
-
-
-
-
-
-
     public User user(String login) {
         return userRepo.user(login);
     }
 
+    //Metodo para listar todos los usuarios
     public List<User> allUsers(int id_user) { return userRepo.allUsers(id_user);}
 
 }
