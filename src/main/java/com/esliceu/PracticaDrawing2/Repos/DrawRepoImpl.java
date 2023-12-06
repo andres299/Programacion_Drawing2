@@ -142,7 +142,7 @@ public class DrawRepoImpl implements DrawRepo {
 
     @Override
     public boolean in_your_trash(int drawId) {
-        String sql = "SELECT COUNT(*) FROM permissions WHERE id = ? AND in_your_trash = false";
+        String sql = "SELECT COUNT(*) FROM permissions WHERE id_draw = ? AND in_your_trash = false";
         int count = jdbcTemplate.queryForObject(sql, Integer.class, drawId);
         return count > 0;
     }

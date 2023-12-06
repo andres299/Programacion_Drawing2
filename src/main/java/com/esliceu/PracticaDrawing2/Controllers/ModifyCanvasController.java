@@ -35,19 +35,13 @@ public class ModifyCanvasController {
                                @RequestParam int drawId) {
         //La sesion del usuario actual
         User user = (User) session.getAttribute("user");
-        // Obtener el dibujo por su ID
-        Version selectedDraw = versionService.getVersionById(drawId);
 
-        //Metodo para comprobar si eres el propietario del dibujo.
-        boolean OwnerPropietary = drawService.propietaryDraw(drawId, user.getId());
-        //Metodo para comprobar si tienes permisos de escritura.
-        boolean UserPermission = drawService.hasPermissionsWriting(drawId, user.getId());
-        //Metodo para comprobamr que no este en la basura.
-        boolean TrashDraw = drawService.trashDraw(drawId);
-        //Si no tienes te redirige.
-        if (!OwnerPropietary && !UserPermission || !TrashDraw) {
+        if (!drawService.validateDrawModifyAndTrash(drawId, user)) {
             return "redirect:/AllDraw";
         }
+
+        // Obtener el dibujo por su ID
+        Version selectedDraw = versionService.getVersionById(drawId);
 
         //Metodo para obtener la visibilidad
         boolean visibility = drawService.getVisibility(drawId);
@@ -60,8 +54,7 @@ public class ModifyCanvasController {
         model.addAttribute("drawId", drawId);
         model.addAttribute("selectedFiguresJson", selectedFiguresJson);
         model.addAttribute("visibility", visibility);
-        model.addAttribute("OwnerPropietary", OwnerPropietary);
-
+        model.addAttribute("ownerPropietary", drawService.propietaryDraw(drawId, user.getId()));
         return "ModifyCanvas";
     }
 
@@ -73,35 +66,12 @@ public class ModifyCanvasController {
                                     @RequestParam String drawName) {
         //Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
-        //Metodo para comprobar si eres el propietario del dibujo.
-        boolean OwnerPropietary = drawService.propietaryDraw(drawId, user.getId());
-        //Metodo para comprobar si tienes permisos de escritura.
-        boolean UserPermission = drawService.hasPermissionsWriting(drawId, user.getId());
-        //Metodo para comprobamos que no este en la basura general.
-        boolean TrashDraw = drawService.trashDraw(drawId);
-        //Metodo para comprobamos que no este en la basura general.
-        boolean in_your_trash = drawService.in_your_trash(drawId);
-
-        //Obtener la ultima version.
-        List<Version> allVersionsOfTheDraw = versionService.getAllVersionById(drawId);
-        Version lastVersion = allVersionsOfTheDraw.get(0);
-        //Si no tienes te redirige.
-        if (OwnerPropietary && !TrashDraw || UserPermission && !in_your_trash) {
+        // Llamamos al servicio para validar el acceso al dibujo
+        if (!drawService.validateDrawModifyAndTrash(drawId, user)) {
             return "redirect:/AllDraw";
         }
-
-        //Comprobar si las figuras estan vacias
-        if (objectCounter.countFiguresInJson(figures) == 0 || lastVersion.getFigures().equals(figures)) {
-            model.addAttribute("error", "No se han dibujado figuras. Debes dibujar al menos una figura.");
-            return "CanvasDraw";
-        }
-        //Si el nombre esta vacia , genera uno aleatorio
-        String newName = drawName.isEmpty() ? drawService.generateRandomName() : drawName;
-
-        //Actualizar el draw
-        drawService.updateVisibility(newName,drawId, visibility);
-        // Guardar la versión
-        versionService.saveVersion(drawId, figures, user.getId());
+        // Llamamos al servicio para realizar las operaciones correspondientes
+        drawService.processUpdateDrawAndCreatVersion(model, drawName, drawId, figures, visibility, user);
 
         //Actualizar los datos del dibujo
         return "redirect:/AllDraw";

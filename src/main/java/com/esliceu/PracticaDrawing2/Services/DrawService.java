@@ -3,6 +3,7 @@ package com.esliceu.PracticaDrawing2.Services;
 import com.esliceu.PracticaDrawing2.DTO.DrawWithVersionDTO;
 import com.esliceu.PracticaDrawing2.Entities.Draw;
 import com.esliceu.PracticaDrawing2.Entities.User;
+import com.esliceu.PracticaDrawing2.Entities.Version;
 import com.esliceu.PracticaDrawing2.Repos.DrawRepo;
 import com.esliceu.PracticaDrawing2.utils.ObjectCounter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -181,5 +182,49 @@ public class DrawService {
                 permissionService.updatePermissionTrash(id);
             }
         }
+    }
+
+    public boolean validateDrawModifyAndTrash(int drawId, User user) {
+        // Método para comprobar si eres el propietario del dibujo.
+        boolean ownerPropietary = propietaryDraw(drawId, user.getId());
+
+        // Método para comprobar si tienes permisos de escritura.
+        boolean userPermission = hasPermissionsWriting(drawId, user.getId());
+
+        // Método para comprobar que no esté en la basura general.
+        boolean trashDraw = trashDraw(drawId);
+
+        // Método para comprobar si está en la papelera del usuario.
+        boolean inYourTrash = in_your_trash(drawId);
+
+        // Si eres el propietario y el dibujo no está en la basura general,
+        // o tienes permisos de escritura y el dibujo no está en tu papelera,
+        // redirige a la página principal de dibujos.
+        if ((ownerPropietary && !trashDraw) || (userPermission && !inYourTrash)) {
+            return true; // Acceso válido
+        } else {
+            return false; // No tienes acceso, redirige a /AllDraw
+        }
+    }
+
+    public void processUpdateDrawAndCreatVersion(Model model, String drawName, int drawId, String figures, String visibility, User user) {
+        // Obtener la última versión
+        List<Version> allVersionsOfTheDraw = versionService.getAllVersionById(drawId);
+        Version lastVersion =allVersionsOfTheDraw.get(0);
+
+        // Comprobar si el dibujo está vacío o es igual al anterior
+        if (objectCounter.countFiguresInJson(figures) == 0 || lastVersion.getFigures().equals(figures)) {
+            model.addAttribute("error", "No se han dibujado figuras. Debes dibujar al menos una figura.");
+            return;
+        }
+
+        // Si el nombre está vacío, genera uno aleatorio
+        String newName = drawName.isEmpty() ? generateRandomName() : drawName;
+
+        // Actualizar el dibujo
+        updateVisibility(newName, drawId, visibility);
+
+        // Guardar la nueva versión
+        versionService.saveVersion(drawId, figures, user.getId());
     }
 }
