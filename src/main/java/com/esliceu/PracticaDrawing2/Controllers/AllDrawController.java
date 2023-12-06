@@ -38,25 +38,10 @@ public class AllDrawController {
     public String PostAllDraw(@RequestParam int id){
         //La sesion del usuario actual
         User user = (User) session.getAttribute("user");
-        //Metodo para comprobar si eres el propietario del dibujo.
-        boolean OwnerPropietary = drawService.propietaryDraw(id, user.getId());
-        //Metodo para comprobar si tienes permisos de escritura.
-        boolean UserPermission = drawService.hasPermissionsWriting(id, user.getId());
-        //Si no tienes te redirige.
-        if (!OwnerPropietary && !UserPermission) {
-            return "redirect:/AllDraw";
+        boolean success = drawService.processAllDraw(id, user);
+        if (success){
+            return "redirect:/TrashDraw";
         }
-
-        //Metodo para actualizar la imagen a Papelera.
-        if (OwnerPropietary) {
-            drawService.updateTrash(id, user.getId());
-        } else if(UserPermission) {
-            drawService.updateYourTrash(id, user.getId());
-        }
-
-        //Metodo para actualizar la imagen a Papelera.
-        drawService.updateTrash(id, user.getId());
-
         return "redirect:/AllDraw";
     }
 

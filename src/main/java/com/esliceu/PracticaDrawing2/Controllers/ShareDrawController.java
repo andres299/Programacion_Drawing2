@@ -34,7 +34,7 @@ public class ShareDrawController {
         boolean OwnerPropietary = drawService.propietaryDraw(drawId, user.getId());
         //Metodo para comprobamr que no este en la basura.
         boolean TrashDraw = drawService.trashDraw(drawId);
-        if (!OwnerPropietary || !TrashDraw) {
+        if (!OwnerPropietary || OwnerPropietary && !TrashDraw) {
             return "redirect:/AllDraw";
         }
         
@@ -49,13 +49,21 @@ public class ShareDrawController {
                                 @RequestParam String permission){
         //La sesion del usuario actual
         User user = (User) session.getAttribute("user");
+        //Comprobamos si el usuario es el propietario
+        boolean OwnerPropietary = drawService.propietaryDraw(drawId, user.getId());
+        //Metodo para comprobamr que no este en la basura.
+        boolean TrashDraw = drawService.trashDraw(drawId);
 
         //Si ya tiene permisos lo actualiza, sino los añade.
         boolean existPermission = permissionService.ExistpermissionUser(drawId,userId);
-        if (existPermission){
-            permissionService.updatePermission(drawId,userId,permission);
-        } else {
-            permissionService.permissionUser(drawId, userId, permission);
+        if (OwnerPropietary && !TrashDraw) {
+            if (permission.equals("R") || permission.equals("RW")) {
+                if (existPermission) {
+                    permissionService.updatePermission(drawId, userId, permission);
+                } else {
+                    permissionService.permissionUser(drawId, userId, permission);
+                }
+            }
         }
         return "redirect:/AllDraw";
     }

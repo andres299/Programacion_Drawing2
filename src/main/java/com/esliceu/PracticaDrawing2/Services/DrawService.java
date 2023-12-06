@@ -5,7 +5,6 @@ import com.esliceu.PracticaDrawing2.Entities.Draw;
 import com.esliceu.PracticaDrawing2.Entities.User;
 import com.esliceu.PracticaDrawing2.Repos.DrawRepo;
 import com.esliceu.PracticaDrawing2.utils.ObjectCounter;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -115,5 +114,24 @@ public class DrawService {
     //Obtener una lista de los dibujos
     public List<DrawWithVersionDTO> getDraws(int id_user) {
         return drawRepo.getDraws(id_user);
+    }
+
+
+    public boolean processAllDraw(int id, User user) {
+        //Comprobar si eres el propietario y sis tienes permisos.
+        boolean ownerProprietary = propietaryDraw(id, user.getId());
+        boolean userPermission = hasPermissionsWriting(id, user.getId());
+
+        if (ownerProprietary || userPermission) {
+            // Actualizar la imagen a Papelera si se cumple alguna de las condiciones.
+            if (ownerProprietary) {
+                updateTrash(id, user.getId());
+            } else if (userPermission) {
+                updateYourTrash(id, user.getId());
+            }
+            return true; // Indica que la actualización fue exitosa.
+        } else {
+            return false; // Indica que el usuario no es propietario ni tiene permisos.
+        }
     }
 }
