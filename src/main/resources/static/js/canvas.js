@@ -18,6 +18,13 @@ let currentFigure = "circle";
 // Declaración de la variable visibility
 let visibility = "private";
 
+// Event listener para el cambio en los elementos radio
+document.querySelectorAll('.visibility').forEach(function (radio) {
+   radio.addEventListener('change', function () {
+   setVisibility(this.value);
+     });
+});
+
 // Función para establecer la visibilidad
 function setVisibility(value) {
     visibility = value;
