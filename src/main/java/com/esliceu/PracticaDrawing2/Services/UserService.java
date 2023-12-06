@@ -54,6 +54,7 @@ public class UserService {
     public boolean userExists(String login, String password) {
         return userRepo.login(login,xifratMD5(password));
     }
+
     // Función que cifra una contraseña utilizando el algoritmo de hash MD5
     public String xifratMD5(String password){
         return DigestUtils.md5Hex(password).toUpperCase();
