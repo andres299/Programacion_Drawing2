@@ -25,7 +25,7 @@
 
     <div class="select-container">
         <p>Lista de versiones</p>
-        <select id="versionSelect" onchange="updateCanvas()">
+        <select id="versionSelect">
             <option th:each="version, status : ${allVersionsOfTheDraw}"
                     th:value="${version.id}"
                     th:data-figures="${version.figures}"

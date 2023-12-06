@@ -78,6 +78,9 @@ function updateCanvas() {
 // Llamamos al updateCanvas al cargar la página para dibujar las figuras de la ultima version.
 updateCanvas();
 
+// Agregamos el event listener para cambiar el elemento.
+document.getElementById("versionSelect").addEventListener("change", updateCanvas);
+
 
 document.getElementById("copyButton").addEventListener("click", function() {
    // Obténemos las figuras actualizadas del input hidden
@@ -95,15 +98,12 @@ document.getElementById("copyButton").addEventListener("click", function() {
    .then(response => {
            // Maneja la respuesta del servidor aquí
            if (response.ok) {
-               console.log("Datos enviados con éxito");
                alert("¡Se ha copiado correctamente!");
            } else {
-               console.error("Error al enviar los datos al servidor");
                alert("Error al copiar. Por favor, inténtalo de nuevo.");
            }
        })
        .catch(error => {
-           console.error("Error en la solicitud Fetch:", error);
            alert("Error de red. Por favor, inténtalo de nuevo más tarde.");
        });
 });
