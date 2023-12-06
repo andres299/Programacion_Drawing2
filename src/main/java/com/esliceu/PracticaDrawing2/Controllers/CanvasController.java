@@ -27,10 +27,6 @@ public class CanvasController {
     HttpSession session;
     @Autowired
     DrawService drawService;
-    @Autowired
-    VersionService versionService;
-    @Autowired
-    ObjectCounter objectCounter;
 
     @GetMapping("/CanvasDraw")
     public String CanvasDraw(Model model) {
@@ -45,25 +41,14 @@ public class CanvasController {
                                  @RequestParam String visibility) {
         //Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
-        int owner_id = user.getId();
-
-        //Comprobar si las figuras estan vacias
-        if (objectCounter.countFiguresInJson(figures) == 0) {
-            model.addAttribute("error", "No se han dibujado figuras. Debes dibujar al menos una figura.");
+        //Metdodo para guardar el dibujo y la version.
+        String saveDrawAndVersion = drawService.saveDrawAndVersion(user, model, NomImage, visibility, figures);
+        //Si no se ha guardado correctamente, mensaje de error.
+        if (saveDrawAndVersion != null) {
+            model.addAttribute("error", saveDrawAndVersion);
             return "CanvasDraw";
+        } else {
+            return "redirect:/CanvasDraw";
         }
-
-        //Si el nombre esta vacia , genera uno aleatorio
-        String newName = NomImage.isEmpty() ? drawService.generateRandomName() : NomImage;
-
-        // Guardar el dibujo
-        Draw savedDraw = drawService.saveDraw(newName, owner_id, visibility);
-        // Obtener la ID del dibujo recién creado
-        int drawId = savedDraw.getId();
-
-        // Guardar la versión
-        versionService.saveVersion(drawId, figures, owner_id);
-
-        return "CanvasDraw";
     }
 }

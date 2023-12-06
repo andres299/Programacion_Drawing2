@@ -2,10 +2,13 @@ package com.esliceu.PracticaDrawing2.Services;
 
 import com.esliceu.PracticaDrawing2.DTO.DrawWithVersionDTO;
 import com.esliceu.PracticaDrawing2.Entities.Draw;
+import com.esliceu.PracticaDrawing2.Entities.User;
 import com.esliceu.PracticaDrawing2.Repos.DrawRepo;
 import com.esliceu.PracticaDrawing2.utils.ObjectCounter;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,22 +17,10 @@ import java.util.UUID;
 public class DrawService {
     @Autowired
     DrawRepo drawRepo;
-
-    // Método que genera un nombre aleatorio para una imagen.
-    public String generateRandomName() {
-        return "image_" + UUID.randomUUID().toString();
-    }
-
-    //Metodo para guardar el dibujo
-    public Draw saveDraw(String newName, int owner_id, String visibility) {
-        Draw draw = new Draw(newName, owner_id, convertToBoolean(visibility));
-        return drawRepo.saveDraw(draw);
-    }
-
-    //Obtener una lista de los dibujos
-    public List<DrawWithVersionDTO> getDraws(int id_user) {
-        return drawRepo.getDraws(id_user);
-    }
+    @Autowired
+    VersionService versionService;
+    @Autowired
+    ObjectCounter objectCounter;
 
     //Actualizar el dibujo a la papelera
     public void updateTrash(int id, int id_user) {
@@ -86,5 +77,43 @@ public class DrawService {
 
     public boolean in_your_trash(int drawId) {
         return drawRepo.in_your_trash(drawId);
+    }
+
+    public String saveDrawAndVersion(User user, Model model, String nomImage, String visibility, String figures) {
+        //Comprobar si las figuras están vacías
+        if (objectCounter.countFiguresInJson(figures) == 0) {
+            model.addAttribute("error", "No se han dibujado figuras. Debes dibujar al menos una figura.");
+            return "CanvasDraw";
+        }
+
+        //Si el nombre está vacío, genera uno aleatorio
+        String drawName = nomImage.isEmpty() ? generateRandomName() : nomImage;
+
+        // Guardar el dibujo
+        Draw savedDraw = saveDraw(drawName, user.getId(), visibility);
+        // Obtener la ID del dibujo recién creado
+        int drawId = savedDraw.getId();
+
+        // Guardar la versión
+        versionService.saveVersion(drawId, figures, user.getId());
+
+        // Devolver null indica que la operación se realizó con éxito, sin errores.
+        return null;
+    }
+
+    // Método que genera un nombre aleatorio para una imagen.
+    public String generateRandomName() {
+        return "image_" + UUID.randomUUID().toString();
+    }
+
+    //Metodo para guardar el dibujo
+    public Draw saveDraw(String newName, int owner_id, String visibility) {
+        Draw draw = new Draw(newName, owner_id, convertToBoolean(visibility));
+        return drawRepo.saveDraw(draw);
+    }
+
+    //Obtener una lista de los dibujos
+    public List<DrawWithVersionDTO> getDraws(int id_user) {
+        return drawRepo.getDraws(id_user);
     }
 }
