@@ -172,12 +172,21 @@ public class DrawService {
         // Método para comprobar que no esté en la basura general.
         boolean trashDraw = trashDraw(id);
 
-        if(!trashDraw) {
+        // Método para comprobar si está en la papelera del usuario.
+        boolean inYourTrash = in_your_trash(id);
+        System.out.println(ownerPropietary);
+        System.out.println(userPermission);
+        System.out.println(trashDraw);
+        System.out.println(inYourTrash);
             if ("delete".equals(action)) {
                 if (ownerPropietary) {
-                    deleteDraw(id);
+                    if (!trashDraw) {
+                        deleteDraw(id);
+                    }
                 } else if (userPermission) {
-                    deletePermissionUser(id, user.getId());
+                    if (!inYourTrash) {
+                        deletePermissionUser(id, user.getId());
+                    }
                 }
             } else if ("restore".equals(action)) {
                 if (ownerPropietary) {
@@ -186,7 +195,7 @@ public class DrawService {
                     permissionService.updatePermissionTrash(id);
                 }
             }
-        }
+
     }
 
     public boolean validateDrawModifyAndTrash(int drawId, User user) {
@@ -201,6 +210,7 @@ public class DrawService {
 
         // Método para comprobar si está en la papelera del usuario.
         boolean inYourTrash = in_your_trash(drawId);
+
         // Si eres el propietario y el dibujo no está en la basura general,
         // o tienes permisos de escritura y el dibujo no está en tu papelera,
         // redirige a la página principal de dibujos.
