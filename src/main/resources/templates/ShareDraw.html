@@ -36,7 +36,7 @@
               <td th:text="${user.login}"></td>
               <td th:text="${user.name}"></td>
               <td>
-                  <select name="permisos" id="permisos" onchange="actualizarCampoOculto(this)">
+                  <select name="permisos" id="permisos" class="permisos-dropdown">
                       <option value="R">Lectura</option>
                       <option value="RW">Escritura</option>
                   </select>
