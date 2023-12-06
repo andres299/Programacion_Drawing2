@@ -79,4 +79,12 @@ public class DrawService {
     public static boolean convertToBoolean(String visibility) {
         return "public".equalsIgnoreCase(visibility);
     }
+
+    public boolean trashDraw(int drawId) {
+        return drawRepo.trashDraw(drawId);
+    }
+
+    public boolean in_your_trash(int drawId) {
+        return drawRepo.in_your_trash(drawId);
+    }
 }

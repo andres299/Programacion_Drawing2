@@ -32,7 +32,9 @@ public class ShareDrawController {
         User user = (User) session.getAttribute("user");
         //Comprobamos si el usuario es el propietario
         boolean OwnerPropietary = drawService.propietaryDraw(drawId, user.getId());
-        if (!OwnerPropietary) {
+        //Metodo para comprobamr que no este en la basura.
+        boolean TrashDraw = drawService.trashDraw(drawId);
+        if (!OwnerPropietary || !TrashDraw) {
             return "redirect:/AllDraw";
         }
         

@@ -32,4 +32,8 @@ public interface DrawRepo {
     void uodateYourTrash(int id, int id_user);
 
     void deletPermissionUser(int id, int idUser);
+
+    boolean trashDraw(int drawId);
+
+    boolean in_your_trash(int drawId);
 }

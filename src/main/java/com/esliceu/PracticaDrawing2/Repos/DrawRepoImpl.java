@@ -131,6 +131,23 @@ public class DrawRepoImpl implements DrawRepo {
         String deletePermissionsSql = "DELETE FROM permissions WHERE id_draw = ? AND id_user = ?";
         jdbcTemplate.update(deletePermissionsSql, id, idUser);
     }
+
+    @Override
+    public boolean trashDraw(int drawId) {
+        // Consulta SQL para verificar si el dibujo está en la papelera en ambas tablas
+        String sql = "SELECT COUNT(*) FROM draw WHERE d.id = ? AND inTheTrash = false";
+        int count = jdbcTemplate.queryForObject(sql, Integer.class, drawId);
+        return count > 0;
+    }
+
+    @Override
+    public boolean in_your_trash(int drawId) {
+        String sql = "SELECT COUNT(*) FROM permissions WHERE d.id = ? AND in_your_trash = false";
+        int count = jdbcTemplate.queryForObject(sql, Integer.class, drawId);
+        return count > 0;
+    }
+
+
     @Override
     public void restoreDraw(int id_draw) {
         String sql = "UPDATE draw SET inTheTrash = 0 WHERE id = ?";

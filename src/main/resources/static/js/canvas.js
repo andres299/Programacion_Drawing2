@@ -266,11 +266,18 @@ async function saveFigures() {
             body: formData,
         });
        // Manejar la respuesta del servidor
-        if (response.ok) {
-            alert("¡Se ha guardado correctamente!");
+       if (response.ok) {
+        alert("¡Se ha guardado correctamente!");
+        } else {
+        const errorMessage = await response.text();
+
+        console.log(errorMessage);
+        if (errorMessage) {
+            alert("Error: " + errorMessage);
         } else {
             alert("Error al guardar. Por favor, inténtalo de nuevo.");
         }
+    }
     } catch (error) {
             alert("Error de red. Por favor, inténtalo de nuevo más tarde.");
     }

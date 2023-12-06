@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class ModifyCanvasController {
@@ -41,9 +42,10 @@ public class ModifyCanvasController {
         boolean OwnerPropietary = drawService.propietaryDraw(drawId, user.getId());
         //Metodo para comprobar si tienes permisos de escritura.
         boolean UserPermission = drawService.hasPermissionsWriting(drawId, user.getId());
-
+        //Metodo para comprobamr que no este en la basura.
+        boolean TrashDraw = drawService.trashDraw(drawId);
         //Si no tienes te redirige.
-        if (!OwnerPropietary && !UserPermission) {
+        if (!OwnerPropietary && !UserPermission || !TrashDraw) {
             return "redirect:/AllDraw";
         }
 
@@ -58,6 +60,7 @@ public class ModifyCanvasController {
         model.addAttribute("drawId", drawId);
         model.addAttribute("selectedFiguresJson", selectedFiguresJson);
         model.addAttribute("visibility", visibility);
+        model.addAttribute("OwnerPropietary", OwnerPropietary);
 
         return "ModifyCanvas";
     }
@@ -74,14 +77,21 @@ public class ModifyCanvasController {
         boolean OwnerPropietary = drawService.propietaryDraw(drawId, user.getId());
         //Metodo para comprobar si tienes permisos de escritura.
         boolean UserPermission = drawService.hasPermissionsWriting(drawId, user.getId());
+        //Metodo para comprobamos que no este en la basura general.
+        boolean TrashDraw = drawService.trashDraw(drawId);
+        //Metodo para comprobamos que no este en la basura general.
+        boolean in_your_trash = drawService.in_your_trash(drawId);
 
+        //Obtener la ultima version.
+        List<Version> allVersionsOfTheDraw = versionService.getAllVersionById(drawId);
+        Version lastVersion = allVersionsOfTheDraw.get(0);
         //Si no tienes te redirige.
-        if (!OwnerPropietary && !UserPermission) {
+        if (OwnerPropietary && !TrashDraw || UserPermission && !in_your_trash) {
             return "redirect:/AllDraw";
         }
 
         //Comprobar si las figuras estan vacias
-        if (objectCounter.countFiguresInJson(figures) == 0) {
+        if (objectCounter.countFiguresInJson(figures) == 0 || lastVersion.getFigures().equals(figures)) {
             model.addAttribute("error", "No se han dibujado figuras. Debes dibujar al menos una figura.");
             return "CanvasDraw";
         }

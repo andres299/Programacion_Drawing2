@@ -30,9 +30,11 @@ public class ViewDrawController {
     public String ViewDraw(Model model, @RequestParam int drawId , @RequestParam String drawName)  {
         //Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
-        //Comprobar si puedes ver.
+        //Comprobar si eres el usuario.
         boolean isTheOwner = drawService.userCanSee(drawId,user.getId());
-        if (!isTheOwner) {return "redirect:/AllDraw";}
+        //Comprobamos que no este en la basura.
+        boolean TrashDraw = drawService.trashDraw(drawId);
+        if (!isTheOwner && !TrashDraw) {return "redirect:/AllDraw";}
 
         //Obtener todas las versiones.
         List<Version> allVersionsOfTheDraw = versionService.getAllVersionById(drawId);
