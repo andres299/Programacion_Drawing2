@@ -35,7 +35,6 @@ const removeFigure = (i) => {
     render(figures);
 };
 
-
 // Función para renderizar las figuras y actualizar los registros
 const render = (figures) => {
     logs.innerHTML = "";
@@ -44,13 +43,18 @@ const render = (figures) => {
     figures.forEach((figure, i) => {
         const listItem = document.createElement("li");
         listItem.innerHTML = `Tipo: ${figure.type} - Color: ${figure.color}
-        <button data-index="${i}" class="Delete-Button">Eliminar</button>`;
+        <button data-index="${i}" class="Delete-Button">Eliminar</button>;
+        <button data-index="${i}" class="Modify-Button">Modify</button>`;
 
         const deleteButton = listItem.querySelector(".Delete-Button");
         deleteButton.addEventListener("click", () => {
         removeFigure(i);
         });
 
+        const modifyButton = listItem.querySelector(".Modify-Button");
+        modifyButton.addEventListener("click", () => {
+            modifyFigure(i);
+        });
         logs.appendChild(listItem);
         draw(figure);
     });
@@ -67,7 +71,42 @@ const render = (figures) => {
         draw(lineFigure);
     }
 };
+const modifyFigure = (index) => {
+     // Obtén la figura actual que deseas modificar
+        const currentFigure = figures[index];
 
+        // Obtén los elementos del formulario
+        const colorInput = document.getElementById("color");
+        const sizeInput = document.getElementById("size");
+        const fillCheckbox = document.getElementById("fillFigure");
+
+        // Actualiza los valores de la figura con los nuevos valores del formulario
+        currentFigure.color = colorInput.value;
+        currentFigure.size = sizeInput.value;
+        currentFigure.filled = fillCheckbox.checked;
+
+        // Renderizar las figuras actualizadas
+        render(figures);
+};
+
+/*
+const modifyFigure = (index) => {
+    const selectedFigure = figures[index];
+
+    // Abre un cuadro de diálogo para que el usuario pueda modificar la figura
+    const newColor = prompt("Nuevo color:", selectedFigure.color);
+    const newSize = prompt("Nuevo tamaño:", selectedFigure.size);
+    const newFill = confirm("¿Rellenar la figura?");
+
+    // Actualiza la figura con los nuevos valores
+    selectedFigure.color = newColor || selectedFigure.color;
+    selectedFigure.size = newSize || selectedFigure.size;
+    selectedFigure.filled = newFill;
+
+    // Renderiza las figuras actualizadas
+    render(figures);
+};
+*/
 // Evento para el clic en el canvas
 canvas.addEventListener("mousedown", (event) => {
     if (currentFigure !== "line") {
