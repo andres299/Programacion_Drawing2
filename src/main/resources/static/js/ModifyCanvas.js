@@ -123,6 +123,8 @@ render(figures);
 
 // Evento para el clic en el canvas
 canvas.addEventListener("mousedown", (event) => {
+// Reinicia el temporizador al hacer clic en el canvas
+    restartTimer();
     if (currentFigure !== "line") {
         // Dibuja otras figuras al hacer clic
         const figure = {
@@ -213,8 +215,21 @@ window.addEventListener('load', () => {
     }
 });
 
+let timer;
+let shouldSubmitAutomatically = false;
+
+// Función para reiniciar el temporizador
+function restartTimer() {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+        shouldSubmitAutomatically = true;
+        submitModify();
+    }, 30000);
+}
+
 // Event listener para el botón de guardar
 saveButton.addEventListener("click", () => {
+    shouldSubmitAutomatically = false;
     saveFigures();
 });
 
@@ -255,5 +270,13 @@ async function saveFigures() {
         }
     } catch (error) {
             alert("Error de red. Por favor, inténtalo de nuevo más tarde.");
+    }
+}
+
+// Función para enviar automáticamente las figuras al servidor después de 30 segundos de inactividad
+function submitModify() {
+    if (shouldSubmitAutomatically) {
+        saveFigures();
+        shouldSubmitAutomatically = false; // Resetear la bandera después de enviar automáticamente
     }
 }
