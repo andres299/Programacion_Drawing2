@@ -175,7 +175,7 @@ public class DrawService {
         boolean ownerPropietary = propietaryDraw(id, user.getId());
 
         // Método para comprobar si tienes permisos de escritura.
-        boolean userPermissionWriting = hasPermissionsWriting(id, user.getId());
+        boolean userPermission = hasPermissions(id, user.getId());
 
         // Método para comprobar que no esté en la basura general.
         boolean trashDraw = trashDraw(id);
@@ -187,7 +187,7 @@ public class DrawService {
                 if (!trashDraw) {
                         deleteDraw(id);
                 }
-            } else if (userPermissionWriting) {
+            } else if (userPermission) {
                 if (!inYourTrash) {
                         deletePermissionUser(id, user.getId());
                     }
@@ -195,7 +195,7 @@ public class DrawService {
         } else if ("restore".equals(action)) {
                 if (ownerPropietary) {
                         restoreDraw(id);
-            } else if (userPermissionWriting) {
+            } else if (userPermission) {
                         permissionService.updatePermissionTrash(id);
             }
         }
