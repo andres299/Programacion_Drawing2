@@ -31,7 +31,7 @@ public class ShareDrawController {
         //La sesion del usuario actual
         User user = (User) session.getAttribute("user");
         //Comprobar si eres el propietrio y no esta en la basura.
-        if (!drawService.canUserAccessDraw(drawId, user)) {
+        if (!drawService.canUserShareDraw(drawId, user)) {
             return "redirect:/AllDraw";
         }
         
@@ -56,7 +56,7 @@ public class ShareDrawController {
         //La sesion del usuario actual
         User user = (User) session.getAttribute("user");
         //Comprobar si eres el propietrio y no esta en la basura.
-        if (!drawService.canUserAccessDraw(drawId, user)) {
+        if (!drawService.canUserShareDraw(drawId, user)) {
             return "redirect:/AllDraw";
         }
         //Restaura la imagen.

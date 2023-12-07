@@ -39,7 +39,9 @@ public class DrawService {
     public boolean hasPermissionsWriting(int id_draw, int id_user) {
         return drawRepo.hasPermissionsWriting(id_draw, id_user);
     }
-
+    private boolean hasPermissions(int drawId, int id_user) {
+        return drawRepo.hasPermissions(drawId, id_user);
+    }
     //Metodo borrar el dibujo con su version
     public void deleteDraw(int id_draw) {
         drawRepo.deleteDraw(id_draw);
@@ -123,13 +125,13 @@ public class DrawService {
     public boolean processAllDraw(int id, User user) {
         //Comprobar si eres el propietario y sis tienes permisos.
         boolean ownerProprietary = propietaryDraw(id, user.getId());
-        boolean userPermission = hasPermissionsWriting(id, user.getId());
+        boolean userPermissionWriting = hasPermissionsWriting(id, user.getId());
 
-        if (ownerProprietary || userPermission) {
+        if (ownerProprietary || userPermissionWriting) {
             // Actualizar la imagen a Papelera si se cumple alguna de las condiciones.
             if (ownerProprietary) {
                 updateTrash(id, user.getId());
-            } else if (userPermission) {
+            } else if (userPermissionWriting) {
                 updateYourTrash(id, user.getId());
             }
             return true; // Indica que la actualización fue exitosa.
@@ -138,20 +140,20 @@ public class DrawService {
         }
     }
 
-    public boolean canUserAccessDraw(int drawId, User user) {
+    public boolean canUserViewDraw(int drawId, User user) {
         // Comprobar si eres el propietario del dibujo.
         boolean isTheOwner = userCanSee(drawId, user.getId());
-
-        // Método para comprobar si tienes permisos de escritura.
-        boolean userPermission = hasPermissionsWriting(drawId, user.getId());
 
         // Comprobamos que no esté en la basura.
         boolean trashDrawGeneral = trashDraw(drawId);
 
+        //Comprobamos que tiene permisos.
+        boolean userPermission = hasPermissions(drawId, user.getId());
+
         // Método para comprobar si está en la papelera del usuario.
         boolean inYourTrash = in_your_trash(drawId);
 
-        return isTheOwner && trashDrawGeneral || inYourTrash && userPermission;
+        return isTheOwner && trashDrawGeneral || userPermission && inYourTrash;
         }
 
     public String copiDrawAndVersion(User user, String jsonData) {
@@ -173,7 +175,7 @@ public class DrawService {
         boolean ownerPropietary = propietaryDraw(id, user.getId());
 
         // Método para comprobar si tienes permisos de escritura.
-        boolean userPermission = hasPermissionsWriting(id, user.getId());
+        boolean userPermissionWriting = hasPermissionsWriting(id, user.getId());
 
         // Método para comprobar que no esté en la basura general.
         boolean trashDraw = trashDraw(id);
@@ -185,7 +187,7 @@ public class DrawService {
                 if (!trashDraw) {
                         deleteDraw(id);
                 }
-            } else if (userPermission) {
+            } else if (userPermissionWriting) {
                 if (!inYourTrash) {
                         deletePermissionUser(id, user.getId());
                     }
@@ -193,7 +195,7 @@ public class DrawService {
         } else if ("restore".equals(action)) {
                 if (ownerPropietary) {
                         restoreDraw(id);
-            } else if (userPermission) {
+            } else if (userPermissionWriting) {
                         permissionService.updatePermissionTrash(id);
             }
         }
@@ -204,7 +206,7 @@ public class DrawService {
         boolean ownerPropietary = propietaryDraw(drawId, user.getId());
 
         // Método para comprobar si tienes permisos de escritura.
-        boolean userPermission = hasPermissionsWriting(drawId, user.getId());
+        boolean userPermissionWriting = hasPermissionsWriting(drawId, user.getId());
 
         // Método para comprobar que no esté en la basura general.
         boolean trashDraw = trashDraw(drawId);
@@ -215,7 +217,7 @@ public class DrawService {
         // Si eres el propietario y el dibujo no está en la basura general,
         // o tienes permisos de escritura y el dibujo no está en tu papelera,
         // redirige a la página principal de dibujos.
-        if ((ownerPropietary && trashDraw) || (userPermission && inYourTrash)) {
+        if ((ownerPropietary && trashDraw) || (userPermissionWriting && inYourTrash)) {
             return true; // Acceso válido
         } else {
             return false; // No tienes acceso, redirige a /AllDraw
@@ -264,5 +266,15 @@ public class DrawService {
                 }
             }
         }
+    }
+
+    public boolean canUserShareDraw(int drawId, User user) {
+        // Comprobar si eres el propietario del dibujo.
+        boolean isTheOwner = userCanSee(drawId, user.getId());
+
+        // Comprobamos que no esté en la basura.
+        boolean trashDrawGeneral = trashDraw(drawId);
+
+        return isTheOwner && trashDrawGeneral;
     }
 }

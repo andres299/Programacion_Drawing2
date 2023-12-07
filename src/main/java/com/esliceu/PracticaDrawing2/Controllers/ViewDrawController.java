@@ -1,7 +1,5 @@
 package com.esliceu.PracticaDrawing2.Controllers;
 
-import com.esliceu.PracticaDrawing2.DTO.DrawWithVersionDTO;
-import com.esliceu.PracticaDrawing2.Entities.Draw;
 import com.esliceu.PracticaDrawing2.Entities.User;
 import com.esliceu.PracticaDrawing2.Entities.Version;
 import com.esliceu.PracticaDrawing2.Services.DrawService;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -31,7 +28,7 @@ public class ViewDrawController {
         //Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
         //Comprobar si eres el propietrio y no esta en la basura.
-        if (!drawService.canUserAccessDraw(drawId, user)) {
+        if (!drawService.canUserViewDraw(drawId, user)) {
             return "redirect:/AllDraw";
         }
 
@@ -52,7 +49,7 @@ public class ViewDrawController {
         //Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
         //Comprobar si eres el usuario y no esta en la basura.
-        if (!drawService.canUserAccessDraw(draw_Id, user)) {
+        if (!drawService.canUserViewDraw(draw_Id, user)) {
             return "redirect:/AllDraw";
         }
 

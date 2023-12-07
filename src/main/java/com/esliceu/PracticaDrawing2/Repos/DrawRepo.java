@@ -36,4 +36,6 @@ public interface DrawRepo {
     boolean trashDraw(int drawId);
 
     boolean in_your_trash(int drawId);
+
+    boolean hasPermissions(int drawId, int idUser);
 }
