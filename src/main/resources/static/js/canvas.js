@@ -37,6 +37,29 @@ const removeFigure = (i) => {
     render(figures);
 };
 
+// Función para actualizar la interfaz de usuario al hacer clic en "Modificar"
+const updateFigure = (i) => {
+    const figureToUpdate = figures[i];
+
+     // Verificar si la figura existe antes de actualizar propiedades
+         if (figureToUpdate) {
+             // Obtener los valores actuales de los controles de entrada
+             const updatedColor = colorInput.value;
+             const updatedSize = sizeInput.value;
+             const updatedFill = fillFigureCheckbox.checked;
+
+             // Actualizar la figura con los nuevos valores
+             figureToUpdate.color = updatedColor;
+             figureToUpdate.size = updatedSize;
+             figureToUpdate.fill = updatedFill;
+
+             // Volver a renderizar la lista y el lienzo
+             render(figures);
+         } else {
+             console.error("La figura no está definida en la posición " + i);
+         }
+};
+
 // Función para renderizar las figuras y actualizar los registros
 const render = (figures) => {
     logs.innerHTML = "";
@@ -45,7 +68,7 @@ const render = (figures) => {
     figures.forEach((figure, i) => {
         logs.innerHTML += `<li>Tipo: ${figure.type} - Color: ${figure.color}
        <button id="${i}" onclick="removeFigure(${i})" class="Delete-Button">Eliminar</button>
-       <button id="${i}" onclick="updateFigure(${i})" class="Modify-Button">Modify</button>
+        <button id="${i}" onclick="updateFigure(${i})" class="Modify-Button">Modificar</button>
        </li>`;
         draw(figure);
     });
