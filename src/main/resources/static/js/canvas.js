@@ -42,17 +42,16 @@ const render = (figures) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     figures.forEach((figure, i) => {
-      // Declarar listItem antes del bucle
-              const listItem = document.createElement("li");
-              listItem.innerHTML = `Tipo: ${figure.type} - Color: ${figure.color}
-                  <button data-index="${i}" class="Delete-Button">Eliminar</button>`;
+        const listItem = document.createElement("li");
+        listItem.innerHTML = `Tipo: ${figure.type} - Color: ${figure.color}
+        <button data-index="${i}" class="Delete-Button">Eliminar</button>`;
 
-              const deleteButton = listItem.querySelector(".Delete-Button");
-              deleteButton.addEventListener("click", () => {
-                  removeFigure(i);
-              });
+        const deleteButton = listItem.querySelector(".Delete-Button");
+        deleteButton.addEventListener("click", () => {
+        removeFigure(i);
+        });
 
-              logs.appendChild(listItem);
+        logs.appendChild(listItem);
         draw(figure);
     });
 
