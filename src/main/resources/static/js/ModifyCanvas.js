@@ -189,6 +189,30 @@ clearButton.addEventListener("click", () => {
     render(figures);
 });
 
+//Al cargar la pagina
+window.addEventListener('load', () => {
+    // Recuperamos valores si existen
+    const storedFigure = localStorage.getItem('figure');
+    const storedColor = localStorage.getItem('color');
+    const storedSize = localStorage.getItem('size');
+    const storedFillFigure = localStorage.getItem('fillFigure');
+    const storedVisibility = localStorage.getItem('visibility');
+
+    // Establece los valores recuperados en los elementos del formulario
+    if (storedFigure) {
+        figureSelect.value = storedFigure;
+    }
+    if (storedColor) {
+        colorInput.value = storedColor;
+    }
+    if (storedSize) {
+        sizeInput.value = storedSize;
+    }
+    if (storedFillFigure) {
+        fillFigureCheckbox.checked = storedFillFigure === 'true';
+    }
+});
+
 // Event listener para el botón de guardar
 saveButton.addEventListener("click", () => {
     saveFigures();
