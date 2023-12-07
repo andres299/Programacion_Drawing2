@@ -17,14 +17,13 @@ public class RegisterController {
         return "register";
     }
 
-    // Manejo de la solicitud POST para procesar el formulario de registro
     @PostMapping("/register")
     public String PostRegister(Model model, @RequestParam String login,
                                @RequestParam String name,
                                @RequestParam String password) {
         //Metodo para registrar el usuario.
         String register = userService.registerUser(login, name, password);
-        //Si no cumple con los requisitos te manda mensaje de error.
+        //Si no cumple con los requisitos te muestra un mensaje de error.
         if (register != null) {
             model.addAttribute("error", register);
             return "/register";
