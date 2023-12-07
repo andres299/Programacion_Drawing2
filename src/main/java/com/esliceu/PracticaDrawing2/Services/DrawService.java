@@ -125,13 +125,13 @@ public class DrawService {
     public boolean processAllDraw(int id, User user) {
         //Comprobar si eres el propietario y sis tienes permisos.
         boolean ownerProprietary = propietaryDraw(id, user.getId());
-        boolean userPermissionWriting = hasPermissionsWriting(id, user.getId());
+        boolean userPermission = hasPermissions(id, user.getId());
 
-        if (ownerProprietary || userPermissionWriting) {
+        if (ownerProprietary || userPermission) {
             // Actualizar la imagen a Papelera si se cumple alguna de las condiciones.
             if (ownerProprietary) {
                 updateTrash(id, user.getId());
-            } else if (userPermissionWriting) {
+            } else if (userPermission) {
                 updateYourTrash(id, user.getId());
             }
             return true; // Indica que la actualización fue exitosa.
@@ -174,7 +174,7 @@ public class DrawService {
         // Método para comprobar si eres el propietario del dibujo.
         boolean ownerPropietary = propietaryDraw(id, user.getId());
 
-        // Método para comprobar si tienes permisos de escritura.
+        // Método para comprobar si tienes permisos.
         boolean userPermission = hasPermissions(id, user.getId());
 
         // Método para comprobar que no esté en la basura general.

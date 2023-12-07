@@ -46,7 +46,7 @@
                     <input type="hidden" name="drawName" th:value="${draw.nameDraw}">
                     <button class="view" type="submit">View</button>
                 </form>
-                    <form action="/AllDraw" method="post" th:if="${current_id eq draw.owner_id or draw.permissions eq 'RW' or or draw.permissions eq 'R'}">
+                    <form action="/AllDraw" method="post" th:if="${current_id eq draw.owner_id or draw.permissions eq 'RW' or draw.permissions eq 'R'}">
                         <input type="hidden" name="id" th:value="${draw.id}">
                         <button class="delete" type="submit">Eliminar</button>
                     </form>
