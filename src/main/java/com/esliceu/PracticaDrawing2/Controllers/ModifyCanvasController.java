@@ -71,8 +71,11 @@ public class ModifyCanvasController {
             return "redirect:/AllDraw";
         }
         // Llamamos al servicio para realizar las operaciones correspondientes
-        drawService.processUpdateDrawAndCreatVersion(model, drawName, drawId, figures, visibility, user);
-
+        String modifyCanvas = drawService.processUpdateDrawAndCreatVersion(model, drawName, drawId, figures, visibility, user);
+        if (modifyCanvas != null){
+            model.addAttribute("error", modifyCanvas);
+            return "ModifyCanvas";
+        }
         //Actualizar los datos del dibujo
         return "redirect:/AllDraw";
     }

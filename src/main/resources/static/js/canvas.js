@@ -45,6 +45,7 @@ const render = (figures) => {
     figures.forEach((figure, i) => {
         logs.innerHTML += `<li>Tipo: ${figure.type} - Color: ${figure.color}
        <button id="${i}" onclick="removeFigure(${i})" class="Delete-Button">Eliminar</button>
+       <button id="${i}" onclick="updateFigure(${i})" class="Modify-Button">Modify</button>
        </li>`;
         draw(figure);
     });

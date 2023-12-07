@@ -86,8 +86,7 @@ public class DrawService {
     public String saveDrawAndVersion(User user, Model model, String nomImage, String visibility, String figures) {
         //Comprobar si las figuras están vacías
         if (objectCounter.countFiguresInJson(figures) == 0) {
-            model.addAttribute("error", "No se han dibujado figuras. Debes dibujar al menos una figura.");
-            return "CanvasDraw";
+            return "No se han dibujado figuras. Debes dibujar al menos una figura.";
         }
 
         //Si el nombre está vacío, genera uno aleatorio
@@ -224,15 +223,14 @@ public class DrawService {
         }
     }
 
-    public void processUpdateDrawAndCreatVersion(Model model, String drawName, int drawId, String figures, String visibility, User user) {
+    public String processUpdateDrawAndCreatVersion(Model model, String drawName, int drawId, String figures, String visibility, User user) {
         // Obtener la última versión
         List<Version> allVersionsOfTheDraw = versionService.getAllVersionById(drawId);
         Version lastVersion =allVersionsOfTheDraw.get(0);
 
         // Comprobar si el dibujo está vacío o es igual al anterior
         if (objectCounter.countFiguresInJson(figures) == 0 || lastVersion.getFigures().equals(figures)) {
-            model.addAttribute("error", "No se han dibujado figuras. Debes dibujar al menos una figura.");
-            return;
+            return "No se han dibujado figuras. Debes dibujar al menos una figura.";
         }
 
         // Si el nombre está vacío, genera uno aleatorio
@@ -243,6 +241,7 @@ public class DrawService {
 
         // Guardar la nueva versión
         versionService.saveVersion(drawId, figures, user.getId());
+        return null;
     }
 
     public void ShareDraw(int drawId, int userId, String permission, User user) {
