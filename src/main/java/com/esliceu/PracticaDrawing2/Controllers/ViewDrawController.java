@@ -43,7 +43,6 @@ public class ViewDrawController {
         return "ViewDraw";
 }
 
-    // Manejo de la solicitud POST para procesar el formulario de registro
     @PostMapping("/ViewDraw")
     public String PostViewDraw(Model model, @RequestParam String jsonData, @RequestParam int draw_Id) {
         //Obtenemos el usuario actual
