@@ -270,7 +270,7 @@ public class DrawService {
 
     public boolean canUserShareDraw(int drawId, User user) {
         // Comprobar si eres el propietario del dibujo.
-        boolean isTheOwner = userCanSee(drawId, user.getId());
+        boolean isTheOwner = propietaryDraw(drawId, user.getId());
 
         // Comprobamos que no esté en la basura.
         boolean trashDrawGeneral = trashDraw(drawId);
