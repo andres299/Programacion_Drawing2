@@ -274,17 +274,10 @@ async function saveFigures() {
         });
        // Manejar la respuesta del servidor
        if (response.ok) {
-        alert("¡Se ha guardado correctamente!");
-        } else {
-        const errorMessage = await response.text();
-
-        console.log(errorMessage);
-        if (errorMessage) {
-            alert("Error: " + errorMessage);
-        } else {
-            alert("Error al guardar. Por favor, inténtalo de nuevo.");
-        }
-    }
+         alert("¡Se ha creado correctamente!");
+       } else {
+          alert("Error al crear. Tiene que haber una figura");
+       }
     } catch (error) {
             alert("Error de red. Por favor, inténtalo de nuevo más tarde.");
     }

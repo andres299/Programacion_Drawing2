@@ -251,7 +251,7 @@ async function saveFigures() {
         if (response.ok) {
             alert("¡Se ha modificado correctamente!");
         } else {
-            alert("Error al modificar. Por favor, inténtalo de nuevo.");
+            alert("Error al modificar. Tiene que haber una figura y no se puede subir la misma version");
         }
     } catch (error) {
             alert("Error de red. Por favor, inténtalo de nuevo más tarde.");

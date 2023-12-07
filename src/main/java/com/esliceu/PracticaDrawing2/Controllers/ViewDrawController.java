@@ -49,12 +49,13 @@ public class ViewDrawController {
         User user = (User) session.getAttribute("user");
         //Comprobar si eres el usuario y no esta en la basura.
         if (!drawService.canUserViewDraw(draw_Id, user)) {
+            System.out.println("Hola");
             return "redirect:/AllDraw";
         }
 
         //Metdodo para guardar el dibujo y la version.
-        String copiDrawAndVersion = drawService.copiDrawAndVersion(user, jsonData);
-        if (copiDrawAndVersion != null) {
+        String copiaDrawAndVersion = drawService.copiaDrawAndVersion(user, jsonData);
+        if (copiaDrawAndVersion != null) {
             return "ViewDraw";
         }
             return "redirect:/AllDraw";

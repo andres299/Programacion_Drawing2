@@ -63,10 +63,6 @@ public class DrawService {
     public void updateVisibility(String newName, int drawId, String visibility) {
         drawRepo.updateVisibility(newName, drawId, convertToBoolean(visibility));
     }
-    public boolean userCanSee(int drawId, int id_user) {
-        return drawRepo.userCanSee(drawId, id_user);
-    }
-
     public void deletePermissionUser(int id, int id_user) {
         drawRepo.deletPermissionUser(id,id_user);
     }
@@ -141,7 +137,7 @@ public class DrawService {
 
     public boolean canUserViewDraw(int drawId, User user) {
         // Comprobar si eres el propietario del dibujo.
-        boolean isTheOwner = userCanSee(drawId, user.getId());
+        boolean isTheOwner = propietaryDraw(drawId, user.getId());
 
         // Comprobamos que no esté en la basura.
         boolean trashDrawGeneral = trashDraw(drawId);
@@ -155,7 +151,7 @@ public class DrawService {
         return isTheOwner && trashDrawGeneral || userPermission && inYourTrash;
         }
 
-    public String copiDrawAndVersion(User user, String jsonData) {
+    public String copiaDrawAndVersion(User user, String jsonData) {
         String drawName = "Copia " + generateRandomName();
         boolean visibility = false;
         // Guardar el dibujo

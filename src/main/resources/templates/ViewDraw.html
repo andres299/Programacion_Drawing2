@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" xmlns:c="http://www.w3.org/1999/xhtml">
 
 <head>
     <title>Dibujos Usuario</title>
@@ -35,6 +35,9 @@
         </select>
     </div>
 
+    <div th:if="${error}">
+        <p c:class="error" th:text="${error}" style="color: red;"></p>
+    </div><br>
     <input type="hidden" id="selectedFigures" name="selectedFiguresJson" th:value="${selectedFiguresJson}" />
     <input type="hidden" id="drawId" name="drawId" th:value="${drawId}" />
 

@@ -95,15 +95,15 @@ document.getElementById("copyButton").addEventListener("click", function() {
         method: 'POST',
         body: formData
    })
+   // Manejar la respuesta del servidor
    .then(response => {
-           // Maneja la respuesta del servidor aquí
-           if (response.ok) {
-               alert("¡Se ha copiado correctamente!");
-           } else {
-               alert("Error al copiar. Por favor, inténtalo de nuevo.");
-           }
+       if (response.ok) {
+            alert("¡Se ha copiado correctamente!");
+       } else {
+            alert("Error al copiar. Tiene que tener permisos o ser el propietario");
+       }
        })
-       .catch(error => {
+      .catch(error => {
            alert("Error de red. Por favor, inténtalo de nuevo más tarde.");
-       });
+      });
 });
