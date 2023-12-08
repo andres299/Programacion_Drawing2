@@ -13,7 +13,6 @@ import java.net.http.HttpRequest;
 public class SessionInterceptor implements HandlerInterceptor {
     @Autowired
     HttpSession session;
-
     @Override
     public boolean preHandle(
                              HttpServletRequest req,
@@ -21,16 +20,15 @@ public class SessionInterceptor implements HandlerInterceptor {
                              Object handler) throws Exception{
         // Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
-        // Agregar el usuario al atributo de la solicitud
+        // Agregar el usuario al atributo.
         req.setAttribute("user", user);
 
         // Verificar si el usuario está autenticado.
         if (user == null) {
             // Redirigir a la página de inicio de sesión si no está autenticado.
             resp.sendRedirect("/login");
-            return false;  // Detener la ejecución del controlador actual
+            return false;
         }
-
         // Continuar con la ejecución del controlador actual
         return true;
     }
