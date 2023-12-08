@@ -34,7 +34,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Función para realizar la eliminación
     function deleteDraw() {
-        // Puedes agregar aquí la lógica para enviar el formulario de eliminación
         deleteForm.submit();
         closeModal();
     }
