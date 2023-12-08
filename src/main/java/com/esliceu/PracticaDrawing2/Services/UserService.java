@@ -40,12 +40,10 @@ public class UserService {
         user.setPassword(xifratMD5(user.getPassword()));
         userRepo.register(user);
     }
-
     // Métodos para validar login y contraseñas
     private boolean validUsername(String word) {
         return word.matches("[a-zA-Z0-9]+");
     }
-
     private boolean noSpaces(String password) {
         return !password.contains(" ");
     }
@@ -61,9 +59,8 @@ public class UserService {
     }
 
 
-    public User user(String login) {
-        return userRepo.user(login);
-    }
+    //Metodo para obtener toda la informacion del usuario actual.
+    public User user(String login) { return userRepo.user(login);}
 
     //Metodo para listar todos los usuarios
     public List<User> allUsers(int id_user) { return userRepo.allUsers(id_user);}

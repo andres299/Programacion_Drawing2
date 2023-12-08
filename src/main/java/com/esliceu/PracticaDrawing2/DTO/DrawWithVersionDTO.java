@@ -15,7 +15,6 @@ public class DrawWithVersionDTO {
     private int numFigures;
     private String modificationDate;
     private String permissions;
-
     private boolean in_your_trash;
 
     public DrawWithVersionDTO() {

@@ -39,10 +39,11 @@ public class DrawService {
     public boolean hasPermissionsWriting(int id_draw, int id_user) {
         return drawRepo.hasPermissionsWriting(id_draw, id_user);
     }
+    //Metodo para comprobar si tiene permisos.
     private boolean hasPermissions(int drawId, int id_user) {
         return drawRepo.hasPermissions(drawId, id_user);
     }
-    //Metodo borrar el dibujo con su version
+    //Metodo borrar el dibujo con sus versiones
     public void deleteDraw(int id_draw) {
         drawRepo.deleteDraw(id_draw);
     }
@@ -52,21 +53,26 @@ public class DrawService {
         drawRepo.restoreDraw(id_draw);
     }
 
+    //Para obtener el propietario del dibujo
     public boolean propietaryDraw(int drawId, int id_user) {
         return drawRepo.propietaryDraw(drawId, id_user);
     }
 
+    //Metodo para obtener la visibilidad
     public boolean getVisibility(int drawId) {
         return drawRepo.getVisibility(drawId);
     }
 
+    //
     public void updateVisibility(String newName, int drawId, String visibility) {
         drawRepo.updateVisibility(newName, drawId, convertToBoolean(visibility));
     }
+    //Borrar permisos del usuario sobre el dibujo.
     public void deletePermissionUser(int id, int id_user) {
         drawRepo.deletPermissionUser(id,id_user);
     }
 
+    //Pasar de string a booleano.
     public static boolean convertToBoolean(String visibility) {
         return "public".equalsIgnoreCase(visibility);
     }
