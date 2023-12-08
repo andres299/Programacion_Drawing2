@@ -28,7 +28,7 @@ public class DrawService {
     public void updateTrash(int id, int id_user) {
         drawRepo.updateDraw(id, id_user);
     }
-    public void updateYourTrash(int id, int id_user) {drawRepo.uodateYourTrash(id,id_user);}
+    public void updateYourTrash(int id, int id_user) {drawRepo.updateYourTrash(id,id_user);}
 
     //Obtener una lista de los dibujos en la papelera
     public List<DrawWithVersionDTO> getDrawsTrash(int id) {

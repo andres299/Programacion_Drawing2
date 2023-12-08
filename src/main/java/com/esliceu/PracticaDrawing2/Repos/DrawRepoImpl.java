@@ -73,8 +73,9 @@ public class DrawRepoImpl implements DrawRepo {
         jdbcTemplate.update(sql, id, id_user);
     }
 
+    //Metodo para actualizar tu papelera
     @Override
-    public void uodateYourTrash(int id, int id_user) {
+    public void updateYourTrash(int id, int id_user) {
     //Aquí verificamos que el id_user es el propietario de la imagen antes de realizar la actualización
         String sql = "UPDATE permissions SET in_your_trash = 1 WHERE id_draw = ? AND id_user = ?";
         jdbcTemplate.update(sql, id, id_user);
@@ -172,17 +173,6 @@ public class DrawRepoImpl implements DrawRepo {
     public void updateVisibility(String newName,int drawId, boolean visibility) {
         String sql = "UPDATE draw SET nameDraw = ?, visualization = ? WHERE id = ?";
         jdbcTemplate.update(sql, newName, visibility, drawId);
-    }
-
-    @Override
-    public boolean userCanSee(int drawId, int idUser) {
-    String sql = "SELECT COUNT(*) FROM draw LEFT JOIN permissions ON draw.id = permissions.id_draw AND permissions.id_user = ? " +
-            "LEFT JOIN user ON permissions.id_user = user.id WHERE draw.id = ? " +
-            "AND inTheTrash = false AND ( (owner_id = ?) OR (draw.visualization = true AND " +
-            "(permissions.id_user IS NULL OR permissions.id_user <> ?)) OR (permissions.id_user = ? " +
-            "AND in_your_trash = false));";
-        int count = jdbcTemplate.queryForObject(sql, Integer.class, idUser, drawId, idUser, idUser, idUser);
-        return count > 0;
     }
 }
 
