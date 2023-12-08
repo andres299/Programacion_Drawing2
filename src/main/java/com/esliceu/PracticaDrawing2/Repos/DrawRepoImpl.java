@@ -28,8 +28,7 @@ public class DrawRepoImpl implements DrawRepo {
 
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(
-                    "INSERT INTO draw (nameDraw, owner_id, creationDate, 
-                    visualization) VALUES (?, ?, NOW(), ?)",
+                    "INSERT INTO draw (nameDraw, owner_id, creationDate, visualization) VALUES (?, ?, NOW(), ?)",
                     Statement.RETURN_GENERATED_KEYS
             );
 
