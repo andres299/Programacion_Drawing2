@@ -27,19 +27,16 @@ public class ModifyCanvasController {
     DrawService drawService;
     @Autowired
     VersionService versionService;
-    @Autowired
-    ObjectCounter objectCounter;
 
     @GetMapping("/ModifyCanvas")
     public String ModifyCanvas(Model model, @RequestParam String drawName,
                                @RequestParam int drawId) {
         //La sesion del usuario actual
         User user = (User) session.getAttribute("user");
-
+        //Comprobar si el usuario tiene permisos de modificar
         if (!drawService.validateDrawModifyAndTrash(drawId, user)) {
             return "redirect:/AllDraw";
         }
-
         // Obtener el dibujo por su ID
         Version selectedDraw = versionService.getVersionById(drawId);
 
@@ -48,7 +45,7 @@ public class ModifyCanvasController {
 
         // Convertir la cadena de figuras a una cadena JSON
         String selectedFiguresJson = selectedDraw.getFigures();
-
+        
         // Establecer los atributos en la solicitud.
         model.addAttribute("drawName", drawName);
         model.addAttribute("drawId", drawId);
@@ -66,17 +63,18 @@ public class ModifyCanvasController {
                                     @RequestParam String drawName) {
         //Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
-        // Llamamos al servicio para validar el acceso al dibujo
+        //Comprobar si el usuario tiene permisos de modificar el dibujo correspondiente.
         if (!drawService.validateDrawModifyAndTrash(drawId, user)) {
             return "redirect:/AllDraw";
         }
         // Llamamos al servicio para realizar las operaciones correspondientes
-        String modifyCanvas = drawService.processUpdateDrawAndCreatVersion(model, drawName, drawId, figures, visibility, user);
+        String modifyCanvas = drawService.processUpdateDrawAndCreatVersion(model,
+                drawName, drawId, figures, visibility, user);
+        //Si no es un , es que hay un error y muestra ese mensaje.
         if (modifyCanvas != null){
             model.addAttribute("error", modifyCanvas);
             return "ModifyCanvas";
         }
-        //Actualizar los datos del dibujo
         return "redirect:/AllDraw";
     }
 
