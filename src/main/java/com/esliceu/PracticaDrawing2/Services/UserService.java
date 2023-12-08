@@ -58,7 +58,6 @@ public class UserService {
         return DigestUtils.md5Hex(password).toUpperCase();
     }
 
-
     //Metodo para obtener toda la informacion del usuario actual.
     public User user(String login) { return userRepo.user(login);}
 
