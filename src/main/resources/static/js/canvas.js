@@ -48,7 +48,7 @@ const render = (figures) => {
 
         const deleteButton = listItem.querySelector(".Delete-Button");
         deleteButton.addEventListener("click", () => {
-        removeFigure(i);
+            removeFigure(i);
         });
 
         const modifyButton = listItem.querySelector(".Modify-Button");
@@ -71,25 +71,48 @@ const render = (figures) => {
         draw(lineFigure);
     }
 };
+
+
+// Event listener para el cambio en los campos del formulario
+colorInput.addEventListener('input', () => modifyFigure(figures.length - 1));
+sizeInput.addEventListener('input', () => modifyFigure(figures.length - 1));
+fillFigureCheckbox.addEventListener('input', () => modifyFigure(figures.length - 1));
+
+// Función para actualizar la vista de una figura específica
+const modifyFigure = (index) => {
+    const figure = figures[index];
+
+    // Obtén los elementos del formulario
+    const colorInput = document.getElementById("color");
+    const sizeInput = document.getElementById("size");
+    const fillCheckbox = document.getElementById("fillFigure");
+
+    // Actualiza los valores de la figura con los nuevos valores del formulario
+    figure.color = colorInput.value;
+    figure.size = sizeInput.value;
+    figure.filled = fillCheckbox.checked;
+
+    // Borra el lienzo y vuelve a dibujar todas las figuras
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    figures.forEach(draw);
+
+    // Dibuja la figura modificada
+    draw(figure);
+};
+/*
 const modifyFigure = (index) => {
      // Obtén la figura actual que deseas modificar
-        const currentFigure = figures[index];
+     const selectedFigure = figures[index];
 
-        // Obtén los elementos del formulario
-        const colorInput = document.getElementById("color");
-        const sizeInput = document.getElementById("size");
-        const fillCheckbox = document.getElementById("fillFigure");
+     // Actualiza los valores de la figura con los nuevos valores del formulario
+     selectedFigure.color = colorInput.value;
+     selectedFigure.size = sizeInput.value;
+     selectedFigure.filled = fillCheckbox.checked;
 
-        // Actualiza los valores de la figura con los nuevos valores del formulario
-        currentFigure.color = colorInput.value;
-        currentFigure.size = sizeInput.value;
-        currentFigure.filled = fillCheckbox.checked;
-
-        // Renderizar las figuras actualizadas
-        render(figures);
+     // Renderizar las figuras actualizadas
+     render(figures);
 };
 
-/*
 const modifyFigure = (index) => {
     const selectedFigure = figures[index];
 
@@ -155,8 +178,6 @@ canvas.addEventListener("mouseup", () => {
             figures.push(lineFigure);
             currentPath = [];
             render(figures);
-            // Llama a la función saveFigures() cada vez que agregas una figura
-            //saveFigures();
         }
     }
 });

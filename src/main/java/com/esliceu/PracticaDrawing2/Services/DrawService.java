@@ -148,7 +148,9 @@ public class DrawService {
         // Método para comprobar si está en la papelera del usuario.
         boolean inYourTrash = in_your_trash(drawId);
 
-        return isTheOwner && trashDrawGeneral || userPermission && inYourTrash;
+        boolean getVisibility = getVisibility(drawId);
+
+        return isTheOwner && trashDrawGeneral || userPermission && inYourTrash || getVisibility;
         }
 
     public String copiaDrawAndVersion(User user, String jsonData) {

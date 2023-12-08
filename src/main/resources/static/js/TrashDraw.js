@@ -1,13 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
-    var deleteButton = document.querySelector('.delete');
+    var deleteButtons = document.querySelectorAll('.delete');
     var modalDeleteButton = document.querySelector('.modal-delete');
     var modalCancelButton = document.querySelector('.modal-cancel');
     var deleteForm = document.getElementById('deleteForm');
     var deleteModal = document.getElementById('deleteModal');
 
-    // Agregar un listener al botón de eliminar en la tabla
-    deleteButton.addEventListener('click', function () {
-        confirmDelete();
+    // Agregar un listener a cada botón de eliminar en la tabla
+    deleteButtons.forEach(function (deleteButton) {
+        deleteButton.addEventListener('click', function () {
+            confirmDelete();
+        });
     });
 
     // Agregar un listener al botón de eliminar en el modal
