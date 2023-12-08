@@ -20,7 +20,6 @@ public class ViewDrawController {
     HttpSession session;
     @Autowired
     DrawService drawService;
-
     @Autowired
     VersionService versionService;
     @GetMapping("/ViewDraw")
@@ -58,6 +57,6 @@ public class ViewDrawController {
         if (copiaDrawAndVersion != null) {
             return "ViewDraw";
         }
-            return "redirect:/AllDraw";
+        return "redirect:/AllDraw";
     }
 }
