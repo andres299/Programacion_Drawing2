@@ -4,6 +4,7 @@ public class Permissions {
     private int id_draw;
     private int id_users;
     private String permissions;
+    private String in_your_trash;
 
     public Permissions() {
     }
@@ -36,5 +37,13 @@ public class Permissions {
 
     public void setPermissions(String permissions) {
         this.permissions = permissions;
+    }
+
+    public String getIn_your_trash() {
+        return in_your_trash;
+    }
+
+    public void setIn_your_trash(String in_your_trash) {
+        this.in_your_trash = in_your_trash;
     }
 }
