@@ -68,7 +68,7 @@ public class ModifyCanvasController {
             return "redirect:/AllDraw";
         }
         // Llamamos al servicio para realizar las operaciones correspondientes
-        String modifyCanvas = drawService.processUpdateDrawAndCreatVersion(model,
+        String modifyCanvas = drawService.processUpdateDrawAndCreatVersion(
                 drawName, drawId, figures, visibility, user);
         //Si no es un , es que hay un error y muestra ese mensaje.
         if (modifyCanvas != null){

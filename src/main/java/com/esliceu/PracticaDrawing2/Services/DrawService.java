@@ -63,7 +63,7 @@ public class DrawService {
         return drawRepo.getVisibility(drawId);
     }
 
-    //
+    //Metodo para cambiar la visibilidad
     public void updateVisibility(String newName, int drawId, String visibility) {
         drawRepo.updateVisibility(newName, drawId, convertToBoolean(visibility));
     }
@@ -77,14 +77,17 @@ public class DrawService {
         return "public".equalsIgnoreCase(visibility);
     }
 
+    //Metodo para comprobar si esta en la basura
     public boolean trashDraw(int drawId) {
         return drawRepo.trashDraw(drawId);
     }
 
+    //Metodo para comporbar si esta en la basura tuya.
     public boolean in_your_trash(int drawId) {
         return drawRepo.in_your_trash(drawId);
     }
 
+    //Guradar el dibujo y su version
     public String saveDrawAndVersion(User user, Model model, String nomImage, String visibility, String figures) {
         //Comprobar si las figuras están vacías
         if (objectCounter.countFiguresInJson(figures) == 0) {
@@ -122,7 +125,7 @@ public class DrawService {
         return drawRepo.getDraws(id_user);
     }
 
-
+    //Metodo para comprobar a que papelera mandarlo
     public boolean processAllDraw(int id, User user) {
         //Comprobar si eres el propietario y sis tienes permisos.
         boolean ownerProprietary = propietaryDraw(id, user.getId());
@@ -141,6 +144,7 @@ public class DrawService {
         }
     }
 
+    //SI tiene permisos para ver el dibujo
     public boolean canUserViewDraw(int drawId, User user) {
         // Comprobar si eres el propietario del dibujo.
         boolean isTheOwner = propietaryDraw(drawId, user.getId());
@@ -159,6 +163,7 @@ public class DrawService {
         return isTheOwner && trashDrawGeneral || userPermission && inYourTrash || getVisibility;
         }
 
+    //Copiar el dibujo y su version
     public String copiaDrawAndVersion(User user, String jsonData) {
         String drawName = "Copia " + generateRandomName();
         boolean visibility = false;
@@ -173,6 +178,7 @@ public class DrawService {
         return null;
     }
 
+    //Borrar la imagen o restaurarla
     public void deleteOrRestoreTrashDraw(int id, String action, User user) {
         // Método para comprobar si eres el propietario del dibujo.
         boolean ownerPropietary = propietaryDraw(id, user.getId());
@@ -204,6 +210,7 @@ public class DrawService {
         }
     }
 
+    //Validar que puede modificar.
     public boolean validateDrawModifyAndTrash(int drawId, User user) {
         // Método para comprobar si eres el propietario del dibujo.
         boolean ownerPropietary = propietaryDraw(drawId, user.getId());
@@ -227,7 +234,8 @@ public class DrawService {
         }
     }
 
-    public String processUpdateDrawAndCreatVersion(Model model, String drawName, int drawId, String figures, String visibility, User user) {
+    //Subir la version modificada
+    public String processUpdateDrawAndCreatVersion(String drawName, int drawId, String figures, String visibility, User user) {
         // Obtener la última versión
         List<Version> allVersionsOfTheDraw = versionService.getAllVersionById(drawId);
         Version lastVersion =allVersionsOfTheDraw.get(0);
@@ -248,6 +256,7 @@ public class DrawService {
         return null;
     }
 
+    //Metodo para compartir el dibujo
     public void ShareDraw(int drawId, int userId, String permission, User user) {
         // Comprobamos si el usuario es el propietario
         boolean ownerPropietary = propietaryDraw(drawId, user.getId());
@@ -271,6 +280,7 @@ public class DrawService {
         }
     }
 
+    //Comprobar si el usuario puede compartir.
     public boolean canUserShareDraw(int drawId, User user) {
         // Comprobar si eres el propietario del dibujo.
         boolean isTheOwner = propietaryDraw(drawId, user.getId());
