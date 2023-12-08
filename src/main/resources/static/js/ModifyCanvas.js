@@ -64,6 +64,33 @@ const render = (figures) => {
     }
 };
 
+// Event listener para el cambio en los campos del formulario
+colorInput.addEventListener('input', () => modifyFigure(figures.length - 1));
+sizeInput.addEventListener('input', () => modifyFigure(figures.length - 1));
+fillFigureCheckbox.addEventListener('input', () => modifyFigure(figures.length - 1));
+
+// Función para actualizar la vista de una figura específica
+const modifyFigure = (index) => {
+    const figure = figures[index];
+
+    // Obtén los elementos del formulario
+    const colorInput = document.getElementById("color");
+    const sizeInput = document.getElementById("size");
+    const fillCheckbox = document.getElementById("fillFigure");
+
+    // Actualiza los valores de la figura con los nuevos valores del formulario
+    figure.color = colorInput.value;
+    figure.size = sizeInput.value;
+    figure.filled = fillCheckbox.checked;
+
+    // Borra el lienzo y vuelve a dibujar todas las figuras
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    figures.forEach(draw);
+
+    // Dibuja la figura modificada
+    draw(figure);
+};
+
 // Agrega figuras almacenadas en parsedFigures al array figures
 parsedFigures.forEach((figure) => {
     figures.push(figure);

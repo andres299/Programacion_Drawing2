@@ -99,37 +99,7 @@ const modifyFigure = (index) => {
     // Dibuja la figura modificada
     draw(figure);
 };
-/*
-const modifyFigure = (index) => {
-     // Obtén la figura actual que deseas modificar
-     const selectedFigure = figures[index];
 
-     // Actualiza los valores de la figura con los nuevos valores del formulario
-     selectedFigure.color = colorInput.value;
-     selectedFigure.size = sizeInput.value;
-     selectedFigure.filled = fillCheckbox.checked;
-
-     // Renderizar las figuras actualizadas
-     render(figures);
-};
-
-const modifyFigure = (index) => {
-    const selectedFigure = figures[index];
-
-    // Abre un cuadro de diálogo para que el usuario pueda modificar la figura
-    const newColor = prompt("Nuevo color:", selectedFigure.color);
-    const newSize = prompt("Nuevo tamaño:", selectedFigure.size);
-    const newFill = confirm("¿Rellenar la figura?");
-
-    // Actualiza la figura con los nuevos valores
-    selectedFigure.color = newColor || selectedFigure.color;
-    selectedFigure.size = newSize || selectedFigure.size;
-    selectedFigure.filled = newFill;
-
-    // Renderiza las figuras actualizadas
-    render(figures);
-};
-*/
 // Evento para el clic en el canvas
 canvas.addEventListener("mousedown", (event) => {
     if (currentFigure !== "line") {

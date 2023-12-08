@@ -20,14 +20,11 @@ import java.util.List;
 
 @Controller
 public class TrashDrawController {
-
     @Autowired
     HttpSession session;
 
     @Autowired
     DrawService drawService;
-    @Autowired
-    PermissionService permissionService;
 
     @GetMapping("/TrashDraw")
     public String TrashDrawController(Model model) {
