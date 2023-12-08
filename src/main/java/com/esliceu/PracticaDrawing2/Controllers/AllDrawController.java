@@ -39,9 +39,9 @@ public class AllDrawController {
         //La sesion del usuario actual
         User user = (User) session.getAttribute("user");
         boolean success = drawService.processAllDraw(id, user);
-        if (success){
+        if (success){ //Si no hay problema , redirige a la basura
             return "redirect:/TrashDraw";
-        }
+        } //Si no te redirige a AllDraw
         return "redirect:/AllDraw";
     }
 }
