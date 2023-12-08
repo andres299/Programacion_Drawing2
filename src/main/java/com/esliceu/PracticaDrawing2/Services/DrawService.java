@@ -174,7 +174,7 @@ public class DrawService {
         boolean ownerPropietary = propietaryDraw(id, user.getId());
         // Método para comprobar si tienes permisos.
         boolean userPermission = hasPermissions(id, user.getId());
-        // Método para comprobar que no esté en la basura general.
+        // Método para comprobar que si esta en la basura general.
         boolean trashDraw = trashDraw(id);
         // Método para comprobar si está en la papelera del usuario.
         boolean inYourTrash = in_your_trash(id);
