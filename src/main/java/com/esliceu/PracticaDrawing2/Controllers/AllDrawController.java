@@ -44,7 +44,5 @@ public class AllDrawController {
         }
         return "redirect:/AllDraw";
     }
-
-
 }
 
