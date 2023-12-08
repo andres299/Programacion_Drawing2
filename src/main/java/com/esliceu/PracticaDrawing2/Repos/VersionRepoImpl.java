@@ -14,13 +14,14 @@ import java.util.List;
 public class VersionRepoImpl implements VersionRepo{
     @Autowired
     JdbcTemplate jdbcTemplate;
+    //Para guaradar la version
     @Override
     public void saveVersion(Version version) {
         jdbcTemplate.update("INSERT INTO version (id_draw, figures, numFigures, modificationDate,id_user) VALUES (?, ?, ?, NOW(),?)",
                 version.getId_draw(),version.getFigures(), version.getNumFigures() ,version.getId_user()
         );
     }
-
+    //Obtener verion por id.
     @Override
     public Version getVersionById(int drawId) {
         String sql = "SELECT * FROM version WHERE id_draw = ? ORDER BY modificationDate DESC LIMIT 1";
@@ -30,7 +31,7 @@ public class VersionRepoImpl implements VersionRepo{
             return null;
         }
     }
-
+    //Obtener una lista de las versiones del dibujo
     @Override
     public List<Version> getAllVersionById(int drawId) {
         String sql = "SELECT * FROM version WHERE id_draw = ? ORDER BY modificationDate DESC";
