@@ -40,13 +40,18 @@ const render = (figures) => {
     figures.forEach((figure, i) => {
         const listItem = document.createElement("li");
         listItem.innerHTML = `Tipo: ${figure.type} - Color: ${figure.color}
-        <button data-index="${i}" class="Delete-Button">Eliminar</button>`;
+        <button data-index="${i}" class="Delete-Button">Eliminar</button>;
+        <button data-index="${i}" class="Modify-Button">Modify</button>`;
 
         const deleteButton = listItem.querySelector(".Delete-Button");
         deleteButton.addEventListener("click", () => {
         removeFigure(i);
         });
 
+        const modifyButton = listItem.querySelector(".Modify-Button");
+        modifyButton.addEventListener("click", () => {
+            modifyFigure(i);
+        });
         logs.appendChild(listItem);
         draw(figure);
     });

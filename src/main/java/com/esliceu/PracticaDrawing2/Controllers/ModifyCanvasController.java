@@ -65,6 +65,7 @@ public class ModifyCanvasController {
         User user = (User) session.getAttribute("user");
         //Comprobar si el usuario tiene permisos de modificar el dibujo correspondiente.
         if (!drawService.validateDrawModifyAndTrash(drawId, user)) {
+            System.out.println("error");
             return "redirect:/AllDraw";
         }
         // Llamamos al servicio para realizar las operaciones correspondientes
