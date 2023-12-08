@@ -20,7 +20,6 @@ public class ShareDrawController {
     HttpSession session;
     @Autowired
     UserService userService;
-
     @Autowired
     DrawService drawService;
     @Autowired

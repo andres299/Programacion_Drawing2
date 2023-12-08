@@ -167,7 +167,7 @@ public class DrawService {
         return null;
     }
 
-    public void deleteTrashDraw(int id, String action, User user) {
+    public void deleteOrRestoreTrashDraw(int id, String action, User user) {
         // Método para comprobar si eres el propietario del dibujo.
         boolean ownerPropietary = propietaryDraw(id, user.getId());
 

@@ -45,7 +45,7 @@ public class TrashDrawController {
         User user = (User) session.getAttribute("user");
 
         // Llamamos al servicio para realizar las operaciones correspondientes
-        drawService.deleteTrashDraw(id, action, user);
+        drawService.deleteOrRestoreTrashDraw(id, action, user);
         return "redirect:/TrashDraw";
     }
 }
