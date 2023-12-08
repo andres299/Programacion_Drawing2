@@ -255,6 +255,6 @@ async function saveFigures() {
 function submitModify() {
     if (shouldSubmitAutomatically) {
         saveFigures();
-        shouldSubmitAutomatically = false; // Resetear la bandera después de enviar automáticamente
+        shouldSubmitAutomatically = false;
     }
 }
