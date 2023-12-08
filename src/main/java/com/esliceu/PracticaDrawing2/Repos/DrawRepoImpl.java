@@ -28,7 +28,8 @@ public class DrawRepoImpl implements DrawRepo {
 
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(
-                    "INSERT INTO draw (nameDraw, owner_id, creationDate, visualization) VALUES (?, ?, NOW(), ?)",
+                    "INSERT INTO draw (nameDraw, owner_id, creationDate, 
+                    visualization) VALUES (?, ?, NOW(), ?)",
                     Statement.RETURN_GENERATED_KEYS
             );
 
@@ -81,6 +82,7 @@ public class DrawRepoImpl implements DrawRepo {
         jdbcTemplate.update(sql, id, id_user);
     }
 
+    //Metodo para obetener lista de dibujos
     @Override
     public List<DrawWithVersionDTO> getDrawsTrash(int id) {
         String sql = "SELECT draw.*, MAX(version.figures) AS figures, " +
@@ -98,13 +100,14 @@ public class DrawRepoImpl implements DrawRepo {
         return allDrawWhithVersion;
     }
 
+    //Si tiene permisos
     @Override
     public boolean hasPermissions(int drawId, int idUser) {
         String checkPermissionsSql = "SELECT COUNT(*) FROM permissions WHERE id_draw = ? AND id_user = ? AND (permissions = 'RW' OR permissions = 'R')";
         int count = jdbcTemplate.queryForObject(checkPermissionsSql, Integer.class, drawId, idUser);
         return count > 0;
     }
-
+    //SI tiene permisos de escritura
     @Override
     public boolean hasPermissionsWriting(int id_draw, int id_user) {
         String checkPermissionsSql = "SELECT COUNT(*) FROM permissions WHERE id_draw = ? " +
@@ -113,6 +116,7 @@ public class DrawRepoImpl implements DrawRepo {
         return count > 0;
     }
 
+    //Borrar el dibujo.
     @Override
     public void deleteDraw(int id_draw) {
         // Eliminar de la tabla permissions
@@ -128,6 +132,7 @@ public class DrawRepoImpl implements DrawRepo {
         jdbcTemplate.update(deleteDrawSql, id_draw);
     }
 
+    //Eliminar permisos usuario
     @Override
     public void deletPermissionUser(int id, int idUser) {
         // Eliminar de la tabla permissions
@@ -135,6 +140,7 @@ public class DrawRepoImpl implements DrawRepo {
         jdbcTemplate.update(deletePermissionsSql, id, idUser);
     }
 
+    //Verificar que esta en la basura general
     @Override
     public boolean trashDraw(int drawId) {
         // Consulta SQL para verificar si el dibujo está en la papelera en ambas tablas
@@ -143,6 +149,7 @@ public class DrawRepoImpl implements DrawRepo {
         return count > 0;
     }
 
+    //Verificar sis esta en tu basura
     @Override
     public boolean in_your_trash(int drawId) {
         String sql = "SELECT COUNT(*) FROM permissions WHERE id_draw = ? AND in_your_trash = false";
@@ -150,12 +157,14 @@ public class DrawRepoImpl implements DrawRepo {
         return count > 0;
     }
 
+    //Restaurar el dibujo
     @Override
     public void restoreDraw(int id_draw) {
         String sql = "UPDATE draw SET inTheTrash = 0 WHERE id = ?";
         jdbcTemplate.update(sql, id_draw);
     }
 
+    //Comprobar el propietario del dibujo
     @Override
     public boolean propietaryDraw(int drawId, int idUser) {
         String checkUserDraw = "SELECT COUNT(*) FROM draw WHERE id = ? AND owner_id = ?";
@@ -163,12 +172,13 @@ public class DrawRepoImpl implements DrawRepo {
         return count > 0;
     }
 
+    //Obtener la visibilidad
     @Override
     public boolean getVisibility(int drawId) {
         String checkVisibilityDraw = "SELECT visualization FROM draw WHERE id = ?";
         return jdbcTemplate.queryForObject(checkVisibilityDraw, boolean.class, drawId);
          }
-
+    //Actualizar la visibilidad
     @Override
     public void updateVisibility(String newName,int drawId, boolean visibility) {
         String sql = "UPDATE draw SET nameDraw = ?, visualization = ? WHERE id = ?";
