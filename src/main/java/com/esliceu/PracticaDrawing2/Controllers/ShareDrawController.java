@@ -33,19 +33,21 @@ public class ShareDrawController {
         if (!drawService.canUserShareDraw(drawId, user)) {
             return "redirect:/AllDraw";
         }
-        
+        //Obtenemos una lista de los usuarios.
         List<User> users = userService.allUsers(user.getId());
+        // Agregar los usuarios y el ID del dibujo.
         model.addAttribute("users",users);
         model.addAttribute("drawId",drawId);
         return "ShareDraw";
     }
+
 
     @PostMapping("/ShareDraw")
     public String PostShareDraw(Model model,@RequestParam int drawId, @RequestParam int userId,
                                 @RequestParam String permission){
         //La sesion del usuario actual
         User user = (User) session.getAttribute("user");
-        // Llamamos al servicio para procesar el compartir dibujo
+        // Aqui implementamos el metodo de compartir dibujo
         drawService.ShareDraw(drawId, userId, permission, user);
         return "redirect:/AllDraw";
     }
@@ -58,7 +60,7 @@ public class ShareDrawController {
         if (!drawService.canUserShareDraw(drawId, user)) {
             return "redirect:/AllDraw";
         }
-        //Restaura la imagen.
+        //Eliminar los permisos.
         permissionService.deletePermissionsUser(drawId, userId);
         return "redirect:/AllDraw";
     }

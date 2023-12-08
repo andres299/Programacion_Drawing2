@@ -45,7 +45,7 @@ public class ModifyCanvasController {
 
         // Convertir la cadena de figuras a una cadena JSON
         String selectedFiguresJson = selectedDraw.getFigures();
-        
+
         // Establecer los atributos en la solicitud.
         model.addAttribute("drawName", drawName);
         model.addAttribute("drawId", drawId);
