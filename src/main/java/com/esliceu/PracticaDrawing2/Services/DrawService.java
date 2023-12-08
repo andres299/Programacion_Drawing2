@@ -57,7 +57,6 @@ public class DrawService {
     public boolean propietaryDraw(int drawId, int id_user) {
         return drawRepo.propietaryDraw(drawId, id_user);
     }
-
     //Metodo para obtener la visibilidad
     public boolean getVisibility(int drawId) {
         return drawRepo.getVisibility(drawId);
@@ -67,20 +66,15 @@ public class DrawService {
     public void updateVisibility(String newName, int drawId, String visibility) {
         drawRepo.updateVisibility(newName, drawId, convertToBoolean(visibility));
     }
+
     //Borrar permisos del usuario sobre el dibujo.
-    public void deletePermissionUser(int id, int id_user) {
-        drawRepo.deletPermissionUser(id,id_user);
-    }
+    public void deletePermissionUser(int id, int id_user) {drawRepo.deletPermissionUser(id,id_user);}
 
     //Pasar de string a booleano.
-    public static boolean convertToBoolean(String visibility) {
-        return "public".equalsIgnoreCase(visibility);
-    }
+    public static boolean convertToBoolean(String visibility) {return "public".equalsIgnoreCase(visibility);    }
 
     //Metodo para comprobar si esta en la basura
-    public boolean trashDraw(int drawId) {
-        return drawRepo.trashDraw(drawId);
-    }
+    public boolean trashDraw(int drawId) { return drawRepo.trashDraw(drawId); }
 
     //Metodo para comporbar si esta en la basura tuya.
     public boolean in_your_trash(int drawId) {
@@ -88,7 +82,7 @@ public class DrawService {
     }
 
     //Guradar el dibujo y su version
-    public String saveDrawAndVersion(User user, Model model, String nomImage, String visibility, String figures) {
+    public String saveDrawAndVersion(User user, String nomImage, String visibility, String figures) {
         //Comprobar si las figuras están vacías
         if (objectCounter.countFiguresInJson(figures) == 0) {
             return "No se han dibujado figuras. Debes dibujar al menos una figura.";
@@ -110,9 +104,7 @@ public class DrawService {
     }
 
     // Método que genera un nombre aleatorio para una imagen.
-    public String generateRandomName() {
-        return "image_" + UUID.randomUUID().toString();
-    }
+    public String generateRandomName() { return "image_" + UUID.randomUUID().toString();}
 
     //Metodo para guardar el dibujo
     public Draw saveDraw(String newName, int owner_id, String visibility) {
@@ -121,16 +113,14 @@ public class DrawService {
     }
 
     //Obtener una lista de los dibujos
-    public List<DrawWithVersionDTO> getDraws(int id_user) {
-        return drawRepo.getDraws(id_user);
-    }
+    public List<DrawWithVersionDTO> getDraws(int id_user) {return drawRepo.getDraws(id_user);}
 
     //Metodo para comprobar a que papelera mandarlo
     public boolean processAllDraw(int id, User user) {
         //Comprobar si eres el propietario y sis tienes permisos.
         boolean ownerProprietary = propietaryDraw(id, user.getId());
         boolean userPermission = hasPermissions(id, user.getId());
-
+        //Si es el propietario o tiene permisos
         if (ownerProprietary || userPermission) {
             // Actualizar la imagen a Papelera si se cumple alguna de las condiciones.
             if (ownerProprietary) {
@@ -182,13 +172,10 @@ public class DrawService {
     public void deleteOrRestoreTrashDraw(int id, String action, User user) {
         // Método para comprobar si eres el propietario del dibujo.
         boolean ownerPropietary = propietaryDraw(id, user.getId());
-
         // Método para comprobar si tienes permisos.
         boolean userPermission = hasPermissions(id, user.getId());
-
         // Método para comprobar que no esté en la basura general.
         boolean trashDraw = trashDraw(id);
-
         // Método para comprobar si está en la papelera del usuario.
         boolean inYourTrash = in_your_trash(id);
         if ("delete".equals(action)) {

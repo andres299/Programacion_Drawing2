@@ -42,7 +42,7 @@ public class CanvasController {
         //Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
         //Metdodo para guardar el dibujo y la version.
-        String saveDrawAndVersion = drawService.saveDrawAndVersion(user, model, NomImage, visibility, figures);
+        String saveDrawAndVersion = drawService.saveDrawAndVersion(user, NomImage, visibility, figures);
         //Si no se ha guardado correctamente, mensaje de error.
         if (saveDrawAndVersion != null) {
             model.addAttribute("error", saveDrawAndVersion);
