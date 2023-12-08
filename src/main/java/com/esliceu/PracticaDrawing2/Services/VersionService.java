@@ -27,7 +27,7 @@ public class VersionService {
         return versionRepo.getVersionById(drawId);
     }
 
-
+    //Metodo para obtener una lista de las versiones por su id.
     public List<Version> getAllVersionById(int drawId) {
         return versionRepo.getAllVersionById(drawId);
     }
