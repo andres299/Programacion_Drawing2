@@ -54,11 +54,9 @@
         </div>
 
         <div class="separador"></div>
-
-        <th:block th:if="${OwnerPropietary}">
-            <label for="drawName">Nombre de la imagen:</label>
-            <input type="text" name="drawName" id="drawName" th:value="${drawName}"><br>
-        </th:block>
+        
+        <label for="drawName">Nombre de la imagen:</label>
+        <input type="text" name="drawName" id="drawName" th:value="${drawName}"><br>
 
          <div th:if="${error}">
             <p c:class="error" th:text="${error}" style="color: red;"></p>

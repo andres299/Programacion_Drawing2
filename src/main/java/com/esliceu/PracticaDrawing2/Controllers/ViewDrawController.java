@@ -48,7 +48,6 @@ public class ViewDrawController {
         User user = (User) session.getAttribute("user");
         //Comprobar si eres el usuario y no esta en la basura.
         if (!drawService.canUserViewDraw(draw_Id, user)) {
-            System.out.println("Hola");
             return "redirect:/AllDraw";
         }
 

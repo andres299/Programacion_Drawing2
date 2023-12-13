@@ -211,7 +211,7 @@ function restartTimer() {
 }
 
 // Event listener para el botón de guardar
-saveButton.addEventListener("click", () => {
+saveButton.addEventListener("click", async () => {
     shouldSubmitAutomatically = false;
     saveFigures();
 });
