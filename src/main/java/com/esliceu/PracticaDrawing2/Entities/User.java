@@ -7,14 +7,16 @@ public class User {
     String login;
     String name;
     String password;
+    String oauth;
 
     public User() {
     }
 
-    public User(String login, String name, String password) {
+    public User(String login, String name, String password, String oauth) {
         this.login = login;
         this.name = name;
         this.password = password;
+        this.oauth = oauth;
     }
 
     public int getId() {
@@ -49,4 +51,11 @@ public class User {
         this.password = password;
     }
 
+    public String getOauth() {
+        return oauth;
+    }
+
+    public void setOauth(String oauth) {
+        this.oauth = oauth;
+    }
 }

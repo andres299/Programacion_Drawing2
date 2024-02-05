@@ -23,8 +23,8 @@ public class UserRepoImpl implements UserRepo{
     //Metodo para registrar usuario.
     @Override
     public void register(User user) {
-        jdbcTemplate.update("INSERT INTO user (login,name,password) VALUES (?,?,?)",
-                user.getLogin(),user.getName(),user.getPassword());
+        jdbcTemplate.update("INSERT INTO user (login,name,password,oauth) VALUES (?,?,?,?)",
+                user.getLogin(),user.getName(),user.getPassword(),user.getOauth());
     }
     //Metodo para iniciar sesion.
     @Override

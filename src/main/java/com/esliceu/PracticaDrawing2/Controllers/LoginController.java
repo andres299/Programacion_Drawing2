@@ -46,9 +46,13 @@ public class LoginController {
     @GetMapping("/discord/callback")
     public String discordCallback(@RequestParam String code) throws Exception{
         String email = loginDiscordServices.getDiscordUserEmail(code);
-        System.out.println(email);
-        session.setAttribute("email",email);
-        return "redirect:/success";
+        if (userService.existsLogin(email)) {
+            userService.registerUserByDiscrod(email, email, "");
+            session.setAttribute("email", email);
+            return "redirect:/success";
+        }
+        return "login";
+
     }
 
     @GetMapping("/success")

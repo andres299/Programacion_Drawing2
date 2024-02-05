@@ -15,22 +15,20 @@ public class SessionInterceptor implements HandlerInterceptor {
     HttpSession session;
     @Override
     public boolean preHandle(
-                             HttpServletRequest req,
-                             HttpServletResponse resp,
-                             Object handler) throws Exception{
-        // Obtenemos el usuario actual y el email
+            HttpServletRequest req,
+            HttpServletResponse resp,
+            Object handler) throws Exception{
+        // Obtenemos el usuario actual
         User user = (User) session.getAttribute("user");
-        String email = (String) session.getAttribute("email");
-        System.out.println(email);
-        // Verificar si el usuario o el email están autenticados.
-        if (user == null && email == null) {
-            // Redirigir a la página de inicio de sesión si no están autenticados.
+        // Agregar el usuario al atributo.
+        req.setAttribute("user", user);
+
+        // Verificar si el usuario está autenticado.
+        if (user == null) {
+            // Redirigir a la página de inicio de sesión si no está autenticado.
             resp.sendRedirect("/login");
             return false;
         }
-
-        // Agregar el usuario al atributo. Puede ser nulo si solo se ha autenticado con el email.
-        req.setAttribute("user", user);
         // Continuar con la ejecución del controlador actual
         return true;
     }

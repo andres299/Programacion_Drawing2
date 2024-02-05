@@ -85,6 +85,6 @@ public class LoginDiscordServices {
         if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
             return EntityUtils.toString(response.getEntity());
         }
-        throw new RuntimeException("Error in response puto");
+        throw new RuntimeException("Error in response");
     }
 }
