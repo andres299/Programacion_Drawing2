@@ -1,5 +1,6 @@
 package com.esliceu.PracticaDrawing2.Controllers;
 
+import com.esliceu.PracticaDrawing2.Services.LoginDiscordServices;
 import com.esliceu.PracticaDrawing2.Services.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -18,6 +19,9 @@ public class LoginController {
     HttpSession session;
     @Autowired
     UserService userService;
+
+    @Autowired
+    LoginDiscordServices loginDiscordServices;
     @GetMapping("/login")
     public String Login() {
         return "login";
@@ -33,5 +37,25 @@ public class LoginController {
         //Si no se ha iniciado correctamente sale el error.
         model.addAttribute("error", "El usuario o la contraseña incorrectos.");
         return "login";
+    }
+
+    @GetMapping("/logindiscord")
+    public String logindiscord() throws Exception {
+        return "redirect:" + loginDiscordServices.getDiscordRedirection();
+    }
+
+    @GetMapping("/discord/callback")
+    public String discordCallback(@RequestParam String code, HttpSession session) throws Exception{
+        String email = loginDiscordServices.getDiscordUserEmail(code);
+        session.setAttribute("email",email);
+        return "redirect:/success";
+    }
+
+    @GetMapping("/success")
+    public String successController(HttpSession session, Model model){
+        String email = (String) session.getAttribute("email");
+        if (email == null) return "error";
+        model.addAttribute("email",email);
+        return "success";
     }
 }

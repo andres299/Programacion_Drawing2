@@ -4,6 +4,7 @@ import com.esliceu.PracticaDrawing2.Entities.User;
 import com.esliceu.PracticaDrawing2.Repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -64,4 +65,7 @@ public class UserService {
     //Metodo para listar todos los usuarios
     public List<User> allUsers(int id_user) { return userRepo.allUsers(id_user);}
 
+    //public String getGithubRedirection() {
+
+    //}
 }

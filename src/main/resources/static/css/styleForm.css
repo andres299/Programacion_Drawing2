@@ -67,3 +67,18 @@ input[type="submit"] {
 input[type="submit"]:hover {
     background-color: #0056A4;
 }
+
+.discord-button {
+    text-decoration: none;
+    width: 200px;
+    height: 40px;
+    background-color: #7289DA;
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.discord-button:hover {
+    background-color: #6273A7;
+}
