@@ -19,7 +19,6 @@ public class LoginController {
     HttpSession session;
     @Autowired
     UserService userService;
-
     @Autowired
     LoginDiscordServices loginDiscordServices;
     @GetMapping("/login")
@@ -45,14 +44,15 @@ public class LoginController {
     }
 
     @GetMapping("/discord/callback")
-    public String discordCallback(@RequestParam String code, HttpSession session) throws Exception{
+    public String discordCallback(@RequestParam String code) throws Exception{
         String email = loginDiscordServices.getDiscordUserEmail(code);
+        System.out.println(email);
         session.setAttribute("email",email);
         return "redirect:/success";
     }
 
     @GetMapping("/success")
-    public String successController(HttpSession session, Model model){
+    public String successController(Model model){
         String email = (String) session.getAttribute("email");
         if (email == null) return "error";
         model.addAttribute("email",email);
