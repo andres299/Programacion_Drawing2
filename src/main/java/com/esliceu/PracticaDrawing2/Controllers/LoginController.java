@@ -1,5 +1,6 @@
 package com.esliceu.PracticaDrawing2.Controllers;
 
+import com.esliceu.PracticaDrawing2.Entities.User;
 import com.esliceu.PracticaDrawing2.Services.LoginDiscordServices;
 import com.esliceu.PracticaDrawing2.Services.UserService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -50,15 +51,15 @@ public class LoginController {
             loginDiscordServices.registerUserByDiscrod(email, email, "");
             return "login";
         }
-        session.setAttribute("email", email);
+        session.setAttribute("user", loginDiscordServices.user(email));
         return "redirect:/success";
     }
 
     @GetMapping("/success")
     public String successController(Model model){
-        String email = (String) session.getAttribute("email");
-        if (email == null) return "error";
-        model.addAttribute("email",email);
+        User user = (User) session.getAttribute("user");
+        if (user == null) return "error";
+        model.addAttribute("email",user.getLogin());
         return "success";
     }
 }

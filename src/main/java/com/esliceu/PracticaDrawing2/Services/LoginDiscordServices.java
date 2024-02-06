@@ -109,4 +109,7 @@ public class LoginDiscordServices {
         return DigestUtils.md5Hex(password).toUpperCase();
     }
 
+    public User user(String email) {
+        return userDiscordRepo.user(email);
+    }
 }

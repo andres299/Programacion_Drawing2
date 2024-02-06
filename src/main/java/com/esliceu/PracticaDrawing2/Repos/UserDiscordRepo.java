@@ -6,4 +6,6 @@ public interface UserDiscordRepo {
     boolean existUser(String email);
 
     void register(User user);
+
+    User user(String email);
 }
