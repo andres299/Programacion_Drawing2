@@ -29,10 +29,11 @@ public class LoginController {
 
     @PostMapping("/login")
     public String PostLogin(Model model,@RequestParam String login, @RequestParam String password) {
+        //Si la contraseña esta vacia
         if (password.isEmpty()){
             //Si no se ha iniciado correctamente sale el error.
             model.addAttribute("error", "La contraseña esta vacia.");
-            return "login"; 
+            return "login";
         }
         //Metodo para iniciar sesion, si se ha iniciado correctamente.
         if (userService.userExists(login, password)) {
