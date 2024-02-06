@@ -1,6 +1,9 @@
 package com.esliceu.PracticaDrawing2.Services;
 
+import com.esliceu.PracticaDrawing2.Entities.User;
+import com.esliceu.PracticaDrawing2.Repos.UserDiscordRepo;
 import com.google.gson.Gson;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -12,6 +15,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +27,8 @@ import java.util.Map;
 
 @Service
 public class LoginDiscordServices {
+    @Autowired
+    UserDiscordRepo userDiscordRepo;
 
     @Value("${client-idDiscord}")
     String clientidDiscord;
@@ -87,4 +93,20 @@ public class LoginDiscordServices {
         }
         throw new RuntimeException("Error in response");
     }
+
+    public boolean existsLogin(String email) {
+        return userDiscordRepo.existUser(email);
+    }
+
+    public void registerUserByDiscrod(String email, String email1, String s) {
+        String oauth = "online";
+        User user = new User(email,email1,s,oauth);
+        user.setPassword(xifratMD5(user.getPassword()));
+        userDiscordRepo.register(user);
+    }
+
+    public String xifratMD5(String password){
+        return DigestUtils.md5Hex(password).toUpperCase();
+    }
+
 }

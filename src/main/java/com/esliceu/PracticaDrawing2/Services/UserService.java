@@ -66,15 +66,4 @@ public class UserService {
     //Metodo para listar todos los usuarios
     public List<User> allUsers(int id_user) { return userRepo.allUsers(id_user);}
 
-    public void registerUserByDiscrod(String email, String email1, String s) {
-        String oauth = "online";
-        User user = new User(email,email1,s,oauth);
-        user.setPassword(xifratMD5(user.getPassword()));
-        userRepo.register(user);
-    }
-
-
-    //public String getGithubRedirection() {
-
-    //}
 }
